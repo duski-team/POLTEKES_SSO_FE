@@ -31,18 +31,6 @@
               />
             </div> -->
             <div class="mb-3">
-              <label for="exampleInputpassword_lama" class="form-label"
-                >Password Lama</label
-              >
-              <input
-                type="password"
-                class="form-control"
-                id="exampleInputpassword_lama"
-                v-model="state.password_lama"
-                @keydown.enter.prevent="login()"
-              />
-            </div>
-            <div class="mb-3">
               <label for="exampleInputpassword_baru" class="form-label"
                 >Password Baru</label
               >
@@ -131,11 +119,14 @@ export default {
     async login() {
       let vm = this;
       vm.state.username = localStorage.getItem('SSO_username')
-      let login = await vm.$axios.post("users/changepassword", vm.state);
+      let login = await vm.$axios.post("users/changePasswordOTP", vm.state);
       console.log(login);
       if(login.status == 200){
         console.log('ok')
-        this.$router.push({path:"/login"})
+        if(login.data.message == 'sukses'){
+          this.$router.push({path:"/"})
+        }
+        
       }
     },
     async recaptcha() {

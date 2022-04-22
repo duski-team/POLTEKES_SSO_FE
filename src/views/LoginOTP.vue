@@ -83,12 +83,13 @@ export default {
   methods: {
     async login() {
       let vm = this;
-      let login = await vm.$axios.post("oauth/applyOTP", vm.data);
+      vm.data.username = localStorage.getItem("SSO_username");
+      let login = await vm.$axios.post("users/applyOTP", vm.data);
       console.log(login);
-      if (login.data.status == 200) {
-        this.$router.push({ path: "/gantiPassword" });
-      } else if (login.data.status == 201) {
+      if (login.data.status == 201) {
         console.log("error");
+      } else {
+        this.$router.push({ path: "/gantiPassword2" });
       }
     },
     async recaptcha() {
@@ -199,12 +200,12 @@ label {
   font-size: 30px;
   letter-spacing: 1rem;
 }
-.kirim_ulang{
+.kirim_ulang {
   color: aqua;
 }
-.kirim_ulang:hover{
+.kirim_ulang:hover {
   transform: scale(1.1);
   font-weight: 500;
-  color:aqua
+  color: aqua;
 }
 </style>

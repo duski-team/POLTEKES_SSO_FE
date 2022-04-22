@@ -36,7 +36,7 @@
                 type="text"
                 class="form-control"
                 id="exampleInputpassword"
-                v-model="data.OTP"
+                v-model="data.username"
                 @keydown.enter.prevent="kirim()"
               />
             </div>
@@ -46,7 +46,7 @@
                   <button
                     href="#"
                     class="btn btn-outline-primary"
-                    @click="recaptcha()"
+                    @click="kirim()"
                   >
                     DAPATKAN KODE OTP
                   </button>
@@ -61,7 +61,6 @@
 </template>
 
 <script>
-
 export default {
   name: "Home",
   data() {
@@ -75,11 +74,12 @@ export default {
     async kirim() {
       let vm = this;
       let login = await vm.$axios.post("users/kirimUlangOTP", vm.data);
-      if(login.data.status == 200){
-        localStorage.setItem('username_lupa', this.data.username)
-        this.$router.push({path:"/OTP"})
-      } else if (login.data.status == 201){
-        console.log(login.data.message)
+      console.log(login);
+      if (login.data.status == 201) {
+        console.log(login.data.message);
+      } else {
+        localStorage.setItem("username_lupa", this.data.username);
+        this.$router.push({ path: "/OTP" });
       }
     },
     async recaptcha() {
@@ -98,6 +98,13 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+* {
+  /* margin: 0;
+    padding: 0; */
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
 .container-fluid {
   /* background-image: url("https://picsum.photos/seed/picsum/200/300"); */
   background-size: cover;

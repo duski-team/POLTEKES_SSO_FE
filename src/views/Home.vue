@@ -101,16 +101,18 @@ export default {
         },
       });
       console.log(login);
-      if (login.data.status == 200) {
+      if (login.status == 200) {
         localStorage.setItem("SSO_access_token", login.data.accessToken);
         localStorage.setItem("SSO_refresh_token", login.data.refreshToken);
         localStorage.setItem("SSO_client_id", login.data.user.id);
-        if (login.data.user.userStatus == 0) {
-          vm.$router.push({ path: "/loginOTP" });
+        localStorage.setItem("SSO_username", login.data.user.username)
+
+        if (login.data.user.user_status == 0) {
+          vm.$router.push({ path: "/gantiPassword" });
         } else {
           vm.$router.push({ path: "/dashboard" });
         }
-      } else if (login.data.status == 201) {
+      } else{
         console.log("error");
       }
     },
@@ -131,6 +133,13 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+* {
+  /* margin: 0;
+    padding: 0; */
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
 .container-fluid {
   /* background-image: url("https://picsum.photos/seed/picsum/200/300"); */
   background-size: cover;
@@ -193,12 +202,14 @@ export default {
   width: 100%;
 }
 .register:hover {
+  transform: scale(1.1);
   font-size: 16px;
   font-weight: 500;
   color: blue;
 }
 
 .lupa:hover {
+  transform: scale(1.1);
   font-size: 16px;
   font-weight: 500;
   color: blue;

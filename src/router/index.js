@@ -2,10 +2,11 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Dashboard from "../views/Dashboard.vue";
 import Register from "../views/Register.vue";
-import Login from "../views/Login.vue";
+// import Login from "../views/Login.vue";
 import LoginOTP from "../views/LoginOTP.vue";
 import LupaPassword from "../views/LupaPassword.vue";
 import GantiPassword from "../views/GantiPassword.vue";
+import GantiPasswordOTP from "../views/GantiPasswordOTP.vue";
 
 const routes = [
   {
@@ -28,11 +29,11 @@ const routes = [
     name: "OTP",
     component: LoginOTP,
   },
-  {
-    path: "/login",
-    name: "Login",
-    component: Login,
-  },
+  // {
+  //   path: "/login",
+  //   name: "Login",
+  //   component: Login,
+  // },
   {
     path: "/lupaPassword",
     name: "LupaPassword",
@@ -42,6 +43,11 @@ const routes = [
     path: "/gantiPassword",
     name: "GantiPassword",
     component: GantiPassword,
+  },
+  {
+    path: "/gantiPassword2",
+    name: "GantiPassword",
+    component: GantiPasswordOTP,
   },
   {
     path: "/about",

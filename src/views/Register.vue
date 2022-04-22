@@ -13,7 +13,7 @@
                 class="form-check-input dot"
                 type="radio"
                 id="inlineCheckbox1"
-                value="Mahasiswa"
+                value="mahasiswa"
                 name="role"
                 v-model="data.role"
               />
@@ -26,7 +26,7 @@
                 class="form-check-input dot"
                 type="radio"
                 id="inlineCheckbox2"
-                value="Dosen"
+                value="dosen"
                 name="role"
                 v-model="data.role"
               />
@@ -51,10 +51,9 @@
         </div>
         <div class="user-details">
           <div class="input-box">
-            <span class="details" v-if="data.role == 'Mahasiswa'">NIM</span>
-            <span class="details" v-if="data.role == 'Dosen'">NIDN</span>
-            <span class="details" v-if="data.role == 'Tenaga Pendidik'"
-              >NIP</span
+            <span class="details" v-if="data.role == 'mahasiswa'">NIM</span>
+            <span class="details" v-if="data.role == 'dosen'">NIDN</span>
+            <span class="details" v-if="data.role == 'Tenaga Pendidik'">NIP</span
             >
             <span class="details" v-if="data.role == ''">NIM/NIDN/NIP</span>
             <input
@@ -107,12 +106,12 @@
           </div>
         </div>
         <!-- <div>{{isValid}}</div> -->
-        <div class="button text-center btn-primary" @click="register()" v-if="!busy" disabled>
+        <div class="button text-center btn-primary" @click="register()">
           <div class="title">Daftar</div>
         </div>
-        <div class="button text-center" @click="register()" v-else>
+        <!-- <div class="button text-center" @click="register()">
           <div class="title">Mohon Tunggu ...</div>
-        </div>
+        </div> -->
       </form>
     </section>
   </div>
@@ -192,12 +191,11 @@ export default {
           "content-type": "application/x-www-form-urlencoded;charset=utf-8",
         }});
       console.log(register);
-      if (register.data.status == 200) {
+      if (register.status == 200) {
         vm.busy = false;
-        if (register.data.message == "sukses") {
+        console.log(register.data.message)
           vm.reset();
           vm.$router.push({ path: "/login" });
-        }
       } else {
         vm.busy = false;
       }

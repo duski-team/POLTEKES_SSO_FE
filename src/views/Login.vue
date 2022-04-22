@@ -118,6 +118,13 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+* {
+  /* margin: 0;
+    padding: 0; */
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
 .container-fluid {
   /* background-image: url("https://picsum.photos/seed/picsum/200/300"); */
   background-size: cover;
@@ -180,12 +187,14 @@ export default {
   width: 100%;
 }
 .register:hover {
+  transform: scale(1.1);
   font-size: 16px;
   font-weight: 500;
   color: blue;
 }
 
 .lupa:hover {
+  transform: scale(1.1);
   font-size: 16px;
   font-weight: 500;
   color: blue;
