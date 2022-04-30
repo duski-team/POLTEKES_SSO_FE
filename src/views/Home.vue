@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="container-fluid"
-  >
+  <div class="container-fluid">
     <!-- <h1 class="title text-center py-4">SSO POLTEKES</h1> -->
 
     <div class="row">
@@ -9,14 +7,27 @@
         <div class="card cb1 m-2 text-center">
           <div class="card-body">
             <!-- <span class="card-number">01</span> -->
-            <img src="@/assets/logo-poltekes.jpg" alt="">
+            <img src="@/assets/logo-poltekes.jpg" alt="" />
 
-            <h5 class="SSO mb-4">Single Sign On (SSO)</h5>
+            <h5 class="SSO">Single Sign On (SSO)</h5>
             <h5 class="card-title mb-4">Poltekes Semarang</h5>
             <div class="mb-3">
-              <!-- <label for="exampleInputEmail1" class="form-label"
-                >Alamat Email</label
-              > -->
+              <div>
+                <div
+                  class="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  <strong>Perhatian!</strong> Username salah atau tidak terdaftar
+                  <!-- <button
+                    type="button"
+                    class="close"
+                    data-dismiss="alert"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">X</span>
+                  </button> -->
+                </div>
+              </div>
               <input
                 type="email"
                 class="form-control"
@@ -107,14 +118,14 @@ export default {
         localStorage.setItem("SSO_access_token", login.data.accessToken);
         localStorage.setItem("SSO_refresh_token", login.data.refreshToken);
         localStorage.setItem("SSO_client_id", login.data.user.id);
-        localStorage.setItem("SSO_username", login.data.user.username)
+        localStorage.setItem("SSO_username", login.data.user.username);
 
         if (login.data.user.user_status == 0) {
           vm.$router.push({ path: "/gantiPassword" });
         } else {
           vm.$router.push({ path: "/dashboard" });
         }
-      } else{
+      } else {
         console.log("error");
       }
     },
@@ -152,25 +163,34 @@ export default {
   /* color: aqua; */
 }
 
-.SSO{
+.SSO {
   font-size: 30px;
   line-height: 38px;
   font-weight: 600;
   color: #101828;
+  margin-bottom: 0px;
 }
 .title {
   margin: 0 auto;
   width: 100%;
   max-width: 40rem;
-  font-size: 4rem;
+  font-size: 16px;
+  line-height: 24px;
   text-align: center;
+  font-weight: 400;
+  color: #667085;
+}
+
+.alert{
+  font-size: 10px;
+  color: red;
 }
 
 .card {
   width: 90%;
   max-width: 440px;
   padding: 5rem 2.5rem;
-  height: 560px;
+  height: 696px;
 
   border-radius: 1rem;
   border: 1px solid transparent;
@@ -189,7 +209,7 @@ export default {
   width: 90%;
   max-width: 440px;
   padding: 5rem 2.5rem;
-  height: 560px;
+  height: 696px;
 
   border-radius: 1rem;
   border: 1px solid transparent;
@@ -210,19 +230,18 @@ export default {
 }
 .btn {
   width: 100%;
-  background-color: #027A48;
-  color: #FFFFFF;
+  background-color: #027a48;
+  color: #ffffff;
 }
-.register{
+.register {
   font-size: 14px;
 }
 
-.register-box{
+.register-box {
   justify-content: space-between;
 }
-.register-text{
-  color: #027A48;
-  
+.register-text {
+  color: #027a48;
 }
 /* .register:hover {
   transform: scale(1.1);
