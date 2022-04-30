@@ -1,22 +1,20 @@
 <template>
   <div
     class="container-fluid"
-    :style="{
-      'background-image': 'url(https://picsum.photos/seed/picsum/1000/1000)',
-    }"
   >
-    <h1 class="title text-center py-4">VERIFIKASI</h1>
+    <!-- <h1 class="title text-center py-4">VERIFIKASI</h1> -->
 
     <div class="row">
       <div class="col d-flex justify-content-center">
-        <div class="card cb1 m-2 text-center">
+        <div class="card cb1 m-2">
           <div class="card-body">
             <!-- <span class="card-number">01</span> -->
-
+            <img class="mb-4" src="@/assets/logo-poltekes.jpg" alt="">
             <!-- <h5 class="card-title mb-4">Masukkan</h5> -->
-            <h6 class="card-title mb-4">
-              Masukkan One Time Password di Email Anda
-            </h6>
+            <p class="card-title mb-4">
+              Verifikasi Kode Authentifikasi
+            </p>
+            <h5>Kirim ke {{data.username}}</h5>
 
             <!-- <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label"
@@ -31,7 +29,7 @@
               />
             </div> -->
             <div class="mb-3">
-              <label for="exampleInputpassword" class="form-label">OTP</label>
+              <!-- <label for="exampleInputpassword" class="form-label">OTP</label> -->
               <input
                 type="password"
                 class="form-control"
@@ -42,7 +40,7 @@
             </div>
             <div class="mb-3 mt-3">
               <div class="d-flex justify-content-center">
-                <div class="col-8">
+                <div class="col-12">
                   <button
                     href="#"
                     class="btn btn-outline-primary"
@@ -53,9 +51,10 @@
                 </div>
               </div>
             </div>
-            <div><span>Belum Mendapatkan Kode OTP ?</span></div>
-            <div class="kirim_ulang text-primary text-bold">
-              <span>Kirim Ulang OTP </span>
+            <!-- <div><span>Belum Mendapatkan Kode OTP ?</span></div> -->
+            <div >
+              <span class="kirim_ulang text-primary text-bold">Kirim Ulang Kode </span> 
+              <span>dalam {{countdown}} detik</span>
             </div>
           </div>
         </div>
@@ -73,6 +72,7 @@ export default {
         username: "",
         kode_otp: "",
       },
+      countdown:30
     };
   },
   computed: {
@@ -126,18 +126,17 @@ export default {
   /* color: aqua; */
 }
 
-.title {
-  margin: 0 auto;
-  width: 100%;
-  max-width: 40rem;
-  font-size: 4rem;
-  text-align: center;
+img{
+  width: 50px;
+  height: 50px;
 }
 
 .card {
   width: 90%;
-  max-width: 500px;
-  padding: 5rem 2.5rem;
+  max-width: 440px;
+  height: 492px;
+  padding: 2rem 2.5rem;
+  text-align: start;
 
   border-radius: 1rem;
   border: 1px solid transparent;
@@ -154,8 +153,10 @@ export default {
 
 .card:hover {
   width: 90%;
-  max-width: 500px;
-  padding: 5rem 2.5rem;
+  max-width: 440px;
+  height: 492px;
+  padding: 2rem 2.5rem;
+  text-align: start;
 
   border-radius: 1rem;
   border: 1px solid transparent;
@@ -174,8 +175,16 @@ export default {
   border-bottom-color: rgba(225, 225, 225, 0.1);
   border-right-color: rgba(225, 225, 225, 0.1);
 }
+
+.card-title{
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 38px;
+}
 .btn {
   width: 100%;
+  color: #FFFFFF;
+  background-color: #027A48;
 }
 .register:hover {
   font-size: 16px;

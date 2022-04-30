@@ -1,21 +1,19 @@
 <template>
   <div
     class="container-fluid"
-    :style="{
-      'background-image': 'url(https://picsum.photos/seed/picsum/1000/1000)',
-    }"
   >
-    <h1 class="title text-center py-4">LUPA PASSWORD</h1>
+    <!-- <h1 class="title text-center py-4">LUPA PASSWORD ?</h1> -->
 
     <div class="row">
       <div class="col d-flex justify-content-center">
-        <div class="card cb1 m-2 text-center">
+        <div class="card cb1 m-2">
           <div class="card-body">
             <!-- <span class="card-number">01</span> -->
+            <img  class="mb-4" src="@/assets/logo-poltekes.jpg" alt="">
 
-            <h5 class="card-title mb-4">Masukkan Email Anda</h5>
-            <h5 class="card-title mb-4">
-              Untuk Mendapatkan One Time Password Lupa Password
+            <h5 class="card-title mb-4">Lupa Password ?</h5>
+            <h5 class="card-instruction mb-4">
+              Masukkan Email anda yang terdaftar. Kami akan kirimkan Instruksi Ke Email
             </h5>
 
             <!-- <div class="mb-3">
@@ -31,24 +29,25 @@
               />
             </div> -->
             <div class="mb-3">
-              <label for="exampleInputpassword" class="form-label">Email</label>
+              <!-- <label for="exampleInputpassword" class="form-label">Email</label> -->
               <input
                 type="text"
                 class="form-control"
                 id="exampleInputpassword"
                 v-model="data.username"
+                placeholder="Email"
                 @keydown.enter.prevent="kirim()"
               />
             </div>
             <div class="mb-3 mt-3">
               <div class="d-flex justify-content-center">
-                <div class="col-8">
+                <div class="col-12">
                   <button
                     href="#"
                     class="btn btn-outline-primary"
                     @click="kirim()"
                   >
-                    DAPATKAN KODE OTP
+                    Kirim Permintaan Reset Password
                   </button>
                 </div>
               </div>
@@ -123,10 +122,17 @@ export default {
   text-align: center;
 }
 
+img{
+  height: 50px;
+  width: 50px;
+}
+
 .card {
   width: 90%;
-  max-width: 500px;
-  padding: 5rem 2.5rem;
+  max-width: 440px;
+  height: 492px;
+  padding: 2rem 2.5rem;
+  text-align: start;
 
   border-radius: 1rem;
   border: 1px solid transparent;
@@ -143,8 +149,10 @@ export default {
 
 .card:hover {
   width: 90%;
-  max-width: 500px;
-  padding: 5rem 2.5rem;
+  max-width: 440px;
+  height: 496px;
+  padding: 2rem 2.5rem;
+  text-align: start;
 
   border-radius: 1rem;
   border: 1px solid transparent;
@@ -163,8 +171,22 @@ export default {
   border-bottom-color: rgba(225, 225, 225, 0.1);
   border-right-color: rgba(225, 225, 225, 0.1);
 }
+
+
+.card-title{
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 38px;
+}
+.card-instruction{
+  font-weight: 200;
+  font-size: 12px;
+  line-height: 24px;
+}
 .btn {
   width: 100%;
+  background-color: #027A48;
+  color: #FFFFFF;
 }
 .register:hover {
   font-size: 16px;
@@ -182,7 +204,7 @@ input {
   height: 50px;
   font-size: 20px;
   align-items: center;
-  text-align: center;
+  text-align: start;
 }
 label {
   font-weight: 500;
