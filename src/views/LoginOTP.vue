@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="container-fluid"
-  >
+  <div class="container-fluid">
     <!-- <h1 class="title text-center py-4">VERIFIKASI</h1> -->
 
     <div class="row">
@@ -9,12 +7,10 @@
         <div class="card cb1 m-2">
           <div class="card-body">
             <!-- <span class="card-number">01</span> -->
-            <img class="mb-4" src="@/assets/logo-poltekes.jpg" alt="">
+            <img class="mb-4" src="@/assets/logo-poltekes.jpg" alt="" />
             <!-- <h5 class="card-title mb-4">Masukkan</h5> -->
-            <p class="card-title mb-4">
-              Verifikasi Kode Authentifikasi
-            </p>
-            <h5>Kirim ke {{data.username}}</h5>
+            <p class="card-title mb-4">Verifikasi Kode Authentifikasi</p>
+            <h5>Kirim ke {{ data.username }}</h5>
 
             <!-- <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label"
@@ -52,9 +48,11 @@
               </div>
             </div>
             <!-- <div><span>Belum Mendapatkan Kode OTP ?</span></div> -->
-            <div >
-              <span class="kirim_ulang text-primary text-bold">Kirim Ulang Kode </span> 
-              <span>dalam {{countdown}} detik</span>
+            <div>
+              <span class="kirim_ulang text-primary text-bold"
+                >Kirim Ulang Kode
+              </span>
+              <span>dalam {{ countdown }} detik</span>
             </div>
           </div>
         </div>
@@ -72,7 +70,7 @@ export default {
         username: "",
         kode_otp: "",
       },
-      countdown:30
+      countdown: 30,
     };
   },
   computed: {
@@ -126,7 +124,7 @@ export default {
   /* color: aqua; */
 }
 
-img{
+img {
   width: 50px;
   height: 50px;
 }
@@ -176,15 +174,15 @@ img{
   border-right-color: rgba(225, 225, 225, 0.1);
 }
 
-.card-title{
+.card-title {
   font-size: 22px;
   font-weight: 600;
   line-height: 38px;
 }
 .btn {
   width: 100%;
-  color: #FFFFFF;
-  background-color: #027A48;
+  color: #ffffff;
+  background-color: #027a48;
 }
 .register:hover {
   font-size: 16px;

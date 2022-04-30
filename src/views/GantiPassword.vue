@@ -98,12 +98,12 @@ import useVuelidate from "@vuelidate/core";
 export default {
   setup() {
     const state = reactive({
-      username:"",
+      username: "",
       password_lama: "",
       password_baru: "",
       password2: "",
     });
-    
+
     const rules = computed(() => {
       return {
         password_lama: {
@@ -130,12 +130,12 @@ export default {
   methods: {
     async login() {
       let vm = this;
-      vm.state.username = localStorage.getItem('SSO_username')
+      vm.state.username = localStorage.getItem("SSO_username");
       let login = await vm.$axios.post("users/changepassword", vm.state);
       console.log(login);
-      if(login.status == 200){
-        console.log('ok')
-        this.$router.push({path:"/login"})
+      if (login.status == 200) {
+        console.log("ok");
+        this.$router.push({ path: "/login" });
       }
     },
     async recaptcha() {

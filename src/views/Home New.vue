@@ -105,14 +105,14 @@ export default {
         localStorage.setItem("SSO_access_token", login.data.accessToken);
         localStorage.setItem("SSO_refresh_token", login.data.refreshToken);
         localStorage.setItem("SSO_client_id", login.data.user.id);
-        localStorage.setItem("SSO_username", login.data.user.username)
+        localStorage.setItem("SSO_username", login.data.user.username);
 
         if (login.data.user.user_status == 0) {
           vm.$router.push({ path: "/gantiPassword" });
         } else {
           vm.$router.push({ path: "/dashboard" });
         }
-      } else{
+      } else {
         console.log("error");
       }
     },

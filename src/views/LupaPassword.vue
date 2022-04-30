@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="container-fluid"
-  >
+  <div class="container-fluid">
     <!-- <h1 class="title text-center py-4">LUPA PASSWORD ?</h1> -->
 
     <div class="row">
@@ -9,11 +7,12 @@
         <div class="card cb1 m-2">
           <div class="card-body">
             <!-- <span class="card-number">01</span> -->
-            <img  class="mb-4" src="@/assets/logo-poltekes.jpg" alt="">
+            <img class="mb-4" src="@/assets/logo-poltekes.jpg" alt="" />
 
             <h5 class="card-title mb-4">Lupa Password ?</h5>
             <h5 class="card-instruction mb-4">
-              Masukkan Email anda yang terdaftar. Kami akan kirimkan Instruksi Ke Email
+              Masukkan Email anda yang terdaftar. Kami akan kirimkan Instruksi
+              Ke Email
             </h5>
 
             <!-- <div class="mb-3">
@@ -122,7 +121,7 @@ export default {
   text-align: center;
 }
 
-img{
+img {
   height: 50px;
   width: 50px;
 }
@@ -172,21 +171,20 @@ img{
   border-right-color: rgba(225, 225, 225, 0.1);
 }
 
-
-.card-title{
+.card-title {
   font-weight: 600;
   font-size: 30px;
   line-height: 38px;
 }
-.card-instruction{
+.card-instruction {
   font-weight: 200;
   font-size: 12px;
   line-height: 24px;
 }
 .btn {
   width: 100%;
-  background-color: #027A48;
-  color: #FFFFFF;
+  background-color: #027a48;
+  color: #ffffff;
 }
 .register:hover {
   font-size: 16px;

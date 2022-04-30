@@ -1,11 +1,7 @@
 <template>
-  <div
-    class="container-fluid"
-    :style="{
-      'background-image': 'url(https://picsum.photos/seed/picsum/1000/1000)',
-    }"
-  >
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <div><Header /></div>
+  <div class="container-fluid">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
       <strong>Welcome!</strong> Nama Mahasiswa/Siswi
       <button
         type="button"
@@ -103,7 +99,11 @@
   </div>
 </template>
 <script>
+import Header from "@/components/header.vue";
 export default {
+  components: {
+    Header,
+  },
   setup() {},
 };
 </script>

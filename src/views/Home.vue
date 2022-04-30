@@ -17,7 +17,8 @@
                   class="alert alert-danger alert-dismissible fade show"
                   role="alert"
                 >
-                  <strong>Perhatian!</strong> Username salah atau tidak terdaftar
+                  <strong>Perhatian!</strong> Username salah atau tidak
+                  terdaftar
                   <!-- <button
                     type="button"
                     class="close"
@@ -181,7 +182,7 @@ export default {
   color: #667085;
 }
 
-.alert{
+.alert {
   font-size: 10px;
   color: red;
 }
