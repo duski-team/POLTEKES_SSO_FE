@@ -1,6 +1,6 @@
 <template>
   <div><Header /></div>
-  <div class="container-fluid">
+  <div class="container">
     <div class="alert alert-success alert-dismissible fade show" role="alert">
       <strong>Welcome!</strong> Nama Mahasiswa/Siswi
       <button
@@ -10,74 +10,8 @@
         aria-label="Close"
       ></button>
     </div>
-    <section class="glass">
-      <div class="dashboard">
-        <div class="user">
-          <img
-            src="https://picsum.photos/200/300"
-            alt=""
-            style="height: 100px; width: 100px"
-          />
-          <h3>Nama Mahasiswa</h3>
-          <p>Mahasiswa</p>
-        </div>
-        <div class="biodatas">
-          <div class="biodata">
-            <img src="https://picsum.photos/25/25" alt="" />
-            <h4>Status</h4>
-          </div>
-          <div class="biodata">
-            <img src="https://picsum.photos/25/25" alt="" />
-            <h4>NIM</h4>
-          </div>
-          <div class="biodata">
-            <img src="https://picsum.photos/25/25" alt="" />
-            <h4>Email Poltekes</h4>
-          </div>
-          <div class="biodata">
-            <img src="https://picsum.photos/25/25" alt="" />
-            <h4>Email User</h4>
-          </div>
-          <div class="biodata">
-            <img src="https://picsum.photos/25/25" alt="" />
-            <h4>Kontak</h4>
-          </div>
-          <div class="biodata">
-            <img src="https://picsum.photos/25/25" alt="" />
-            <h4>Data</h4>
-          </div>
-        </div>
-        <div class="options">
-          <h2>Ubah</h2>
-          <img src="https://picsum.photos/50/50" alt="" />
-        </div>
-      </div>
-      <div class="tools">
-        <div class="status">
-          <h2>Status</h2>
-        </div>
-        <div class="tool">
-          <div class="card">
-            <img src="" alt="" />
-            <div class="tool-info">Information</div>
-          </div>
-        </div>
-        <div class="tool">
-          <div class="card">
-            <img src="" alt="" />
-            <div class="tool-info">Information</div>
-          </div>
-        </div>
-        <div class="tool">
-          <div class="card">
-            <img src="" alt="" />
-            <div class="tool-info">Information</div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <div class="row mt-3 mb-3">
+    <!-- <div class="row mt-3 mb-3">
       <div class="col-md-12">
         <div class="divider">
           <h3>Aplikasi & Layanan</h3>
@@ -95,7 +29,51 @@
       <div class="col-md-3 col-sm-4 mb-3"><div class="card app"></div></div>
       <div class="col-md-3 col-sm-4 mb-3"><div class="card app"></div></div>
       <div class="col-md-3 col-sm-4 mb-3"><div class="card app"></div></div>
-    </div>
+    </div> -->
+  </div>
+  <div class="container">
+    <section class="glass">
+      <div class="dashboard">
+        <div class="user">
+          <div>
+            <img class="foto" src="https://picsum.photos/100/100" alt="" />
+          </div>
+          <div class="nama">
+            <p>Nama Mahasiswa</p>
+          </div>
+          <div class="role">
+            <p>Role</p>
+            <p>|</p>
+            <p>NIM</p>
+          </div>
+          <div>
+            <div type="button" class="btn btn-lihat">
+              Lihat Selengkapnya
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tools">
+        <!-- <div class="tool">
+          <div class="card">
+            <img src="" alt="" />
+            <div class="tool-info">Information</div>
+          </div>
+        </div>
+        <div class="tool">
+          <div class="card">
+            <img src="" alt="" />
+            <div class="tool-info">Information</div>
+          </div>
+        </div>
+        <div class="tool">
+          <div class="card">
+            <img src="" alt="" />
+            <div class="tool-info">Information</div>
+          </div>
+        </div> -->
+      </div>
+    </section>
   </div>
 </template>
 <script>
@@ -149,6 +127,7 @@ export default {
   border-bottom-color: rgba(225, 225, 225, 0.1);
   border-right-color: rgba(225, 225, 225, 0.1);
   display: flex;
+  justify-content: space-between;
 }
 
 .glass:hover {
@@ -174,25 +153,75 @@ export default {
 }
 
 .dashboard {
-  flex: 1;
-  min-height: 50vh;
+  width: 280px;
+  height: 349px;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
-  text-align: center;
-  background: linear-gradient(
-    to right bottom,
-    rgba(255, 255, 255, 0.7),
-    rgba(255, 255, 255, 0.3)
-  );
-  border-radius: 2rem;
+  padding-top: 24px;
+  background-color: #ffffff;
+  border: 1px solid #eaecf0;
+  box-sizing: border-box;
+  /* Shadow/sm */
+
+  box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
+    0px 1px 2px rgba(16, 24, 40, 0.06);
+  border-radius: 8px;
 }
+
 .user {
-  margin: 3rem;
+  /* margin: 3rem; */
+  display: flex;
+  flex-direction: column;
+
 }
+
+.nama {
+  display: flex;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 600;
+}
+
+.role {
+  display: flex;
+  justify-content: center;
+  font-size: 15px;
+  line-height: 24px;
+
+}
+
+.btn-lihat{
+  background-color: #027A48;
+  color: #ffffff;
+}
+
 .tools {
-  flex: 2;
-  min-height: 60vh;
+  width: 906px;
+  height: 349pxF;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px;
+  gap: 24px;
+
+  width: 906px;
+  height: 349px;
+  left: 422px;
+  top: 163px;
+
+  /* White */
+
+  background: #ffffff;
+  /* Gray/200 */
+
+  border: 1px solid #eaecf0;
+  box-sizing: border-box;
+  /* Shadow/sm */
+
+  box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
+    0px 1px 2px rgba(16, 24, 40, 0.06);
+  border-radius: 8px;
 }
 
 .tool {
@@ -224,15 +253,8 @@ export default {
   padding: 0rem 2rem;
 }
 
-.options {
-  background: linear-gradient(
-    to right bottom,
-    rgba(255, 255, 255, 0.9),
-    rgba(255, 255, 255, 0.3)
-  );
-  color: black;
-  padding: 1rem;
-}
+/* .options {
+} */
 
 .divider {
   width: 100%;

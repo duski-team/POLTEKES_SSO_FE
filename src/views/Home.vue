@@ -19,14 +19,12 @@
                 >
                   <strong>Perhatian!</strong> Username salah atau tidak
                   terdaftar
-                  <!-- <button
+                  <button
                     type="button"
-                    class="close"
-                    data-dismiss="alert"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
                     aria-label="Close"
-                  >
-                    <span aria-hidden="true">X</span>
-                  </button> -->
+                  ></button>
                 </div>
               </div>
               <input
