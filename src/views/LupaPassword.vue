@@ -39,6 +39,7 @@
                 v-model="data.username"
                 @keydown.enter.prevent="kirim()"
               />
+              <span v-if="showing" class="text-danger fst-italic mt-2">"{{ msg }}</span>
             </div>
             <div class="mb-3 mt-3">
               <div class="d-flex justify-content-center">
@@ -68,6 +69,8 @@ export default {
       data: {
         username: "",
       },
+      msg: "",
+      showing: false,
     };
   },
   methods: {
@@ -76,9 +79,13 @@ export default {
       let login = await vm.$axios.post("users/kirimUlangOTP", vm.data);
       console.log(login);
       if (login.data.status == 201) {
-        console.log(login.data.message);
+        vm.msg = login.data.message;
+        vm.showing = true;
+        setTimeout(() => {
+          vm.showing = false;
+        }, 4000);
       } else {
-        localStorage.setItem("username_lupa", this.data.username);
+        localStorage.setItem("username", this.data.username);
         this.$router.push({ path: "/OTP" });
       }
     },

@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import qs from "qs";
+// import qs from "qs";
 
 export default {
   name: "Home",
@@ -90,31 +90,33 @@ export default {
         client_id: "a5e1397c-c227-42c4-b188-0297f9afa990",
         client_secret: "SSO",
       },
+      msg:"",
+      show:false,
     };
   },
   methods: {
     async login() {
       let vm = this;
-      let login = await vm.$axios.post("oauth/login", qs.stringify(vm.data), {
-        headers: {
-          "content-type": "application/x-www-form-urlencoded;charset=utf-8",
-        },
-      });
-      console.log(login);
-      if (login.status == 200) {
-        localStorage.setItem("SSO_access_token", login.data.accessToken);
-        localStorage.setItem("SSO_refresh_token", login.data.refreshToken);
-        localStorage.setItem("SSO_client_id", login.data.user.id);
-        localStorage.setItem("SSO_username", login.data.user.username)
-
-        if (login.data.user.user_status == 0) {
-          vm.$router.push({ path: "/gantiPassword" });
-        } else {
-          vm.$router.push({ path: "/dashboard" });
-        }
-      } else{
-        console.log("error");
-      }
+      let login = await vm.$axios
+        .post("oauth/login", vm.qs.stringify(vm.data), {
+          headers: {
+            "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          },
+        })
+          console.log(login)
+          if (login.status == 200) {
+            localStorage.setItem("SSO_access_token", login.data.accessToken);
+            localStorage.setItem("SSO_refresh_token", login.data.refreshToken);
+            localStorage.setItem("SSO_client_id", login.data.user.id);
+            localStorage.setItem("SSO_username", login.data.user.username);
+            if (login.data.user.user_status == 0) {
+              vm.$router.push({ path: "/gantiPassword" });
+            } else {
+              vm.$router.push({ path: "/dashboard" });
+            }
+          } else {
+            console.log("error");
+          }
     },
     async recaptcha() {
       // (optional) Wait until recaptcha has been loaded.
