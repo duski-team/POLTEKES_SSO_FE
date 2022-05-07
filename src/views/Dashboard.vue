@@ -1,15 +1,7 @@
 <template>
   <div><Header /></div>
   <div class="container">
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      <strong>Welcome!</strong> Nama Mahasiswa/Siswi
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-      ></button>
-    </div>
+    
 
     <!-- <div class="row mt-3 mb-3">
       <div class="col-md-12">
@@ -32,6 +24,15 @@
     </div> -->
   </div>
   <div class="container">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>Welcome!</strong> Nama Mahasiswa/Siswi
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
     <section class="glass">
       <div class="dashboard">
         <div class="user">
@@ -52,38 +53,200 @@
         </div>
         <div class="line"></div>
         <div class="jurusan-wrapper mt-3">
-          <h5 style="line-height:14px">Jurusan</h5>
-          <p style="line-height:14px;font-size:14px;">Prodi Jurusan</p>
+          <h5 style="line-height: 14px">Jurusan</h5>
+          <p style="line-height: 14px; font-size: 14px">Prodi Jurusan</p>
         </div>
       </div>
-      <div class="tools">
-        <div class="tool">
-          <div class="card">
-            <img src="" alt="" />
-            <div class="tool-info">Information</div>
+      <div class="tools text-start">
+        <div class="box-info">
+          <div class="box-title mb-3" style="color: #027a48">Resource</div>
+          <div class="box-content">
+            <div>
+              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
+            </div>
+            <div>
+              <h6>Lorem</h6>
+              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+            </div>
+          </div>
+
+          <div class="box-content">
+            <div>
+              <img class="icons" src="@/assets/Icon2.jpg" alt="" />
+            </div>
+            <div>
+              <h6>Lorem</h6>
+              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+            </div>
+          </div>
+          <div class="box-content">
+            <div>
+              <img class="icons" src="@/assets/Icon3.jpg" alt="" />
+            </div>
+            <div>
+              <h6>Lorem</h6>
+              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+            </div>
           </div>
         </div>
-        <div class="tool">
-          <div class="card">
-            <img src="" alt="" />
-            <div class="tool-info">Information</div>
+        <div class="box-info">
+          <div class="box-title mb-3" style="color: #027a48">
+            Informasi Baru
           </div>
-        </div>
-        <div class="tool">
-          <div class="card">
-            <img src="" alt="" />
-            <div class="tool-info">Information</div>
+          <div class="box-content2">
+            <div>
+              <img class="icons2" src="https://picsum.photos/100/100" alt="" />
+            </div>
+            <div>
+              <h6>Lorem</h6>
+              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+            </div>
+          </div>
+          <div class="box-content2">
+            <div>
+              <img class="icons2" src="https://picsum.photos/100/101" alt="" />
+            </div>
+            <div>
+              <h6>Lorem</h6>
+              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+            </div>
+          </div>
+          <div class="box-title mb-3" style="color: #027a48">
+            Baca Informasi ->
           </div>
         </div>
       </div>
     </section>
+    <section class="fas-wrapper">
+      <div class="app-title d-flex">
+        <p>Fasilitas</p>
+        /
+        <p>facilities</p>
+      </div>
+      <div class="row">
+        <div class="col-md-3 col-sm-4 mb-3">
+          <div class="cards">
+            <div>
+              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
+            </div>
+            <div>
+              <h6>Lorem</h6>
+              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-4 mb-3">
+          <div class="cards">
+            <div>
+              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
+            </div>
+            <div>
+              <h6>Lorem</h6>
+              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-4 mb-3">
+          <div class="cards">
+            <div>
+              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
+            </div>
+            <div>
+              <h6>Lorem</h6>
+              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-4 mb-3">
+          <div class="cards">
+            <div>
+              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
+            </div>
+            <div>
+              <h6>Lorem</h6>
+              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+     <section class="fas-wrapper">
+      <div class="app-title d-flex">
+        <p>Aplikasi & Layanan</p>
+        /
+        <p>applications & services</p>
+      </div>
+      <div class="row">
+        <div class="col-md-3 col-sm-4 mb-3">
+          <div class="cards">
+            <div>
+              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
+            </div>
+            <div>
+              <h6>Lorem</h6>
+              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-4 mb-3">
+          <div class="cards">
+            <div>
+              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
+            </div>
+            <div>
+              <h6>Lorem</h6>
+              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-4 mb-3">
+          <div class="cards">
+            <div>
+              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
+            </div>
+            <div>
+              <h6>Lorem</h6>
+              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-4 mb-3">
+          <div class="cards">
+            <div>
+              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
+            </div>
+            <div>
+              <h6>Lorem</h6>
+              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- <section>
+      <div class="glass">
+        <div class="app-title d-flex">
+          <p>Aplikasi & Layanan</p>
+          /
+          <p>applications & services</p>
+        </div>
+        <div class="fas-wrapper">
+          <div class="cards"></div>
+        </div>
+      </div>
+    </section> -->
+  </div>
+  <div>
+    <Footer />
   </div>
 </template>
 <script>
 import Header from "@/components/header.vue";
+import Footer from "@/components/footer.vue";
 export default {
   components: {
     Header,
+    Footer
   },
   data() {
     return {
@@ -116,13 +279,11 @@ export default {
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-.container-fluid {
+.container {
   /* background-image: url("https://picsum.photos/seed/picsum/200/300"); */
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
-  min-height: 100vh;
-  /* background-color: red; */
   /* color: aqua; */
 }
 
@@ -137,43 +298,35 @@ export default {
 .glass {
   width: 100%;
   padding: 1rem 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+.fas-wrapper{
+  width: 100%;
+  padding: 1rem 0.5rem;
+}
 
-  /* border-radius: 1rem;
-  border: 1px solid transparent;
-  background-color: rgba(225, 225, 225, 0.1);
+/* .glass:hover {
+  width: 100%;
+  padding: 1rem 0.5rem;
 
-  backdrop-filter: blur(1rem);
-  box-shadow: 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.5);
+  border-radius: 1rem; */
+/* border: 1px solid transparent;
+  color: black; */
+/* background-color: linear-gradient(
+    to right bottom,
+    rgba(225, 225, 225, 0.5),
+    rgba(225, 225, 225, 0.1)
+  ); */
 
+/* backdrop-filter: blur(1rem); */
+/* box-shadow: 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.2); */
+/* 
   border-top-color: rgba(225, 225, 225, 0.5);
   border-left-color: rgba(225, 225, 225, 0.5);
   border-bottom-color: rgba(225, 225, 225, 0.1);
   border-right-color: rgba(225, 225, 225, 0.1); */
-  display: flex;
-  justify-content: space-between;
-}
-
-.glass:hover {
-  width: 100%;
-  padding: 1rem 0.5rem;
-
-  border-radius: 1rem;
-  border: 1px solid transparent;
-  color: black;
-  background-color: linear-gradient(
-    to right bottom,
-    rgba(225, 225, 225, 0.5),
-    rgba(225, 225, 225, 0.1)
-  );
-
-  backdrop-filter: blur(1rem);
-  box-shadow: 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.5);
-
-  border-top-color: rgba(225, 225, 225, 0.5);
-  border-left-color: rgba(225, 225, 225, 0.5);
-  border-bottom-color: rgba(225, 225, 225, 0.1);
-  border-right-color: rgba(225, 225, 225, 0.1);
-}
+/* } */
 
 .dashboard {
   width: 280px;
@@ -249,47 +402,66 @@ export default {
   border-right-color: rgba(225, 225, 225, 0.1);
 }
 
-.jurusan-wrapper{
+.jurusan-wrapper {
   color: #667085;
   display: flex;
   flex-direction: column;
-  
 }
 
 .tools {
   width: 906px;
   height: 349px;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 24px;
   gap: 24px;
-
-  width: 806px;
+  width: 956px;
   height: 349px;
   left: 422px;
   top: 163px;
-
   /* White */
-
   background: #ffffff;
   /* Gray/200 */
-
   border: 1px solid #eaecf0;
   box-sizing: border-box;
   /* Shadow/sm */
-
   box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
     0px 1px 2px rgba(16, 24, 40, 0.06);
   border-radius: 8px;
 }
+.box-info {
+  width: 80%;
+  /* background-color: #027a48; */
+  padding: 2rem;
+  height: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+}
 
-.tool {
+.box-content {
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  margin: 5rem;
-  /* background-color: red; */
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.box-content2 {
+  display: flex;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.icons {
+  width: 25px;
+  height: 25px;
+  margin-right: 15px;
+}
+
+.icons2 {
+  margin-right: 15px;
+  width: 144px;
+  height: 90px;
+  border-radius: 15px;
+}
+h6 {
+  font-weight: 700;
 }
 
 .biodata {
@@ -301,50 +473,11 @@ export default {
   /* background-color: red; */
 }
 
-.card {
+.cards {
   display: flex;
-  background: linear-gradient(
-    to left top,
-    rgba(255, 255, 255, 1),
-    rgba(255, 255, 255, 0.8)
-  );
-  box-shadow: 6px 6px 20px rgba(255, 255, 255, 0.3);
-}
-.biodata h2 {
-  padding: 0rem 2rem;
-}
-
-/* .options {
-} */
-
-.divider {
-  width: 100%;
-  /* max-width: 400px; */
-  padding: 1rem 0.5rem;
-  max-height: 60px;
-
-  border-radius: 1rem;
-  border: 1px solid transparent;
-  background-color: rgba(225, 225, 225, 0.5);
-
-  backdrop-filter: blur(1rem);
-  box-shadow: 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.5);
-
-  border-top-color: rgba(225, 225, 225, 0.5);
-  border-left-color: rgba(225, 225, 225, 0.5);
-  border-bottom-color: rgba(225, 225, 225, 0.1);
-  border-right-color: rgba(225, 225, 225, 0.1);
-}
-
-.card.app {
-  /* color: aqua; */
-  font-size: 35px;
-  height: 100px;
-  letter-spacing: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
+  padding: 20px;
+  text-align: start;
+  background-color: #ffffff;
   border-radius: 1rem;
   border: 1px solid transparent;
   background: linear-gradient(
@@ -354,7 +487,33 @@ export default {
   );
 
   backdrop-filter: blur(1rem);
-  box-shadow: 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.5);
+  box-shadow: 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.2);
+
+  border-top-color: rgba(225, 225, 225, 0.5);
+  border-left-color: rgba(225, 225, 225, 0.5);
+  border-bottom-color: rgba(225, 225, 225, 0.1);
+  border-right-color: rgba(225, 225, 225, 0.1);
+}
+
+.biodata h2 {
+  padding: 0rem 2rem;
+}
+
+/* .options {
+} */
+
+.card {
+  display: flex;
+  border-radius: 1rem;
+  border: 1px solid transparent;
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.3)
+  );
+
+  backdrop-filter: blur(1rem);
+  box-shadow: 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.1);
 
   border-top-color: rgba(225, 225, 225, 0.5);
   border-left-color: rgba(225, 225, 225, 0.5);

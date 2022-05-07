@@ -9,10 +9,9 @@
             <!-- <span class="card-number">01</span> -->
             <img src="@/assets/logo-poltekes.jpg" alt="" />
 
-            <h5 class="SSO">Single Sign On (SSO)</h5>
+            <h5 class="SSO mb-4">Single Sign On (SSO)</h5>
             <h5 class="card-title mb-4">Poltekes Semarang</h5>
-            <div class="mb-3">
-              <div>
+            <div v-if="show">
                 <div
                   class="alert alert-danger alert-dismissible fade show"
                   role="alert"
@@ -27,6 +26,7 @@
                   ></button>
                 </div>
               </div>
+            <div class="mb-3 mt-4">
               <input
                 type="email"
                 class="form-control"
@@ -110,25 +110,32 @@ export default {
   methods: {
     async login() {
       let vm = this;
-      let login = await vm.$axios.post("oauth/login", qs.stringify(vm.data), {
-        headers: {
-          "content-type": "application/x-www-form-urlencoded;charset=utf-8",
-        },
-      });
-      console.log(login);
-      if (login.status == 200) {
-        localStorage.setItem("SSO_access_token", login.data.accessToken);
-        localStorage.setItem("SSO_refresh_token", login.data.refreshToken);
-        localStorage.setItem("SSO_client_id", login.data.user.id);
-        localStorage.setItem("SSO_username", login.data.user.username);
+      try {
+        let login = await vm.$axios.post("oauth/login", qs.stringify(vm.data), {
+          headers: {
+            "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          },
+        });
+        console.log(login);
+        if (login.status == 200) {
+          localStorage.setItem("SSO_access_token", login.data.accessToken);
+          localStorage.setItem("SSO_refresh_token", login.data.refreshToken);
+          localStorage.setItem("SSO_client_id", login.data.user.id);
+          localStorage.setItem("SSO_username", login.data.user.username);
 
-        if (login.data.user.user_status == 0) {
-          vm.$router.push({ path: "/gantiPassword" });
+          if (login.data.user.user_status == 0) {
+            vm.$router.push({ path: "/gantiPassword" });
+          } else {
+            vm.$router.push({ path: "/dashboard" });
+          }
         } else {
-          vm.$router.push({ path: "/dashboard" });
+          console.log("error");
         }
-      } else {
-        console.log("error");
+      } catch (error) {
+        if(error){
+          this.show = true
+          
+        }
       }
     },
     async recaptcha() {
@@ -198,7 +205,7 @@ export default {
   background-color: rgba(225, 225, 225, 0.1);
 
   backdrop-filter: blur(1rem);
-  box-shadow: 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.5);
+  box-shadow: 1.3rem 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.5);
 
   /* border-top-color: rgba(225, 225, 225, 0.5);
   border-left-color: rgba(225, 225, 225, 0.5);
@@ -222,7 +229,7 @@ export default {
   );
 
   backdrop-filter: blur(1rem);
-  box-shadow: 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.5);
+  box-shadow: 1.3rem 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.5);
 
   /* border-top-color: rgba(225, 225, 225, 0.5);
   border-left-color: rgba(225, 225, 225, 0.5);
