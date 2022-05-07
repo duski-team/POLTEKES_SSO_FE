@@ -1,8 +1,8 @@
 import axios from "axios";
 
-let token = localStorage.getItem('SSO_access_token')
+let token = localStorage.getItem("SSO_access_token");
 
-axios.defaults.headers.common = {'Authorization': `Bearer ${token}`}
+axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
 
 const ip = "http://localhost:8869";
 

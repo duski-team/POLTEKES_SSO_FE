@@ -1,16 +1,8 @@
 <template>
-  <div
-    class="container-fluid"
-    :style="{
-      'background-image': 'url(https://picsum.photos/seed/picsum/1000/1000)',
-    }"
-  >
-    <div
-      v-if="biodata != ''"
-      class="alert alert-warning alert-dismissible fade show"
-      role="alert"
-    >
-      <strong>Welcome!</strong> {{ biodata.nama_lengkap_users }}
+  <div><Header /></div>
+  <div class="container">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>Welcome!</strong> Nama Mahasiswa/Siswi
       <button
         type="button"
         class="btn-close"
@@ -18,56 +10,53 @@
         aria-label="Close"
       ></button>
     </div>
+
+    <!-- <div class="row mt-3 mb-3">
+      <div class="col-md-12">
+        <div class="divider">
+          <h3>Aplikasi & Layanan</h3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 col-sm-4 mb-3">
+        <div class="card app"></div>
+      </div>
+      <div class="col-md-3 col-sm-4 mb-3">
+        <div class="card app"></div>
+      </div>
+      <div class="col-md-3 col-sm-4 mb-3"><div class="card app"></div></div>
+      <div class="col-md-3 col-sm-4 mb-3"><div class="card app"></div></div>
+      <div class="col-md-3 col-sm-4 mb-3"><div class="card app"></div></div>
+      <div class="col-md-3 col-sm-4 mb-3"><div class="card app"></div></div>
+    </div> -->
+  </div>
+  <div class="container">
     <section class="glass">
       <div class="dashboard">
         <div class="user">
-          <img
-            src="https://picsum.photos/200/300"
-            alt=""
-            style="height: 100px; width: 100px"
-          />
           <div>
-            <h3>{{ biodata.nama_lengkap_users }}</h3>
+            <img class="foto mb-3" src="https://picsum.photos/100/100" alt="" />
           </div>
-          <div>
-            <p v-if="biodata">{{ biodata.role.toUpperCase }}</p>
+          <div class="nama">
+            <p>Nama Mahasiswa</p>
+          </div>
+          <div class="role">
+            <p>Role</p>
+            <p>|</p>
+            <p>NIM</p>
+          </div>
+          <div class="btn-wrapper mb-2">
+            <div type="button" class="btn btn-lihat">Lihat Selengkapnya</div>
           </div>
         </div>
-        <div class="biodatas">
-          <div class="biodata">
-            <i
-              class="bi-alarm"
-              style="font-size: 2rem; color: cornflowerblue"
-            ></i>
-            <h5>Status</h5>
-          </div>
-          <div class="biodata">
-            <h5>NIM</h5>
-            <h5>{{ biodata.identity }}</h5>
-          </div>
-          <div class="biodata">
-            <h5>Email</h5>
-            <h5>{{ biodata.username }}</h5>
-          </div>
-          <div class="biodata">
-            <h5>Kontak</h5>
-            <h5>{{ biodata.no_hp_users }}</h5>
-          </div>
-          <div class="biodata">
-            <h5>Data</h5>
-            <h5></h5>
-          </div>
-        </div>
-        <div class="options">
-          <h2>Ubah</h2>
-          <h5></h5>
-          <img src="https://picsum.photos/50/50" alt="" />
+        <div class="line"></div>
+        <div class="jurusan-wrapper mt-3">
+          <h5 style="line-height:14px">Jurusan</h5>
+          <p style="line-height:14px;font-size:14px;">Prodi Jurusan</p>
         </div>
       </div>
       <div class="tools">
-        <div class="status">
-          <h2>Status</h2>
-        </div>
         <div class="tool">
           <div class="card">
             <img src="" alt="" />
@@ -88,125 +77,33 @@
         </div>
       </div>
     </section>
-
-    <div class="row mt-3 mb-3">
-      <div class="col-md-12">
-        <div class="divider">
-          <h3>Aplikasi & Layanan</h3>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <!-- <div class="col-md-3 col-sm-4 mb-3">
-        <div class="card app"></div>
-      </div>
-      <div class="col-md-3 col-sm-4 mb-3">
-        <div class="card app"></div>
-      </div> -->
-      <div
-        v-for="item in client"
-        :key="item.client_id"
-        class="col-md-3 col-sm-4 mb-3"
-      >
-        <div class="card app" @click="go(item)">
-          <div>{{ item.nama_client.toUpperCase() }}</div>
-        </div>
-      </div>
-      <!-- <div class="col-md-3 col-sm-4 mb-3"><div class="card app"></div></div>
-      <div class="col-md-3 col-sm-4 mb-3"><div class="card app"></div></div>
-      <div class="col-md-3 col-sm-4 mb-3"><div class="card app"></div></div> -->
-    </div>
-  </div>
-  <div
-    v-if="popup != ''"
-    class="modal fade"
-    id="modal-popup"
-    tabindex="-1"
-    aria-labelledby="modal-popupLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            {{ popup[0].judul_pop_up }}
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          {{ popup.text_pop_up }}
-        </div>
-        <div class="modal-footer">
-          <center>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-          </center>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 <script>
-import bootstrap from "bootstrap/dist/js/bootstrap.js";
+import Header from "@/components/header.vue";
 export default {
+  components: {
+    Header,
+  },
   data() {
     return {
-      userData: "",
       biodata: "",
-      client: "",
-      popup: [],
     };
   },
   mounted() {
-    this.getDatas();
+    this.getData();
   },
   methods: {
-    async getDatas() {
+    async getData() {
       let vm = this;
-
       try {
-        let user = await vm.$axios.get(
-          "users/detailsById/" + localStorage.getItem("SSO_client_id")
+        let biodata = await vm.$axios.get(
+          "users/detailById/" + localStorage.getItem("SSO_client_id")
         );
-        vm.biodata = user.data.data[0];
-
-        let client = await vm.$axios.get("client/list");
-
-        vm.client = client.data.data;
-
-        let popup = await vm.$axios.get("pop_up/list");
-
-        vm.popup = popup.data.data;
-        if (popup.data.data) {
-          let x = new bootstrap.Modal(
-            document.getElementById("modal-popup"),
-            {}
-          );
-          x.show();
-        }
+        vm.biodata = biodata.data.data[0];
       } catch (error) {
-        console.log(error.response.data.message)
-        this.$router.push({ path: "/" });
-        if (error.response.data.status == 401) {
-          console.log('sesi telah usai silahkan login ulang')
-          this.$router.push({ path: "/" });
-        }
+        console.log(error.response);
       }
-    },
-    go(x) {
-      console.log(x);
-      window.open(x.redirect_uri);
     },
   },
 };
@@ -241,7 +138,7 @@ export default {
   width: 100%;
   padding: 1rem 0.5rem;
 
-  border-radius: 1rem;
+  /* border-radius: 1rem;
   border: 1px solid transparent;
   background-color: rgba(225, 225, 225, 0.1);
 
@@ -251,8 +148,9 @@ export default {
   border-top-color: rgba(225, 225, 225, 0.5);
   border-left-color: rgba(225, 225, 225, 0.5);
   border-bottom-color: rgba(225, 225, 225, 0.1);
-  border-right-color: rgba(225, 225, 225, 0.1);
+  border-right-color: rgba(225, 225, 225, 0.1); */
   display: flex;
+  justify-content: space-between;
 }
 
 .glass:hover {
@@ -278,25 +176,112 @@ export default {
 }
 
 .dashboard {
-  flex: 1;
-  min-height: 50vh;
+  width: 280px;
+  height: 349px;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
-  text-align: center;
-  background: linear-gradient(
-    to right bottom,
-    rgba(255, 255, 255, 0.7),
-    rgba(255, 255, 255, 0.3)
-  );
-  border-radius: 2rem;
+  padding-top: 24px;
+  background-color: #ffffff;
+  border: 1px solid #eaecf0;
+  box-sizing: border-box;
+  /* Shadow/sm */
+
+  box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
+    0px 1px 2px rgba(16, 24, 40, 0.06);
+  border-radius: 8px;
 }
+
 .user {
-  margin: 3rem;
+  /* margin: 3rem; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  /* background-color: #027a48; */
 }
+
+.nama {
+  display: flex;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 600;
+}
+
+.foto {
+  border-radius: 30px;
+}
+
+.role {
+  display: flex;
+  justify-content: center;
+  font-size: 15px;
+  line-height: 24px;
+}
+
+.btn-wrapper {
+  width: 100%;
+  /* background-color: black; */
+}
+
+.btn-lihat {
+  background-color: #027a48;
+  color: #ffffff;
+  height: 30px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: 200;
+  padding: 4px;
+  width: 100%;
+  border-radius: 11px;
+}
+.line {
+  width: 100%;
+  border: 2px solid transparent;
+  background-color: rgba(225, 225, 225, 0.5);
+
+  backdrop-filter: blur(1rem);
+  /* box-shadow: 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.5); */
+
+  border-top-color: rgba(225, 225, 225, 0.5);
+  border-left-color: rgba(225, 225, 225, 0.5);
+  border-bottom-color: rgba(225, 225, 225, 0.1);
+  border-right-color: rgba(225, 225, 225, 0.1);
+}
+
+.jurusan-wrapper{
+  color: #667085;
+  display: flex;
+  flex-direction: column;
+  
+}
+
 .tools {
-  flex: 2;
-  min-height: 60vh;
+  width: 906px;
+  height: 349px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px;
+  gap: 24px;
+
+  width: 806px;
+  height: 349px;
+  left: 422px;
+  top: 163px;
+
+  /* White */
+
+  background: #ffffff;
+  /* Gray/200 */
+
+  border: 1px solid #eaecf0;
+  box-sizing: border-box;
+  /* Shadow/sm */
+
+  box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
+    0px 1px 2px rgba(16, 24, 40, 0.06);
+  border-radius: 8px;
 }
 
 .tool {
@@ -329,15 +314,8 @@ export default {
   padding: 0rem 2rem;
 }
 
-.options {
-  background: linear-gradient(
-    to right bottom,
-    rgba(255, 255, 255, 0.9),
-    rgba(255, 255, 255, 0.3)
-  );
-  color: black;
-  padding: 1rem;
-}
+/* .options {
+} */
 
 .divider {
   width: 100%;

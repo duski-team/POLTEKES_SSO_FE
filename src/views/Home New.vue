@@ -1,18 +1,20 @@
 <template>
-  <div class="container-fluid">
-    <!-- <h1 class="title text-center py-4">VERIFIKASI</h1> -->
+  <div
+    class="container-fluid"
+    :style="{
+      'background-image': 'url(https://picsum.photos/seed/picsum/1000/1000)',
+    }"
+  >
+    <h1 class="title text-center py-4">SSO POLTEKES</h1>
 
     <div class="row">
       <div class="col d-flex justify-content-center">
-        <div class="card cb1 m-2">
+        <div class="card cb1 m-2 text-center">
           <div class="card-body">
             <!-- <span class="card-number">01</span> -->
-            <img class="mb-4" src="@/assets/logo-poltekes.jpg" alt="" />
-            <!-- <h5 class="card-title mb-4">Masukkan</h5> -->
-            <p class="card-title mb-4">Verifikasi Kode Authentifikasi</p>
-            <h5>Kirim ke {{ data.username }}</h5>
 
-            <!-- <div class="mb-3">
+            <h5 class="card-title mb-4">Login</h5>
+            <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label"
                 >Alamat Email</label
               >
@@ -23,36 +25,49 @@
                 aria-describedby="emailHelp"
                 v-model="data.username"
               />
-            </div> -->
+            </div>
             <div class="mb-3">
-              <!-- <label for="exampleInputpassword" class="form-label">OTP</label> -->
+              <label for="exampleInputpassword" class="form-label"
+                >Password</label
+              >
               <input
                 type="password"
                 class="form-control"
                 id="exampleInputpassword"
-                v-model="data.kode_otp"
+                v-model="data.password"
                 @keydown.enter.prevent="login()"
               />
             </div>
             <div class="mb-3 mt-3">
               <div class="d-flex justify-content-center">
-                <div class="col-12">
+                <div class="col-6">
                   <button
                     href="#"
                     class="btn btn-outline-primary"
                     @click="recaptcha()"
                   >
-                    KIRIM
+                    Login
                   </button>
                 </div>
               </div>
             </div>
-            <!-- <div><span>Belum Mendapatkan Kode OTP ?</span></div> -->
-            <div>
-              <span class="kirim_ulang text-primary text-bold"
-                >Kirim Ulang Kode
-              </span>
-              <span>dalam {{ countdown }} detik</span>
+
+            <div class="mt-3">
+              <div class="row">
+                <div
+                  class="register col-5"
+                  @click="$router.push({ path: '/register' })"
+                >
+                  Register
+                </div>
+                <div class="col-2">|</div>
+                <div
+                  class="lupa col-5"
+                  @click="$router.push({ path: '/lupaPassword' })"
+                >
+                  Lupa Password
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -62,32 +77,43 @@
 </template>
 
 <script>
+import qs from "qs";
+
 export default {
   name: "Home",
   data() {
     return {
       data: {
         username: "",
-        kode_otp: "",
+        password: "",
+        grant_type: "password",
+        client_id: "a5e1397c-c227-42c4-b188-0297f9afa990",
+        client_secret: "SSO",
       },
-      countdown: 30,
     };
-  },
-  computed: {
-    digits() {
-      return this.data.kode_otp.length >= 6;
-    },
   },
   methods: {
     async login() {
       let vm = this;
-      vm.data.username = localStorage.getItem("SSO_username");
-      let login = await vm.$axios.post("users/applyOTP", vm.data);
+      let login = await vm.$axios.post("oauth/login", qs.stringify(vm.data), {
+        headers: {
+          "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+        },
+      });
       console.log(login);
-      if (login.data.status == 201) {
-        console.log("error");
+      if (login.status == 200) {
+        localStorage.setItem("SSO_access_token", login.data.accessToken);
+        localStorage.setItem("SSO_refresh_token", login.data.refreshToken);
+        localStorage.setItem("SSO_client_id", login.data.user.id);
+        localStorage.setItem("SSO_username", login.data.user.username);
+
+        if (login.data.user.user_status == 0) {
+          vm.$router.push({ path: "/gantiPassword" });
+        } else {
+          vm.$router.push({ path: "/dashboard" });
+        }
       } else {
-        this.$router.push({ path: "/gantiPassword2" });
+        console.log("error");
       }
     },
     async recaptcha() {
@@ -124,17 +150,18 @@ export default {
   /* color: aqua; */
 }
 
-img {
-  width: 50px;
-  height: 50px;
+.title {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 40rem;
+  font-size: 4rem;
+  text-align: center;
 }
 
 .card {
   width: 90%;
-  max-width: 440px;
-  height: 492px;
-  padding: 2rem 2.5rem;
-  text-align: start;
+  max-width: 400px;
+  padding: 5rem 2.5rem;
 
   border-radius: 1rem;
   border: 1px solid transparent;
@@ -151,10 +178,8 @@ img {
 
 .card:hover {
   width: 90%;
-  max-width: 440px;
-  height: 492px;
-  padding: 2rem 2.5rem;
-  text-align: start;
+  max-width: 400px;
+  padding: 5rem 2.5rem;
 
   border-radius: 1rem;
   border: 1px solid transparent;
@@ -173,46 +198,20 @@ img {
   border-bottom-color: rgba(225, 225, 225, 0.1);
   border-right-color: rgba(225, 225, 225, 0.1);
 }
-
-.card-title {
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 38px;
-}
 .btn {
   width: 100%;
-  color: #ffffff;
-  background-color: #027a48;
 }
 .register:hover {
+  transform: scale(1.1);
   font-size: 16px;
   font-weight: 500;
   color: blue;
 }
 
 .lupa:hover {
+  transform: scale(1.1);
   font-size: 16px;
   font-weight: 500;
   color: blue;
-}
-
-input {
-  height: 50px;
-  font-size: 60px;
-  align-items: center;
-  text-align: center;
-}
-label {
-  font-weight: 500;
-  font-size: 30px;
-  letter-spacing: 1rem;
-}
-.kirim_ulang {
-  color: aqua;
-}
-.kirim_ulang:hover {
-  transform: scale(1.1);
-  font-weight: 500;
-  color: aqua;
 }
 </style>

@@ -53,7 +53,8 @@
           <div class="input-box">
             <span class="details" v-if="data.role == 'mahasiswa'">NIM</span>
             <span class="details" v-if="data.role == 'dosen'">NIDN</span>
-            <span class="details" v-if="data.role == 'Tenaga Pendidik'">NIP</span
+            <span class="details" v-if="data.role == 'Tenaga Pendidik'"
+              >NIP</span
             >
             <span class="details" v-if="data.role == ''">NIM/NIDN/NIP</span>
             <input
@@ -62,7 +63,9 @@
               required
               v-model="data.identity"
             />
-            <span class="text-danger fst-italic">{{ifValid('identity')}}</span>
+            <span class="text-danger fst-italic">{{
+              ifValid("identity")
+            }}</span>
           </div>
           <div class="input-box">
             <span class="details">Email</span>
@@ -72,7 +75,9 @@
               required
               v-model="data.username"
             />
-            <span class="text-danger fst-italic">{{ifValid('username')}}</span>
+            <span class="text-danger fst-italic">{{
+              ifValid("username")
+            }}</span>
           </div>
           <div class="input-box">
             <span class="details">NIK</span>
@@ -82,7 +87,7 @@
               required
               v-model="data.NIK"
             />
-            <span class="text-danger fst-italic">{{ifValid('NIK',16)}}</span>
+            <span class="text-danger fst-italic">{{ ifValid("NIK", 16) }}</span>
           </div>
           <div class="input-box">
             <span class="details">No. Handphone</span>
@@ -92,7 +97,9 @@
               required
               v-model="data.no_hp_users"
             />
-            <span class="text-danger fst-italic">{{ifValid('no_hp_users')}}</span>
+            <span class="text-danger fst-italic">{{
+              ifValid("no_hp_users")
+            }}</span>
           </div>
           <div class="input-box">
             <span class="details">Nama Lengkap</span>
@@ -102,7 +109,7 @@
               required
               v-model="data.nama_lengkap_users"
             />
-            <span class="text-danger fst-italic">{{ifValid('nama')}}</span>
+            <span class="text-danger fst-italic">{{ ifValid("nama") }}</span>
           </div>
         </div>
         <!-- <div>{{isValid}}</div> -->
@@ -121,7 +128,7 @@
 import useValidate from "@vuelidate/core";
 import { required, email, minLength, numeric } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
-import qs from "qs"
+import qs from "qs";
 export default {
   setup() {
     const data = reactive({
@@ -130,7 +137,7 @@ export default {
       identity: "",
       NIK: "",
       no_hp_users: "",
-      nama_lengkap_users:""
+      nama_lengkap_users: "",
     });
 
     const busy = reactive(false);
@@ -186,16 +193,21 @@ export default {
     async register() {
       let vm = this;
       vm.busy = true;
-      let register = await vm.$axios.post("users/register", qs.stringify(vm.data),{
-        headers: {
-          "content-type": "application/x-www-form-urlencoded;charset=utf-8",
-        }});
+      let register = await vm.$axios.post(
+        "users/register",
+        qs.stringify(vm.data),
+        {
+          headers: {
+            "content-type": "application/x-www-form-urlencoded;charset=utf-8",
+          },
+        }
+      );
       console.log(register);
       if (register.status == 200) {
         vm.busy = false;
-        console.log(register.data.message)
-          vm.reset();
-          vm.$router.push({ path: "/login" });
+        console.log(register.data.message);
+        vm.reset();
+        vm.$router.push({ path: "/login" });
       } else {
         vm.busy = false;
       }
@@ -209,21 +221,21 @@ export default {
         NIP: "",
       };
     },
-    ifValid(fieldName,l) {
-      const field = this.v$[fieldName]
-      let x = this.rules[fieldName]
-      
-      let y 
-      for (y in x){
-        if(field[y].$invalid){
-          if(y == 'required'){
-            return "* Data wajib diisi"
-          }else if(y == 'email'){
-            return "* Data harus berbentuk email"
-          } else if (y == 'numeric'){
-            return "* Data harus terdiri hanya dari angka"
-          } else if( y == 'minLength'){
-            return `* Data minimal ${l} digits`
+    ifValid(fieldName, l) {
+      const field = this.v$[fieldName];
+      let x = this.rules[fieldName];
+
+      let y;
+      for (y in x) {
+        if (field[y].$invalid) {
+          if (y == "required") {
+            return "* Data wajib diisi";
+          } else if (y == "email") {
+            return "* Data harus berbentuk email";
+          } else if (y == "numeric") {
+            return "* Data harus terdiri hanya dari angka";
+          } else if (y == "minLength") {
+            return `* Data minimal ${l} digits`;
           }
         }
       }
