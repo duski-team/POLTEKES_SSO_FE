@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Dashboard from "../views/Dashboard.vue";
-import Register from "../views/Register.vue";
+import Register from "../views/Register/Register.vue";
 // import Login from "../views/Login.vue";
 import LoginOTP from "../views/LoginOTP.vue";
 import LupaPassword from "../views/LupaPassword.vue";
@@ -40,8 +40,8 @@ const routes = [
     component: LupaPassword,
   },
   {
-    path: "/gantiPassword",
-    name: "GantiPassword",
+    path: "/1stlogin",
+    name: "1stLogin",
     component: GantiPassword,
   },
   {

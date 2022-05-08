@@ -1,7 +1,5 @@
 <template>
   <div class="container-fluid">
-    <!-- <h1 class="title text-center py-4">LUPA PASSWORD ?</h1> -->
-
     <div class="row">
       <div class="col d-flex justify-content-center">
         <div class="card cb1 m-2">
@@ -15,26 +13,13 @@
               Ke Email
             </h5>
 
-            <!-- <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label"
-                >Alamat Email</label
-              >
-              <input
-                type="email"
-                class="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-                v-model="data.username"
-              />
-            </div> -->
             <div class="mb-3">
-              <!-- <label for="exampleInputpassword" class="form-label">Email</label> -->
               <input
                 type="text"
                 class="form-control"
                 id="exampleInputpassword"
                 v-model="data.username"
-                placeholder="Email"
+                placeholder="E-mail"
                 @keydown.enter.prevent="kirim()"
               />
               <span v-if="showing" class="text-danger fst-italic mt-2"
@@ -115,9 +100,10 @@ export default {
 .container-fluid {
   /* background-image: url("https://picsum.photos/seed/picsum/200/300"); */
   background-size: cover;
-  background-position: center center;
+  background-position: center;
   background-attachment: fixed;
   min-height: 100vh;
+  padding-top: 10%;
   /* background-color: red; */
   /* color: aqua; */
 }
@@ -143,41 +129,6 @@ img {
   text-align: start;
 
   border-radius: 1rem;
-  border: 1px solid transparent;
-  background-color: rgba(225, 225, 225, 0.1);
-
-  backdrop-filter: blur(1rem);
-  box-shadow: 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.5);
-
-  border-top-color: rgba(225, 225, 225, 0.5);
-  border-left-color: rgba(225, 225, 225, 0.5);
-  border-bottom-color: rgba(225, 225, 225, 0.1);
-  border-right-color: rgba(225, 225, 225, 0.1);
-}
-
-.card:hover {
-  width: 90%;
-  max-width: 440px;
-  height: 496px;
-  padding: 2rem 2.5rem;
-  text-align: start;
-
-  border-radius: 1rem;
-  border: 1px solid transparent;
-  color: black;
-  background-color: linear-gradient(
-    to right bottom,
-    rgba(225, 225, 225, 0.5),
-    rgba(225, 225, 225, 0.1)
-  );
-
-  backdrop-filter: blur(1rem);
-  box-shadow: 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.5);
-
-  border-top-color: rgba(225, 225, 225, 0.5);
-  border-left-color: rgba(225, 225, 225, 0.5);
-  border-bottom-color: rgba(225, 225, 225, 0.1);
-  border-right-color: rgba(225, 225, 225, 0.1);
 }
 
 .card-title {
@@ -187,11 +138,13 @@ img {
 }
 .card-instruction {
   font-weight: 200;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 24px;
 }
 .btn {
+  margin-top: 25px;
   width: 100%;
+  height: 44px;
   background-color: #027a48;
   color: #ffffff;
 }
@@ -205,17 +158,5 @@ img {
   font-size: 16px;
   font-weight: 500;
   color: blue;
-}
-
-input {
-  height: 50px;
-  font-size: 20px;
-  align-items: center;
-  text-align: start;
-}
-label {
-  font-weight: 500;
-  font-size: 25px;
-  letter-spacing: 2px;
 }
 </style>

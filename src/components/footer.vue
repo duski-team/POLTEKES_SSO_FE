@@ -11,7 +11,7 @@
 <style scoped>
 .na {
   height: 120px;
-  background-color: #F9FAFB;
+  background-color: #f9fafb;
   color: gray;
   display: flex;
   flex-direction: column;

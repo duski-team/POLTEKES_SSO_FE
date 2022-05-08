@@ -1,31 +1,9 @@
 <template>
   <div><Header /></div>
-  <div class="container">
-    
-
-    <!-- <div class="row mt-3 mb-3">
-      <div class="col-md-12">
-        <div class="divider">
-          <h3>Aplikasi & Layanan</h3>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3 col-sm-4 mb-3">
-        <div class="card app"></div>
-      </div>
-      <div class="col-md-3 col-sm-4 mb-3">
-        <div class="card app"></div>
-      </div>
-      <div class="col-md-3 col-sm-4 mb-3"><div class="card app"></div></div>
-      <div class="col-md-3 col-sm-4 mb-3"><div class="card app"></div></div>
-      <div class="col-md-3 col-sm-4 mb-3"><div class="card app"></div></div>
-      <div class="col-md-3 col-sm-4 mb-3"><div class="card app"></div></div>
-    </div> -->
-  </div>
+  <div class="container"></div>
   <div class="container">
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-      <strong>Welcome!</strong> Nama Mahasiswa/Siswi
+      <strong>Welcome!</strong> {{ biodata.nama_lengkap_users }}
       <button
         type="button"
         class="btn-close"
@@ -170,14 +148,25 @@
         </div>
       </div>
     </section>
-     <section class="fas-wrapper">
+    <section class="fas-wrapper">
       <div class="app-title d-flex">
         <p>Aplikasi & Layanan</p>
         /
         <p>applications & services</p>
       </div>
       <div class="row">
-        <div class="col-md-3 col-sm-4 mb-3">
+        <div v-for="item in app" :key="item.id" class="col-md-3 col-sm-4 mb-3">
+          <div class="cards">
+            <div>
+              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
+            </div>
+            <div>
+              <h6>Lorem</h6>
+              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-md-3 col-sm-4 mb-3">
           <div class="cards">
             <div>
               <img class="icons" src="@/assets/Icon1.jpg" alt="" />
@@ -210,17 +199,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3 col-sm-4 mb-3">
-          <div class="cards">
-            <div>
-              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
-            </div>
-            <div>
-              <h6>Lorem</h6>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-            </div>
-          </div>
-        </div>
+      </div> -->
       </div>
     </section>
     <!-- <section>
@@ -246,11 +225,12 @@ import Footer from "@/components/footer.vue";
 export default {
   components: {
     Header,
-    Footer
+    Footer,
   },
   data() {
     return {
       biodata: "",
+      app: "",
     };
   },
   mounted() {
@@ -264,6 +244,10 @@ export default {
           "users/detailById/" + localStorage.getItem("SSO_client_id")
         );
         vm.biodata = biodata.data.data[0];
+
+        let app = await vm.$axios.get("client/list");
+        console.log(app.data.data);
+        vm.app = app.data.data;
       } catch (error) {
         console.log(error.response);
       }
@@ -301,7 +285,7 @@ export default {
   display: flex;
   justify-content: space-between;
 }
-.fas-wrapper{
+.fas-wrapper {
   width: 100%;
   padding: 1rem 0.5rem;
 }

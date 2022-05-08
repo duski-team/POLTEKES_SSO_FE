@@ -8,22 +8,24 @@
           <div class="card-body">
             <!-- <span class="card-number">01</span> -->
             <img class="mb-4" src="@/assets/logo-poltekes.jpg" alt="" />
-            <!-- <h5 class="card-title mb-4">Masukkan</h5> -->
             <p class="card-title mb-4">Verifikasi Kode Authentifikasi</p>
-            <h5>Kirim ke {{ data.username }}</h5>
+            <p class="card-email mb-4">Kirim ke {{ data.username }}</p>
 
-            <!-- <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label"
-                >Alamat Email</label
+            <div v-if="show">
+              <div
+                class="alert alert-danger alert-dismissible fade show"
+                role="alert"
               >
-              <input
-                type="email"
-                class="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-                v-model="data.username"
-              />
-            </div> -->
+                <strong>Perhatian!</strong> {{ msg }}
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                ></button>
+              </div>
+            </div>
+
             <div class="mb-3">
               <!-- <label for="exampleInputpassword" class="form-label">OTP</label> -->
               <input
@@ -40,7 +42,7 @@
                   <button
                     href="#"
                     class="btn btn-outline-primary"
-                    @click="recaptcha()"
+                    @click="login()"
                   >
                     KIRIM
                   </button>
@@ -49,7 +51,9 @@
             </div>
             <!-- <div><span>Belum Mendapatkan Kode OTP ?</span></div> -->
             <div>
-              <span class="kirim_ulang text-primary text-bold"
+              <span
+                class="kirim_ulang text-primary text-bold"
+                @click="kirimUlang()"
                 >Kirim Ulang Kode
               </span>
               <span>dalam {{ countdown }} detik</span>
@@ -71,6 +75,8 @@ export default {
         kode_otp: "",
       },
       countdown: 30,
+      show: false,
+      msg: "",
     };
   },
   computed: {
@@ -78,29 +84,29 @@ export default {
       return this.data.kode_otp.length >= 6;
     },
   },
+  created() {
+    this.data.username = localStorage.getItem("SSO_username");
+  },
   methods: {
     async login() {
       let vm = this;
-      vm.data.username = localStorage.getItem("SSO_username");
       let login = await vm.$axios.post("users/applyOTP", vm.data);
       console.log(login);
       if (login.data.status == 201) {
-        console.log("error");
+        vm.show = true;
+        vm.msg = login.data.message;
+        setTimeout(() => {
+          vm.show = false;
+        }, 4000);
       } else {
         this.$router.push({ path: "/gantiPassword2" });
       }
     },
-    async recaptcha() {
-      // (optional) Wait until recaptcha has been loaded.
-      await this.$recaptchaLoaded();
+    async kirimUlang() {
+      let vm = this;
+      let kirim = await vm.$axios.post("users/kirimUlangOTP", vm.data).data;
 
-      // Execute reCAPTCHA with action "login".
-      const token = await this.$recaptcha("login");
-      if (token) {
-        console.log("ok");
-        this.login();
-      }
-      // Do stuff with the received token.
+      console.log(kirim);
     },
   },
 };
@@ -120,6 +126,7 @@ export default {
   background-position: center center;
   background-attachment: fixed;
   min-height: 100vh;
+  padding-top: 10%;
   /* background-color: red; */
   /* color: aqua; */
 }
@@ -135,43 +142,7 @@ img {
   height: 492px;
   padding: 2rem 2.5rem;
   text-align: start;
-
   border-radius: 1rem;
-  border: 1px solid transparent;
-  background-color: rgba(225, 225, 225, 0.1);
-
-  backdrop-filter: blur(1rem);
-  box-shadow: 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.5);
-
-  border-top-color: rgba(225, 225, 225, 0.5);
-  border-left-color: rgba(225, 225, 225, 0.5);
-  border-bottom-color: rgba(225, 225, 225, 0.1);
-  border-right-color: rgba(225, 225, 225, 0.1);
-}
-
-.card:hover {
-  width: 90%;
-  max-width: 440px;
-  height: 492px;
-  padding: 2rem 2.5rem;
-  text-align: start;
-
-  border-radius: 1rem;
-  border: 1px solid transparent;
-  color: black;
-  background-color: linear-gradient(
-    to right bottom,
-    rgba(225, 225, 225, 0.5),
-    rgba(225, 225, 225, 0.1)
-  );
-
-  backdrop-filter: blur(1rem);
-  box-shadow: 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.5);
-
-  border-top-color: rgba(225, 225, 225, 0.5);
-  border-left-color: rgba(225, 225, 225, 0.5);
-  border-bottom-color: rgba(225, 225, 225, 0.1);
-  border-right-color: rgba(225, 225, 225, 0.1);
 }
 
 .card-title {
@@ -179,21 +150,17 @@ img {
   font-weight: 600;
   line-height: 38px;
 }
+
+.card-email {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22px;
+}
+
 .btn {
   width: 100%;
   color: #ffffff;
   background-color: #027a48;
-}
-.register:hover {
-  font-size: 16px;
-  font-weight: 500;
-  color: blue;
-}
-
-.lupa:hover {
-  font-size: 16px;
-  font-weight: 500;
-  color: blue;
 }
 
 input {
@@ -201,6 +168,7 @@ input {
   font-size: 60px;
   align-items: center;
   text-align: center;
+  margin-bottom: 50px;
 }
 label {
   font-weight: 500;
@@ -209,10 +177,15 @@ label {
 }
 .kirim_ulang {
   color: aqua;
+  cursor: pointer;
 }
 .kirim_ulang:hover {
   transform: scale(1.1);
   font-weight: 500;
   color: aqua;
+  cursor: pointer;
+}
+.alert {
+  font-size: 14px;
 }
 </style>

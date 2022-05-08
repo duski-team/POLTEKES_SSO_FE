@@ -1,6 +1,7 @@
 <template>
   <div class="container-fluid">
     <!-- <h1 class="title text-center py-4">SSO POLTEKES</h1> -->
+
     <div class="row">
       <div class="col d-flex justify-content-center">
         <div class="card cb1 m-2 text-center">
@@ -164,7 +165,7 @@ export default {
   background-position: center center;
   background-attachment: fixed;
   min-height: 100vh;
-  background-color: #ffffff;
+  /* background-color: red; */
   /* color: aqua; */
 }
 
