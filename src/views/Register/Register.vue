@@ -4,17 +4,32 @@
       <div class="col-md-4">
         <div class="card text-center">
           <div class="card-body">
-            <img src="@/assets/logo-poltekes.jpg" alt="" />
+            <img src="@/assets/logo-poltekes2.svg" alt="" />
           </div>
           <div class="stepper">
             <div class="steps">
               <div>
                 <div
+                  v-if="aktiv != 'step1' && state.role != ''"
                   class="circle"
-                  :class="{ active: aktiv == 'step1' }"
                   @click="aktiv = 'step1'"
                 >
                   <i class="fa-solid fa-check" />
+                </div>
+                <div
+                  v-if="aktiv == 'step1'"
+                  class="circle"
+                  @click="aktiv = 'step1'"
+                >
+                  <i class="fa-solid fa-circle" />
+                </div>
+
+                <div
+                  v-if="aktiv != 'step1' && state.role == ''"
+                  class="circle2"
+                  @click="aktiv = 'step1'"
+                >
+                  <i class="fa-solid fa-circle icog"></i>
                 </div>
                 <div class="v2" />
               </div>
@@ -28,11 +43,38 @@
             <div class="steps">
               <div>
                 <div
+                  v-if="
+                    aktiv != 'step2' &&
+                    state.identity != '' &&
+                    state.nama_lengkap_users != '' &&
+                    state.no_hp_users != '' &&
+                    state.username != '' &&
+                    state.NIK != ''
+                  "
                   class="circle"
-                  :class="{ active: aktiv == 'step2' }"
-                  @click="aktiv = 'step2'"
+                  @click="gostep('step2')"
                 >
                   <i class="fa-solid fa-check" />
+                </div>
+                <div
+                  v-if="aktiv == 'step2'"
+                  class="circle"
+                  @click="gostep('step2')"
+                >
+                  <i class="fa-solid fa-circle" />
+                </div>
+
+                <div
+                  v-if="aktiv != 'step2' &&
+                    state.identity == '' &&
+                    state.nama_lengkap_users == '' &&
+                    state.no_hp_users == '' &&
+                    state.username == '' &&
+                    state.NIK == '' "
+                  class="circle2"
+                  @click="gostep('step2')"
+                >
+                  <i class="fa-solid fa-circle icog"></i>
                 </div>
                 <div class="v2" />
               </div>
@@ -47,12 +89,28 @@
             <div class="steps">
               <div>
                 <div
+                  v-if="aktiv != 'step3' && state.syarat_kebijakan != ''"
                   class="circle"
-                  :class="{ active: aktiv == 'step3' }"
-                  @click="aktiv = 'step3'"
+                  @click="gostep('step3')"
                 >
                   <i class="fa-solid fa-check" />
                 </div>
+                <div
+                  v-if="aktiv == 'step3'"
+                  class="circle"
+                  @click="gostep('step3')"
+                >
+                  <i class="fa-solid fa-circle" />
+                </div>
+
+                <div
+                  v-if="aktiv != 'step3' && state.syarat_kebijakan == ''"
+                  class="circle2"
+                  @click="gostep('step3')"
+                >
+                  <i class="fa-solid fa-circle icog"></i>
+                </div>
+
                 <div class="v2" />
               </div>
               <div class="info">
@@ -64,12 +122,27 @@
           <div class="stepper">
             <div class="steps">
               <div>
-                <div
+                <!-- <div
+                  v-if="aktiv != 'step4'"
                   class="circle"
-                  :class="{ active: aktiv == 'step4' }"
-                  @click="aktiv = 'step4'"
+                  @click="gostep('step4')"
                 >
                   <i class="fa-solid fa-check" />
+                </div> -->
+                <div
+                  v-if="aktiv == 'step4'"
+                  class="circle"
+                  @click="gostep('step4')"
+                >
+                  <i class="fa-solid fa-circle" />
+                </div>
+
+                <div
+                  v-if="aktiv != 'step4'"
+                  class="circle2"
+                  @click="gostep('step4')"
+                >
+                  <i class="fa-solid fa-circle icog"></i>
                 </div>
                 <!-- <div class="v2" /> -->
               </div>
@@ -83,7 +156,7 @@
       </div>
       <div class="col-md-8 d-flex justify-content-center">
         <Step1 v-if="aktiv == 'step1'" @role="setRole($event)" />
-        <Step2 v-if="aktiv == 'step2'" @form="setForm($event)" />
+        <Step2 v-if="aktiv == 'step2'" :aktiv="aktiv" :state="state" @form="setForm($event)" />
         <Step3 v-if="aktiv == 'step3'" @kebijakan="setKebijakan($event)" />
         <Step4 v-if="aktiv == 'step4'" />
       </div>
@@ -92,9 +165,9 @@
 </template>
 
 <script>
-import useValidate from "@vuelidate/core";
-import { required, email, minLength, numeric } from "@vuelidate/validators";
-import { reactive, computed } from "vue";
+// import useValidate from "@vuelidate/core";
+// import { required, email, minLength, numeric } from "@vuelidate/validators";
+import { reactive} from "vue";
 import qs from "qs";
 import Step1 from "./Register1.vue";
 import Step2 from "./Register2.vue";
@@ -110,10 +183,11 @@ export default {
   data() {
     return {
       aktiv: "step1",
+      valid: false
     };
   },
   setup() {
-    const data = reactive({
+    const state = reactive({
       username: "",
       role: "",
       identity: "",
@@ -123,50 +197,50 @@ export default {
       syarat_kebijakan: "",
     });
 
-    const busy = reactive(false);
+    // const busy = reactive(false);
 
-    const rules = computed(() => {
-      return {
-        username: {
-          required,
-          email,
-        },
-        role: {
-          required,
-        },
-        identity: {
-          required,
-          numeric,
-        },
-        NIK: {
-          required,
-          minLength: minLength(16),
-        },
-        no_hp_users: {
-          required,
-          numeric,
-        },
-        nama_lengkap_users: {
-          required,
-        },
-        syarat_kebijakan: {
-          required,
-        },
-      };
-    });
+    // const rules = computed(() => {
+    //   return {
+    //     username: {
+    //       required,
+    //       email,
+    //     },
+    //     role: {
+    //       required,
+    //     },
+    //     identity: {
+    //       required,
+    //       numeric,
+    //     },
+    //     NIK: {
+    //       required,
+    //       minLength: minLength(16),
+    //     },
+    //     no_hp_users: {
+    //       required,
+    //       numeric,
+    //     },
+    //     nama_lengkap_users: {
+    //       required,
+    //     },
+    //     syarat_kebijakan: {
+    //       required,
+    //     },
+    //   };
+    // });
 
-    const v$ = useValidate(rules, data);
+    // const v$ = useValidate(rules, data);
 
     return {
-      v$,
-      data,
-      rules,
-      busy,
+      // v$,
+      state,
+      // rules,
+      // busy,
     };
   },
   computed: {
     formString() {
-      return JSON.stringify(this.data);
+      return JSON.stringify(this.state);
     },
     isValid() {
       return !this.v$.$invalid;
@@ -177,24 +251,41 @@ export default {
   },
   methods: {
     setRole(x) {
-      this.data.role = x.role;
-      this.aktiv = x.step;
+      this.state.role = x.role;
+      this.aktiv = 'step2';
     },
     setForm(x) {
       let vm = this;
-      vm.data.username = x.username;
-      vm.data.NIK = x.NIK;
-      vm.data.identity = x.identity;
-      vm.data.no_hp_users = x.no_hp_users;
-      vm.data.syarat_kebijakan = x.syarat_kebijakan;
-      vm.data.nama_lengkap_users = x.nama_lengkap_users;
-      vm.aktiv = x.step;
+      vm.state.username = x.username;
+      vm.state.NIK = x.NIK;
+      vm.state.identity = x.identity;
+      vm.state.no_hp_users = x.no_hp_users;
+      vm.state.syarat_kebijakan = x.syarat_kebijakan;
+      vm.state.nama_lengkap_users = x.nama_lengkap_users;
+      vm.valid = true
+      vm.aktiv = 'step3';
     },
     setKebijakan(x) {
-      console.log(x);
       let vm = this;
-      vm.data.syarat_kebijakan = x.syarat_kebijakan;
-      vm.aktiv = x.step;
+      vm.state.syarat_kebijakan = x.syarat_kebijakan;
+      this.register()
+    },
+    gostep(x){
+      let vm = this
+      if(x == 'step2'){
+        if(vm.state.role != ''){
+          this.aktiv = 'step2'
+        }
+      }else if (x == 'step3'){
+        if(vm.valid){
+          this.aktiv = 'step3'
+        }
+      }
+      else if (x == 'step4'){
+        if(vm.state.syarat_kebijakan != 0){
+          this.aktiv = 'step4'
+        }
+      }
     },
     async register() {
       let vm = this;
@@ -207,15 +298,17 @@ export default {
             "content-type": "application/x-www-form-urlencoded;charset=utf-8",
           },
         }
-      );
-      console.log(register);
-      if (register.status == 200) {
-        vm.busy = false;
-        console.log(register.data.message);
-        vm.reset();
-        vm.$router.push({ path: "/login" });
+      )
+      console.log(register)
+      if (register.data.status == 200) {
+        if(register.data.message == 'sukses'){
+          this.aktiv = 'step4'
+        }else{
+          alert(register.data.message)
+          console.log(vm.state.identity)
+        }
       } else {
-        vm.busy = false;
+        console.log('error')
       }
     },
     reset() {
@@ -266,6 +359,7 @@ export default {
   background-position: center center;
   background-attachment: fixed;
   background-color: #ffffff;
+  padding: 0;
 }
 
 .SSO {
@@ -314,6 +408,21 @@ p {
   align-items: center;
   color: #027a48;
   margin-right: 10px;
+}
+.circle2 {
+  border: solid 1px #ffffff;
+  width: 36px;
+  height: 36px;
+  background-color: #027a48;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #027a48;
+  margin-right: 10px;
+}
+.icog {
+  color: #ffffff;
 }
 
 .card {

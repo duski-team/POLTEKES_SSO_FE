@@ -98,6 +98,7 @@ import useValidate from "@vuelidate/core";
 import { required, email, minLength, numeric } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
 export default {
+  props: ["aktiv", "state"],
   setup() {
     const data = reactive({
       username: "",
@@ -108,8 +109,6 @@ export default {
       nama_lengkap_users: "",
       step: "step3",
     });
-
-    const busy = reactive(false);
 
     const rules = computed(() => {
       return {
@@ -141,8 +140,10 @@ export default {
       v$,
       data,
       rules,
-      busy,
     };
+  },
+  mounted(){
+    this.check()
   },
   computed: {
     formString() {
@@ -158,15 +159,6 @@ export default {
   methods: {
     async lanjut() {
       this.$emit("form", this.data);
-    },
-    reset() {
-      this.data = {
-        username: "",
-        role: "",
-        password: "",
-        password2: "",
-        NIP: "",
-      };
     },
     ifValid(fieldName, l) {
       const field = this.v$[fieldName];
@@ -187,6 +179,14 @@ export default {
         }
       }
     },
+    check(){
+      let y 
+      for(y in this.data){
+        if(this.data[y] == ''){
+          this.data[y] = this.state[y]
+        }
+      }
+    }
   },
 };
 </script>

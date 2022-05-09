@@ -122,7 +122,7 @@ export default {
           localStorage.setItem("SSO_username", login.data.user.username);
 
           if (login.data.user.user_status == 0) {
-            vm.$router.push({ path: "/gantiPassword" });
+            vm.$router.push({ path: "/1stlogin" });
           } else {
             vm.$router.push({ path: "/dashboard" });
           }
@@ -165,6 +165,7 @@ export default {
   background-attachment: fixed;
   min-height: 100vh;
   background-color: #ffffff;
+  padding:7%
   /* color: aqua; */
 }
 

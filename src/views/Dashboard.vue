@@ -11,19 +11,25 @@
         aria-label="Close"
       ></button>
     </div>
-    <section class="glass">
+    <section v-if="biodata" class="glass">
       <div class="dashboard">
         <div class="user">
           <div>
             <img class="foto mb-3" src="https://picsum.photos/100/100" alt="" />
           </div>
           <div class="nama">
-            <p>Nama Mahasiswa</p>
+            <p>{{ biodata.nama_lengkap_users }}</p>
           </div>
           <div class="role">
-            <p>Role</p>
-            <p>|</p>
-            <p>NIM</p>
+            <div>
+              <p class="mr-1">{{ biodata.role.toUpperCase() }}</p>
+            </div>
+            <div><p>|</p></div>
+            <div>
+              <p class="ml-1" style="color: #027a48">
+                <strong>{{ biodata.identity }}</strong>
+              </p>
+            </div>
           </div>
           <div class="btn-wrapper mb-2">
             <div type="button" class="btn btn-lihat">Lihat Selengkapnya</div>
@@ -155,65 +161,19 @@
         <p>applications & services</p>
       </div>
       <div class="row">
-        <div v-for="item in app" :key="item.id" class="col-md-3 col-sm-4 mb-3">
+        <div v-for="item in app" :key="item.id" class="col-md-3 col-sm-4 mb-3" @click="goApp(item)">
           <div class="cards">
             <div>
               <img class="icons" src="@/assets/Icon1.jpg" alt="" />
             </div>
             <div>
-              <h6>Lorem</h6>
+              <h6>{{ item.nama_client }}</h6>
               <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
             </div>
           </div>
         </div>
-        <!-- <div class="col-md-3 col-sm-4 mb-3">
-          <div class="cards">
-            <div>
-              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
-            </div>
-            <div>
-              <h6>Lorem</h6>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-4 mb-3">
-          <div class="cards">
-            <div>
-              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
-            </div>
-            <div>
-              <h6>Lorem</h6>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-4 mb-3">
-          <div class="cards">
-            <div>
-              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
-            </div>
-            <div>
-              <h6>Lorem</h6>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-            </div>
-          </div>
-        </div>
-      </div> -->
       </div>
     </section>
-    <!-- <section>
-      <div class="glass">
-        <div class="app-title d-flex">
-          <p>Aplikasi & Layanan</p>
-          /
-          <p>applications & services</p>
-        </div>
-        <div class="fas-wrapper">
-          <div class="cards"></div>
-        </div>
-      </div>
-    </section> -->
   </div>
   <div>
     <Footer />
@@ -241,7 +201,7 @@ export default {
       let vm = this;
       try {
         let biodata = await vm.$axios.get(
-          "users/detailById/" + localStorage.getItem("SSO_client_id")
+          "users/detailsById/" + localStorage.getItem("SSO_client_id")
         );
         vm.biodata = biodata.data.data[0];
 
@@ -252,6 +212,9 @@ export default {
         console.log(error.response);
       }
     },
+    goApp(x){
+      window.open(x.redirect_uri + '?token=' + localStorage.getItem('SSO_access_token'))
+    }
   },
 };
 </script>
@@ -351,9 +314,10 @@ export default {
 
 .role {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   font-size: 15px;
   line-height: 24px;
+  width: 100%;
 }
 
 .btn-wrapper {
@@ -503,5 +467,9 @@ h6 {
   border-left-color: rgba(225, 225, 225, 0.5);
   border-bottom-color: rgba(225, 225, 225, 0.1);
   border-right-color: rgba(225, 225, 225, 0.1);
+}
+
+img {
+  cursor: pointer;
 }
 </style>
