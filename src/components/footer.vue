@@ -10,13 +10,13 @@
 
 <style scoped>
 .na {
-  height: 120px;
+  height: 60px;
   background-color: #f9fafb;
   color: gray;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 48px 0px;
+  padding: 12px 0px;
 }
 
 .copyright {

@@ -2,23 +2,36 @@
   <!-- <iv> -->
   <div class="na">
     <div class="row pt-2">
-      <div class="col-8" @click="$router.push({path:'/'})">
+      <div class="col-8" @click="$router.push({ path: '/' })">
         <div class="d-flex">
           <img class="logo" src="@/assets/logo2.svg" alt="" />
           <p class="poltek">Poltekkes Semarang</p>
         </div>
       </div>
       <div class="col-4">
-        <div>
-          <div class="d-flex text-left">
+        <div class="dropdown">
+          <div
+            class="d-flex text-left dropdown"
+            id="dropdownMenuProfil"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
             <div>
-              <img class="avatar" src="@/assets/logo2.svg" alt="" />
+              <img class="avatar" src="https://picsum.photos/100/100" alt="" />
             </div>
             <div>
-              <p class="nama mb-0">{{data.nama_lengkap_users}}</p>
-              <p class="email">{{data.username}}</p>
+              <p class="nama mb-0">{{ data.nama_lengkap_users }}</p>
+              <p class="email">{{ data.username }}</p>
             </div>
           </div>
+          <div
+              class="dropdown-menu text-start"
+              aria-labelledby="dropdownMenuProfil"
+            >
+              <a class="dropdown-item logout">Lihat Profil</a>
+              <a class="dropdown-item logout" @click="$router.push({path:'/logout'})">Log out</a>
+            </div>
         </div>
       </div>
     </div>
@@ -29,16 +42,17 @@
 <script>
 export default {
   data() {
-    return{
-      data:""
-    }
+    return {
+      data: "",
+      options: false,
+    };
   },
-  created(){
-    this.getData()
+  created() {
+    this.getData();
   },
-  methods:{
-    async getData(){
-      let vm = this
+  methods: {
+    async getData() {
+      let vm = this;
       try {
         let biodata = await vm.$axios.get(
           "users/detailsById/" + localStorage.getItem("SSO_client_id")
@@ -48,8 +62,8 @@ export default {
         console.log(error.response);
       }
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
@@ -69,6 +83,7 @@ export default {
   height: 44px;
   width: 44px;
   margin-right: 20px;
+  border-radius: 50px;
 }
 
 .poltek {
@@ -80,7 +95,24 @@ export default {
   text-align: center;
   margin-top: 7px;
 }
-.nama{
+.nama {
   text-align: start;
+}
+
+.email {
+  font-weight: 300;
+  font-size: 14px;
+}
+
+.card {
+  padding: 20px;
+}
+
+.logout {
+  color: black;
+  line-height: 20px;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 10px;
 }
 </style>
