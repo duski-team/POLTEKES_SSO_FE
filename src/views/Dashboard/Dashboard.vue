@@ -161,7 +161,12 @@
         <p>applications & services</p>
       </div>
       <div class="row">
-        <div v-for="item in app" :key="item.id" class="col-md-3 col-sm-4 mb-3" @click="goApp(item)">
+        <div
+          v-for="item in app"
+          :key="item.id"
+          class="col-md-3 col-sm-4 mb-3"
+          @click="goApp(item)"
+        >
           <div class="cards">
             <div>
               <img class="icons" src="@/assets/Icon1.jpg" alt="" />
@@ -212,9 +217,11 @@ export default {
         console.log(error.response);
       }
     },
-    goApp(x){
-      window.open(x.redirect_uri + '?token=' + localStorage.getItem('SSO_access_token'))
-    }
+    goApp(x) {
+      window.open(
+        x.redirect_uri + "?token=" + localStorage.getItem("SSO_access_token")
+      );
+    },
   },
 };
 </script>
@@ -384,16 +391,22 @@ export default {
   justify-content: space-between;
 }
 
+.box-title {
+  cursor: pointer;
+}
+
 .box-content {
   display: flex;
   margin-bottom: 5px;
   margin-top: 5px;
+  cursor: pointer;
 }
 
 .box-content2 {
   display: flex;
   margin-bottom: 10px;
   margin-top: 10px;
+  cursor: pointer;
 }
 
 .icons {

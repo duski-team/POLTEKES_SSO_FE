@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
-import Dashboard from "../views/Dashboard.vue";
+import Dashboard from "../views/Dashboard/Dashboard.vue";
 import Register from "../views/Register/Register.vue";
 // import Login from "../views/Login.vue";
 import LoginOTP from "../views/LoginOTP.vue";
@@ -18,6 +18,9 @@ const routes = [
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/register",
@@ -43,6 +46,9 @@ const routes = [
     path: "/1stlogin",
     name: "1stLogin",
     component: GantiPassword,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/gantiPassword2",
@@ -63,6 +69,21 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach(async function (to, from, next) {
+  let token = localStorage.getItem("SSO_access_token");
+  let too = to.path;
+  console.log(token, too);
+  if (!to.meta.requiresAuth) {
+    next();
+  } else {
+    if (!token) {
+      next({ path: "/" });
+    } else {
+      next();
+    }
+  }
 });
 
 export default router;

@@ -4,6 +4,15 @@
   </div>
 </template>
 
+<script>
+import {setToken} from  "@/axios/index.js"
+export default {
+  mounted(){
+    setToken(localStorage.getItem("SSO_access_token"))
+  },
+}
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
