@@ -13,6 +13,7 @@ import "moment/locale/id";
 import ip from "@/ip";
 import "bootstrap/dist/js/bootstrap.js";
 import qs from "qs";
+// import instance from "@/axios/index.js"
 
 /* import the fontawesome core */
 import { library, dom } from "@fortawesome/fontawesome-svg-core";

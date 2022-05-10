@@ -74,14 +74,20 @@ const router = createRouter({
 router.beforeEach(async function (to, from, next) {
   let token = localStorage.getItem("SSO_access_token");
   let too = to.path;
-  console.log(token, too);
+  // console.log(token, too);
   if (!to.meta.requiresAuth) {
     next();
   } else {
     if (!token) {
       next({ path: "/" });
     } else {
-      next();
+      if (too == "/logout") {
+        console.log(too)
+        localStorage.clear();
+        next({ path: "/" });
+      } else {
+        next();
+      }
     }
   }
 });

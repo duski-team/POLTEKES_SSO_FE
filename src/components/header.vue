@@ -30,7 +30,7 @@
               aria-labelledby="dropdownMenuProfil"
             >
               <a class="dropdown-item logout">Lihat Profil</a>
-              <a class="dropdown-item logout" @click="$router.push({path:'/logout'})">Log out</a>
+              <a class="dropdown-item logout" @click="logout()">Log out</a>
             </div>
         </div>
       </div>
@@ -55,13 +55,18 @@ export default {
       let vm = this;
       try {
         let biodata = await vm.$axios.get(
-          "users/detailsById/" + localStorage.getItem("SSO_client_id")
+          "users/detailsById/" + localStorage.getItem("SSO_user_id")
         );
         vm.data = biodata.data.data[0];
       } catch (error) {
         console.log(error.response);
       }
     },
+    logout(){
+      localStorage.clear()
+      this.$router.push({path:'/'})
+      console.log('logout')
+    }
   },
 };
 </script>

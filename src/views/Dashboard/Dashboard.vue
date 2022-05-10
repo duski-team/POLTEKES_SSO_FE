@@ -1,6 +1,6 @@
 <template>
   <div><Header /></div>
-  <div class="container"></div>
+
   <div class="container">
     <div class="alert alert-success alert-dismissible fade show" role="alert">
       <strong>Welcome!</strong> {{ biodata.nama_lengkap_users }}
@@ -206,7 +206,7 @@ export default {
       let vm = this;
       try {
         let biodata = await vm.$axios.get(
-          "users/detailsById/" + localStorage.getItem("SSO_client_id")
+          "users/detailsById/" + localStorage.getItem("SSO_user_id")
         );
         vm.biodata = biodata.data.data[0];
 

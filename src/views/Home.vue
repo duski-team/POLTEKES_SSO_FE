@@ -118,8 +118,10 @@ export default {
         if (login.status == 200) {
           localStorage.setItem("SSO_access_token", login.data.accessToken);
           localStorage.setItem("SSO_refresh_token", login.data.refreshToken);
-          localStorage.setItem("SSO_client_id", login.data.user.id);
+          localStorage.setItem("SSO_user_id", login.data.user.id);
+          localStorage.setItem("SSO_client_id", login.data.client.id);
           localStorage.setItem("SSO_username", login.data.user.username);
+          localStorage.setItem('expired', login.data.accessTokenExpiresAt)
 
           if (login.data.user.user_status == 0) {
             vm.$router.push({ path: "/1stlogin" });
@@ -131,6 +133,7 @@ export default {
         }
       } catch (error) {
         if (error) {
+          console.log(error)
           this.show = true;
         }
       }
