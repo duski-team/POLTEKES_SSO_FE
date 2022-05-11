@@ -142,8 +142,8 @@ export default {
       rules,
     };
   },
-  mounted(){
-    this.check()
+  mounted() {
+    this.check();
   },
   computed: {
     formString() {
@@ -179,14 +179,14 @@ export default {
         }
       }
     },
-    check(){
-      let y 
-      for(y in this.data){
-        if(this.data[y] == ''){
-          this.data[y] = this.state[y]
+    check() {
+      let y;
+      for (y in this.data) {
+        if (this.data[y] == "") {
+          this.data[y] = this.state[y];
         }
       }
-    }
+    },
   },
 };
 </script>

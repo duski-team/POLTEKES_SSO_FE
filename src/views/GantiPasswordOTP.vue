@@ -110,7 +110,7 @@ export default {
     return {
       v$,
       state,
-      rules
+      rules,
     };
   },
   computed: {

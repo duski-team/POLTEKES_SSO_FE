@@ -65,12 +65,14 @@
                 </div>
 
                 <div
-                  v-if="aktiv != 'step2' &&
+                  v-if="
+                    aktiv != 'step2' &&
                     state.identity == '' &&
                     state.nama_lengkap_users == '' &&
                     state.no_hp_users == '' &&
                     state.username == '' &&
-                    state.NIK == '' "
+                    state.NIK == ''
+                  "
                   class="circle2"
                   @click="gostep('step2')"
                 >
@@ -156,7 +158,12 @@
       </div>
       <div class="col-md-8 d-flex justify-content-center">
         <Step1 v-if="aktiv == 'step1'" @role="setRole($event)" />
-        <Step2 v-if="aktiv == 'step2'" :aktiv="aktiv" :state="state" @form="setForm($event)" />
+        <Step2
+          v-if="aktiv == 'step2'"
+          :aktiv="aktiv"
+          :state="state"
+          @form="setForm($event)"
+        />
         <Step3 v-if="aktiv == 'step3'" @kebijakan="setKebijakan($event)" />
         <Step4 v-if="aktiv == 'step4'" />
       </div>
@@ -167,7 +174,7 @@
 <script>
 // import useValidate from "@vuelidate/core";
 // import { required, email, minLength, numeric } from "@vuelidate/validators";
-import { reactive} from "vue";
+import { reactive } from "vue";
 import qs from "qs";
 import Step1 from "./Register1.vue";
 import Step2 from "./Register2.vue";
@@ -183,7 +190,7 @@ export default {
   data() {
     return {
       aktiv: "step1",
-      valid: false
+      valid: false,
     };
   },
   setup() {
@@ -252,7 +259,7 @@ export default {
   methods: {
     setRole(x) {
       this.state.role = x.role;
-      this.aktiv = 'step2';
+      this.aktiv = "step2";
     },
     setForm(x) {
       let vm = this;
@@ -262,28 +269,27 @@ export default {
       vm.state.no_hp_users = x.no_hp_users;
       vm.state.syarat_kebijakan = x.syarat_kebijakan;
       vm.state.nama_lengkap_users = x.nama_lengkap_users;
-      vm.valid = true
-      vm.aktiv = 'step3';
+      vm.valid = true;
+      vm.aktiv = "step3";
     },
     setKebijakan(x) {
       let vm = this;
       vm.state.syarat_kebijakan = x.syarat_kebijakan;
-      this.register()
+      this.register();
     },
-    gostep(x){
-      let vm = this
-      if(x == 'step2'){
-        if(vm.state.role != ''){
-          this.aktiv = 'step2'
+    gostep(x) {
+      let vm = this;
+      if (x == "step2") {
+        if (vm.state.role != "") {
+          this.aktiv = "step2";
         }
-      }else if (x == 'step3'){
-        if(vm.valid){
-          this.aktiv = 'step3'
+      } else if (x == "step3") {
+        if (vm.valid) {
+          this.aktiv = "step3";
         }
-      }
-      else if (x == 'step4'){
-        if(vm.state.syarat_kebijakan != 0){
-          this.aktiv = 'step4'
+      } else if (x == "step4") {
+        if (vm.state.syarat_kebijakan != 0) {
+          this.aktiv = "step4";
         }
       }
     },
@@ -298,17 +304,17 @@ export default {
             "content-type": "application/x-www-form-urlencoded;charset=utf-8",
           },
         }
-      )
-      console.log(register)
+      );
+      console.log(register);
       if (register.data.status == 200) {
-        if(register.data.message == 'sukses'){
-          this.aktiv = 'step4'
-        }else{
-          alert(register.data.message)
-          console.log(vm.state.identity)
+        if (register.data.message == "sukses") {
+          this.aktiv = "step4";
+        } else {
+          alert(register.data.message);
+          console.log(vm.state.identity);
         }
       } else {
-        console.log('error')
+        console.log("error");
       }
     },
     reset() {

@@ -25,18 +25,20 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use(async (req) => {
-  if (token) {
+  if (!token) {
     token = localStorage.getItem("SSO_access_token");
     req.headers.Authorization = `Bearer ${token}`;
-  } 
+  }
 
+  if (expired == null) {
+    token = localStorage.getItem("SSO_access_token");
+    req.headers.Authorization = `Bearer ${token}`;
+    return req;
+  } else {
     const isExpired = expired <= moment().format("llll");
-      token = localStorage.getItem("SSO_access_token");
-      req.headers.Authorization = `Bearer ${token}`;
-
     if (isExpired && token) {
       try {
-        console.log(isExpired,'exp');
+        console.log(isExpired, "exp");
         let response = await axios.post(
           ip + "oauth/token",
           qs.stringify(datas)
@@ -50,6 +52,7 @@ instance.interceptors.request.use(async (req) => {
     } else {
       return req;
     }
+  }
 });
 
 export default instance;

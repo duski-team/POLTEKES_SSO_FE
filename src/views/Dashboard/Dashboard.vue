@@ -32,7 +32,7 @@
             </div>
           </div>
           <div class="btn-wrapper mb-2">
-            <div type="button" class="btn btn-lihat">Lihat Selengkapnya</div>
+            <div type="button" class="btn btn-lihat" @click="$router.push({path:'/profil'})">Lihat Selengkapnya</div>
           </div>
         </div>
         <div class="line"></div>
@@ -238,6 +238,7 @@ export default {
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
+  height: 100vh;
   /* color: aqua; */
 }
 

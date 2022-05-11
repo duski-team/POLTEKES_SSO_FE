@@ -5,12 +5,12 @@
 </template>
 
 <script>
-import {setToken} from  "@/axios/index.js"
+import { setToken } from "@/axios/index.js";
 export default {
-  mounted(){
-    setToken(localStorage.getItem("SSO_access_token"))
+  mounted() {
+    setToken(localStorage.getItem("SSO_access_token"));
   },
-}
+};
 </script>
 
 <style>

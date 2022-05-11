@@ -98,14 +98,14 @@ export default {
           vm.show = false;
         }, 4000);
       } else {
-        localStorage.getItem('kode_otp', vm.data.kode_otp)
+        localStorage.getItem("kode_otp", vm.data.kode_otp);
         this.$router.push({ path: "/gantiPassword2" });
       }
     },
     async kirimUlang() {
       if (this.countdown == 0) {
         let vm = this;
-        let kirim = await vm.$axios.post("users/kirimUlangOTP", vm.data)
+        let kirim = await vm.$axios.post("users/kirimUlangOTP", vm.data);
         console.log(kirim);
         vm.show = true;
         vm.msg = "Kode OTP Baru sudah dikirim";
@@ -181,7 +181,7 @@ img {
   color: #ffffff;
   background-color: #027a48;
   border: solid 3px;
-  border-radius: 15px ;
+  border-radius: 15px;
 }
 
 input {
@@ -198,7 +198,6 @@ label {
 }
 .kirim_ulang {
   cursor: pointer;
-
 }
 .kirim_ulang:hover {
   transform: scale(1.1);

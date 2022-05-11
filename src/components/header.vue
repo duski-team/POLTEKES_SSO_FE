@@ -26,12 +26,12 @@
             </div>
           </div>
           <div
-              class="dropdown-menu text-start"
-              aria-labelledby="dropdownMenuProfil"
-            >
-              <a class="dropdown-item logout">Lihat Profil</a>
-              <a class="dropdown-item logout" @click="logout()">Log out</a>
-            </div>
+            class="dropdown-menu text-start"
+            aria-labelledby="dropdownMenuProfil"
+          >
+            <a class="dropdown-item logout" @click="$router.push({path:'/profil'})">Lihat Profil</a>
+            <a class="dropdown-item logout" @click="logout()">Log out</a>
+          </div>
         </div>
       </div>
     </div>
@@ -62,11 +62,11 @@ export default {
         console.log(error.response);
       }
     },
-    logout(){
-      localStorage.clear()
-      this.$router.push({path:'/'})
-      console.log('logout')
-    }
+    logout() {
+      localStorage.clear();
+      this.$router.push({ path: "/" });
+      console.log("logout");
+    },
   },
 };
 </script>

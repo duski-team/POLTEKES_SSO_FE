@@ -2,8 +2,10 @@
   <div><Header /></div>
 
   <div class="container">
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      <strong>Welcome!</strong> {{ biodata.nama_lengkap_users }}
+    <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+      <strong>Perhatian</strong> Data nomor telepon ini tidak digunakan sebagai
+      nomor telepon penerima kode OTP dari microsoft. Jika ingin merubah nomor
+      telepon penerima kode OTP login silahkan kunjungi
       <button
         type="button"
         class="btn-close"
@@ -14,64 +16,39 @@
     <div v-if="biodata" class="glass">
       <div class="dashboard">
         <div class="user">
+          <div class="edit mb-4">Edit - Account Profile</div>
           <div>
             <img class="foto mb-3" src="https://picsum.photos/100/100" alt="" />
           </div>
-          <div class="nama">
-            <p>{{ biodata.nama_lengkap_users }}</p>
-          </div>
-          <div class="role">
+        </div>
+        <div class="jurusan-wrapper mt-3">
+          <h5 style="line-height: 14px; font-weight:700;">Jurusan</h5>
+          <p style="line-height: 14px; font-size: 14px">Prodi Jurusan</p>
+        </div>
+        <div class="line mt-1 mb-1"></div>
+         <div class="role">
             <div>
               <p class="mr-1">{{ biodata.role.toUpperCase() }}</p>
             </div>
             <div><p>|</p></div>
             <div>
-              <p class="ml-1" style="color: #027a48">
+              <button class="btn ml-1" style="color: #027a48">
                 <strong>{{ biodata.identity }}</strong>
-              </p>
+              </button>
             </div>
           </div>
-          <div class="btn-wrapper mb-2">
-            <div type="button" class="btn btn-lihat">Lihat Selengkapnya</div>
-          </div>
-        </div>
-        <div class="line"></div>
-        <div class="jurusan-wrapper mt-3">
-          <h5 style="line-height: 14px">Jurusan</h5>
-          <p style="line-height: 14px; font-size: 14px">Prodi Jurusan</p>
-        </div>
       </div>
       <div class="tools text-start">
         <div class="box-info">
-          <div class="box-title mb-3" style="color: #027a48">Resource</div>
-          <div class="box-content">
-            <div>
-              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
+          <div class="input-box">
+              <span class="details">Email Aktif *</span>
+              <input
+                type="text"
+                placeholder="Masukkan email lengkap"
+                required
+                v-model="biodata.username"
+              />
             </div>
-            <div>
-              <h6>Lorem</h6>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-            </div>
-          </div>
-
-          <div class="box-content">
-            <div>
-              <img class="icons" src="@/assets/Icon2.jpg" alt="" />
-            </div>
-            <div>
-              <h6>Lorem</h6>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-            </div>
-          </div>
-          <div class="box-content">
-            <div>
-              <img class="icons" src="@/assets/Icon3.jpg" alt="" />
-            </div>
-            <div>
-              <h6>Lorem</h6>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-            </div>
-          </div>
         </div>
         <div class="box-info">
           <div class="box-title mb-3" style="color: #027a48">
@@ -174,10 +151,13 @@ export default {
 
 .glass {
   width: 100%;
-  padding: 1rem 0.5rem;
+  padding: 2rem 0.5rem 2rem 2rem;
   display: flex;
   justify-content: space-between;
+  background-color: #ffffff;
+  border-radius: 15px;
 }
+
 .fas-wrapper {
   width: 100%;
   padding: 1rem 0.5rem;
@@ -212,14 +192,19 @@ export default {
   flex-direction: column;
   align-items: center;
   padding-top: 24px;
-  background-color: #ffffff;
-  border: 1px solid #eaecf0;
+  background-color: transparent;
+  /* border: 1px solid #eaecf0; */
   box-sizing: border-box;
   /* Shadow/sm */
 
-  box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
+  /* box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
     0px 1px 2px rgba(16, 24, 40, 0.06);
-  border-radius: 8px;
+  border-radius: 8px; */
+}
+
+.edit {
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .user {
@@ -240,6 +225,8 @@ export default {
 
 .foto {
   border-radius: 30px;
+  height: 100px;
+  width: 100px;
 }
 
 .role {
@@ -298,12 +285,12 @@ export default {
   /* White */
   background: #ffffff;
   /* Gray/200 */
-  border: 1px solid #eaecf0;
+  /* border: 1px solid #eaecf0; */
   box-sizing: border-box;
   /* Shadow/sm */
-  box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
+  /* box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
     0px 1px 2px rgba(16, 24, 40, 0.06);
-  border-radius: 8px;
+  border-radius: 8px; */
 }
 .box-info {
   width: 80%;

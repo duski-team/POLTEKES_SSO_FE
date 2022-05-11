@@ -121,7 +121,7 @@ export default {
           localStorage.setItem("SSO_user_id", login.data.user.id);
           localStorage.setItem("SSO_client_id", login.data.client.id);
           localStorage.setItem("SSO_username", login.data.user.username);
-          localStorage.setItem('expired', login.data.accessTokenExpiresAt)
+          localStorage.setItem("expired", login.data.accessTokenExpiresAt);
 
           if (login.data.user.user_status == 0) {
             vm.$router.push({ path: "/1stlogin" });
@@ -133,7 +133,7 @@ export default {
         }
       } catch (error) {
         if (error) {
-          console.log(error)
+          console.log(error);
           this.show = true;
         }
       }
@@ -168,7 +168,7 @@ export default {
   background-attachment: fixed;
   min-height: 100vh;
   background-color: #ffffff;
-  padding:7%
+  padding: 7%;
   /* color: aqua; */
 }
 

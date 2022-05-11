@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Dashboard from "../views/Dashboard/Dashboard.vue";
-import Profil from "../views/Edit/EditProfil.vue";
 import Register from "../views/Register/Register.vue";
+import Profil from "../views/Edit/EditProfil.vue";
 // import Login from "../views/Login.vue";
 import LoginOTP from "../views/LoginOTP.vue";
 import LupaPassword from "../views/LupaPassword.vue";
@@ -15,6 +15,11 @@ const routes = [
     name: "Home",
     component: Home,
   },
+  // {
+  //   path: "/home",
+  //   name: "Home",
+  //   component: Home,
+  // },
   {
     path: "/dashboard",
     name: "Dashboard",
@@ -52,19 +57,19 @@ const routes = [
     },
   },
   {
-    path: "/profil",
-    name: "Profil",
-    component: Profil,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
     path: "/gantiPassword2",
     name: "GantiPassword",
     component: GantiPasswordOTP,
     meta: {
       requiresOTP: true,
+    },
+  },
+  {
+    path: "/profil",
+    name: "Edit Profil",
+    component: Profil,
+    meta: {
+      requiresAuth: true,
     },
   },
   {
@@ -84,31 +89,27 @@ const router = createRouter({
 });
 
 router.beforeEach(function (to, from, next) {
-  let token = localStorage.getItem("SSO_access_token");
-  let otp = localStorage.getItem("kode_otp");
-  // let otp = "00010101";
+  let token = localStorage.getItem("SSO_access_token") != null;
+  // let otp = localStorage.getItem("kode_otp");
   let too = to.path;
-  // console.log(token, too);
-  if (!to.meta.requiresAuth && !to.meta.requiresOTP) {
-    next();
-  } else if (to.meta.requiresOTP) {
-    if (otp) {
-      next();
-    } else {
-      next({
-        path: "/",
-      });
-    }
-  } else {
-    if (!token) {
+  if (too == "/logout") next();
+  if (!token) {
+    if (to.meta.requiresAuth && too != "/") {
       next({ path: "/" });
     } else {
-      if (too == "/logout") {
-        localStorage.clear();
-        next({ path: "/" });
-      } else {
-        next();
+      next();
+    }
+  } else {
+    if (too == "/logout") {
+      localStorage.clear();
+      next({ path: "/" });
+    } else {
+      if(to.meta.requiresAuth){
+        next()
+      }else{
+        next({path:'/dashboard'})
       }
+      
     }
   }
 });
