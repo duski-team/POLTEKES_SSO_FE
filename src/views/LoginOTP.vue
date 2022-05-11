@@ -12,10 +12,7 @@
             <p class="card-email mb-4">Kirim ke {{ data.username }}</p>
 
             <div v-if="show">
-              <div
-                class="alert alert-danger alert-dismissible fade show"
-                role="alert"
-              >
+              <div :class="color" role="alert">
                 <strong>Perhatian!</strong> {{ msg }}
                 <button
                   type="button"
@@ -36,12 +33,12 @@
                 @keydown.enter.prevent="login()"
               />
             </div>
-            <div class="mb-3 mt-3">
+            <div class="mb-3">
               <div class="d-flex justify-content-center">
                 <div class="col-12">
                   <button
-                    href="#"
-                    class="btn btn-outline-primary"
+                    :disabled="!digits"
+                    class="btn btn-outline-Success"
                     @click="login()"
                   >
                     KIRIM
@@ -77,6 +74,7 @@ export default {
       countdown: 30,
       show: false,
       msg: "",
+      color: "",
     };
   },
   computed: {
@@ -95,18 +93,39 @@ export default {
       if (login.data.status == 201) {
         vm.show = true;
         vm.msg = login.data.message;
+        vm.color = "alert alert-danger alert-dismissible fade show";
         setTimeout(() => {
           vm.show = false;
         }, 4000);
       } else {
+        localStorage.getItem('kode_otp', vm.data.kode_otp)
         this.$router.push({ path: "/gantiPassword2" });
       }
     },
     async kirimUlang() {
-      let vm = this;
-      let kirim = await vm.$axios.post("users/kirimUlangOTP", vm.data).data;
-
-      console.log(kirim);
+      if (this.countdown == 0) {
+        let vm = this;
+        let kirim = await vm.$axios.post("users/kirimUlangOTP", vm.data)
+        console.log(kirim);
+        vm.show = true;
+        vm.msg = "Kode OTP Baru sudah dikirim";
+        vm.color = "alert alert-success alert-dismissible fade show";
+        setTimeout(() => {
+          vm.show = false;
+        }, 4000);
+      }
+    },
+  },
+  watch: {
+    countdown: {
+      handler(val) {
+        if (val > 0) {
+          setTimeout(() => {
+            this.countdown--;
+          }, 1000);
+        }
+      },
+      immediate: true,
     },
   },
 };
@@ -161,6 +180,8 @@ img {
   width: 100%;
   color: #ffffff;
   background-color: #027a48;
+  border: solid 3px;
+  border-radius: 15px ;
 }
 
 input {
@@ -168,7 +189,7 @@ input {
   font-size: 60px;
   align-items: center;
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 label {
   font-weight: 500;
@@ -176,16 +197,17 @@ label {
   letter-spacing: 1rem;
 }
 .kirim_ulang {
-  color: aqua;
   cursor: pointer;
+
 }
 .kirim_ulang:hover {
   transform: scale(1.1);
-  font-weight: 500;
   color: aqua;
+  font-weight: 500;
   cursor: pointer;
 }
 .alert {
-  font-size: 14px;
+  font-size: 13px;
+  color: aqua;
 }
 </style>

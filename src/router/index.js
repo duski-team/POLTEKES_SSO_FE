@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Dashboard from "../views/Dashboard/Dashboard.vue";
+import Profil from "../views/Edit/EditProfil.vue";
 import Register from "../views/Register/Register.vue";
 // import Login from "../views/Login.vue";
 import LoginOTP from "../views/LoginOTP.vue";
@@ -51,9 +52,20 @@ const routes = [
     },
   },
   {
+    path: "/profil",
+    name: "Profil",
+    component: Profil,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
     path: "/gantiPassword2",
     name: "GantiPassword",
     component: GantiPasswordOTP,
+    meta: {
+      requiresOTP: true,
+    },
   },
   {
     path: "/about",
@@ -71,18 +83,27 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach(async function (to, from, next) {
+router.beforeEach(function (to, from, next) {
   let token = localStorage.getItem("SSO_access_token");
+  let otp = localStorage.getItem("kode_otp");
+  // let otp = "00010101";
   let too = to.path;
   // console.log(token, too);
-  if (!to.meta.requiresAuth) {
+  if (!to.meta.requiresAuth && !to.meta.requiresOTP) {
     next();
+  } else if (to.meta.requiresOTP) {
+    if (otp) {
+      next();
+    } else {
+      next({
+        path: "/",
+      });
+    }
   } else {
     if (!token) {
       next({ path: "/" });
     } else {
       if (too == "/logout") {
-        console.log(too)
         localStorage.clear();
         next({ path: "/" });
       } else {

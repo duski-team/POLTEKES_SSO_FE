@@ -1,72 +1,64 @@
 <template>
-  <div
-    class="container-fluid"
-    :style="{
-      'background-image': 'url(https://picsum.photos/seed/picsum/1000/1000)',
-    }"
-  >
-    <h1 class="title text-center py-4">GANTI PASSWORD</h1>
-
+  <div class="container-fluid">
     <div class="row">
       <div class="col d-flex justify-content-center">
-        <div class="card cb1 m-2 text-center">
+        <div class="card cb1 m-2">
           <div class="card-body">
-            <!-- <span class="card-number">01</span> -->
+            <img class="mb-4" src="@/assets/logo-poltekes.jpg" alt="" />
 
-            <h5 class="card-title mb-4">Masukkan Password Lama</h5>
-            <!-- <h5 class="card-title mb-4">
-              Untuk Mendapatkan One Time Password Lupa Password
-            </h5> -->
+            <p>{{ username }}</p>
 
-            <!-- <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label"
-                >Alamat Email</label
-              >
-              <input
-                type="email"
-                class="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-                v-model="data.username"
-              />
-            </div> -->
-            <div class="mb-3">
-              <label for="exampleInputpassword_baru" class="form-label"
-                >Password Baru</label
-              >
-              <input
-                type="password"
-                class="form-control"
-                id="exampleInputpassword_baru"
-                v-model="state.password_baru"
-                @keydown.enter.prevent="login()"
-              />
-              <!-- <span v-if="v$.password_baru.$error">
-                {{ v$.password_baru.$error }}
-              </span> -->
+            <h5 class="card-title mb-4">Update Password Anda</h5>
+            <h5 class="card-instruction mb-4">
+              You need to update your password because this is the first time
+              you are signing in or because your password has expired.
+            </h5>
+            <div v-if="show">
+              <div :class="color" role="alert">
+                <strong>Perhatian!</strong> {{ msg }}
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                ></button>
+              </div>
             </div>
-
             <div class="mb-3">
-              <label for="exampleInputpassword2" class="form-label"
-                >Konfirmasi Password Baru</label
-              >
               <input
-                type="password"
+                type="text"
                 class="form-control"
-                id="exampleInputpassword2"
-                v-model="state.password2"
-                @keydown.enter.prevent="login()"
+                id="exampleInputpassword"
+                v-model="state.password_baru"
+                placeholder="Password Baru"
+                @keydown.enter.prevent="kirim()"
               />
+              <!-- <span v-if="showing" class="text-danger fst-italic mt-2"
+                >"{{ msg }}</span
+              > -->
+            </div>
+            <div class="mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="exampleInputpassword"
+                v-model="state.password2"
+                placeholder="Konfirm Password"
+                @keydown.enter.prevent="kirim()"
+              />
+              <!-- <span v-if="showing" class="text-danger fst-italic mt-2"
+                >"{{ msg }}</span
+              > -->
             </div>
             <div class="mb-3 mt-3">
               <div class="d-flex justify-content-center">
-                <div class="col-8">
+                <div class="col-12">
                   <button
-                    href="#"
-                    class="btn btn-outline-primary"
-                    @click="login()"
+                    class="btn btn-outline-success"
+                    @click="kirim()"
+                    :disabled="!isValid"
                   >
-                    GANTI PASSWORD
+                    Update Password dan Sign in
                   </button>
                 </div>
               </div>
@@ -84,22 +76,27 @@ import { required, minLength, sameAs } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
 import useVuelidate from "@vuelidate/core";
 export default {
+  name: "changePassword",
+  data() {
+    return {
+      show: false,
+      username: "",
+      msg: "",
+      color: "",
+    };
+  },
   setup() {
     const state = reactive({
       username: "",
-      password_lama: "",
       password_baru: "",
       password2: "",
     });
 
     const rules = computed(() => {
       return {
-        password_lama: {
-          required,
-        },
         password_baru: {
           required,
-          minLength: minLength(10),
+          minLength: minLength(3),
         },
         password2: {
           required,
@@ -108,37 +105,50 @@ export default {
       };
     });
 
-    const v$ = useVuelidate(state, rules);
+    const v$ = useVuelidate(rules, state);
 
     return {
       v$,
       state,
+      rules
     };
   },
+  computed: {
+    formString() {
+      return JSON.stringify(this.state);
+    },
+    isValid() {
+      return !this.v$.$invalid;
+    },
+    isDirty() {
+      return this.v$.$anyDirty;
+    },
+  },
+  created() {
+    this.username = localStorage.getItem("SSO_username");
+  },
   methods: {
-    async login() {
+    async kirim() {
       let vm = this;
       vm.state.username = localStorage.getItem("SSO_username");
       let login = await vm.$axios.post("users/changePasswordOTP", vm.state);
       console.log(login);
       if (login.status == 200) {
-        console.log("ok");
-        if (login.data.message == "sukses") {
+        vm.show = true;
+        vm.msg = login.data.message;
+        vm.color = "alert alert-success alert-dismissible fade show";
+        setTimeout(() => {
+          vm.show = false;
           this.$router.push({ path: "/" });
-        }
+        }, 4000);
+      } else {
+        vm.show = true;
+        vm.msg = login.data.message;
+        vm.color = "alert alert-danger alert-dismissible fade show";
+        setTimeout(() => {
+          vm.show = false;
+        }, 4000);
       }
-    },
-    async recaptcha() {
-      // (optional) Wait until recaptcha has been loaded.
-      await this.$recaptchaLoaded();
-
-      // Execute reCAPTCHA with action "login".
-      const token = await this.$recaptcha("login");
-      if (token) {
-        console.log("ok");
-        this.login();
-      }
-      // Do stuff with the received token.
     },
   },
 };
@@ -158,6 +168,7 @@ export default {
   background-position: center center;
   background-attachment: fixed;
   min-height: 100vh;
+  padding: 10%;
   /* background-color: red; */
   /* color: aqua; */
 }
@@ -166,74 +177,44 @@ export default {
   margin: 0 auto;
   width: 100%;
   max-width: 40rem;
-  font-size: 4rem;
+  font-size: 30px;
   text-align: center;
+}
+
+img {
+  height: 50px;
+  width: 50px;
 }
 
 .card {
   width: 90%;
-  max-width: 500px;
-  padding: 5rem 2.5rem;
+  max-width: 480px;
+  height: 621px;
+  padding: 2rem 2.5rem;
+  text-align: start;
 
   border-radius: 1rem;
-  border: 1px solid transparent;
-  background-color: rgba(225, 225, 225, 0.1);
-
-  backdrop-filter: blur(1rem);
-  box-shadow: 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.5);
-
-  border-top-color: rgba(225, 225, 225, 0.5);
-  border-left-color: rgba(225, 225, 225, 0.5);
-  border-bottom-color: rgba(225, 225, 225, 0.1);
-  border-right-color: rgba(225, 225, 225, 0.1);
 }
 
-.card:hover {
-  width: 90%;
-  max-width: 500px;
-  padding: 5rem 2.5rem;
-
-  border-radius: 1rem;
-  border: 1px solid transparent;
-  color: black;
-  background-color: linear-gradient(
-    to right bottom,
-    rgba(225, 225, 225, 0.5),
-    rgba(225, 225, 225, 0.1)
-  );
-
-  backdrop-filter: blur(1rem);
-  box-shadow: 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.5);
-
-  border-top-color: rgba(225, 225, 225, 0.5);
-  border-left-color: rgba(225, 225, 225, 0.5);
-  border-bottom-color: rgba(225, 225, 225, 0.1);
-  border-right-color: rgba(225, 225, 225, 0.1);
+.card-title {
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 38px;
+}
+.card-instruction {
+  font-weight: 200;
+  font-size: 14px;
+  line-height: 24px;
 }
 .btn {
   width: 100%;
+  height: 44px;
+  background-color: #027a48;
+  color: #ffffff;
 }
 .register:hover {
   font-size: 16px;
   font-weight: 500;
   color: blue;
-}
-
-.lupa:hover {
-  font-size: 16px;
-  font-weight: 500;
-  color: blue;
-}
-
-input {
-  height: 50px;
-  font-size: 20px;
-  align-items: center;
-  text-align: center;
-}
-label {
-  font-weight: 500;
-  font-size: 25px;
-  letter-spacing: 2px;
 }
 </style>

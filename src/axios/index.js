@@ -2,8 +2,6 @@ import axios from "axios";
 import moment from "moment";
 import "moment/locale/id";
 import qs from "qs";
-// import jwt_decode from "jwt-decode";
-// import dayjs from "dayjs";
 
 const ip = "http://localhost:8869/";
 let token = localStorage.getItem("SSO_access_token");
@@ -15,7 +13,7 @@ let datas = {
   refresh_token: localStorage.getItem("SSO_refresh_token"),
 };
 
-export function setToken(token){
+export function setToken(token) {
   axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
 }
 
@@ -27,22 +25,31 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use(async (req) => {
-  if (!token) {
+  if (token) {
     token = localStorage.getItem("SSO_access_token");
     req.headers.Authorization = `Bearer ${token}`;
-  }
+  } 
 
-  const isExpired = expired < moment();
+    const isExpired = expired <= moment().format("llll");
+      token = localStorage.getItem("SSO_access_token");
+      req.headers.Authorization = `Bearer ${token}`;
 
-  if (isExpired) {
-    let response = await axios.post(ip + "oauth/token", qs.stringify(datas));
-    console.log(response.data.accessToken,'baru')
-    localStorage.setItem("SSO_access_token", response.data.accessToken);
-    req.headers.Authorization = `Bearer ${response.data.accessToken}`;
-    return req;
-  } else {
-    return req;
-  }
+    if (isExpired && token) {
+      try {
+        console.log(isExpired,'exp');
+        let response = await axios.post(
+          ip + "oauth/token",
+          qs.stringify(datas)
+        );
+        localStorage.setItem("SSO_access_token", response.data.accessToken);
+        req.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        return req;
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      return req;
+    }
 });
 
 export default instance;
