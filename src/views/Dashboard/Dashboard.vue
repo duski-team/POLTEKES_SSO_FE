@@ -238,7 +238,6 @@ export default {
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
-  height: 100vh;
   /* color: aqua; */
 }
 

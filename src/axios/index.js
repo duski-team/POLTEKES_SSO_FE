@@ -6,12 +6,6 @@ import qs from "qs";
 const ip = "http://localhost:8869/";
 let token = localStorage.getItem("SSO_access_token");
 let expired = moment(localStorage.getItem("expired")).format("llll");
-let datas = {
-  client_id: localStorage.getItem("SSO_client_id"),
-  grant_type: "refresh_token",
-  client_secret: "SSO",
-  refresh_token: localStorage.getItem("SSO_refresh_token"),
-};
 
 export function setToken(token) {
   axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
@@ -35,8 +29,14 @@ instance.interceptors.request.use(async (req) => {
     req.headers.Authorization = `Bearer ${token}`;
     return req;
   } else {
-    const isExpired = expired <= moment().format("llll");
+    const isExpired = expired < moment().format("llll");
     if (isExpired && token) {
+      let datas = {
+        client_id: localStorage.getItem("SSO_client_id"),
+        grant_type: "refresh_token",
+        client_secret: "SSO",
+        refresh_token: localStorage.getItem("SSO_refresh_token"),
+      };
       try {
         console.log(isExpired, "exp");
         let response = await axios.post(

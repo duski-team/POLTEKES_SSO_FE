@@ -31,7 +31,7 @@
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
                 v-model="data.username"
-                placeholder="Username/e-mail"
+                placeholder="Username / e-mail"
               />
             </div>
             <div class="mb-3">
@@ -46,6 +46,10 @@
                 placeholder="password"
                 @keydown.enter.prevent="login()"
               />
+            </div>
+            <div class="lupa" @click="$router.push('/lupaPassword')">
+              <p> </p>
+              <p>Forgot Password</p>
             </div>
             <div class="mb-3 mt-3">
               <div class="d-flex justify-content-center">
@@ -70,13 +74,6 @@
                 >
                   Daftar Sekarang
                 </div>
-                <!-- <div class="col-2">|</div>
-                <div
-                  class="lupa col-5"
-                  @click="$router.push({ path: '/lupaPassword' })"
-                >
-                  Lupa Password
-                </div> -->
               </div>
             </div>
           </div>
@@ -241,6 +238,7 @@ export default {
   width: 100%;
   background-color: #027a48;
   color: #ffffff;
+  letter-spacing: 1px;
 }
 .register {
   font-size: 14px;
@@ -259,10 +257,20 @@ export default {
   color: blue;
 } */
 
-.lupa:hover {
-  transform: scale(1.1);
-  font-size: 16px;
+.lupa {
+  font-size: 14px;
   font-weight: 500;
-  color: blue;
+  color: #d92d20;
+  display: flex;
+  justify-content: space-between;
+  line-height: 16px;
+}
+
+.lupa:hover {
+  transform: scale(1.01);
+  font-size: 14px;
+  font-weight: 500;
+  color: #d92d20;
+  line-height: 16px;
 }
 </style>

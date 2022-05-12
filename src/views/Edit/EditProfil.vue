@@ -22,58 +22,95 @@
           </div>
         </div>
         <div class="jurusan-wrapper mt-3">
-          <h5 style="line-height: 14px; font-weight:700;">Jurusan</h5>
+          <h5 style="line-height: 14px; font-weight: 700">Jurusan</h5>
           <p style="line-height: 14px; font-size: 14px">Prodi Jurusan</p>
         </div>
-        <div class="line mt-1 mb-1"></div>
-         <div class="role">
-            <div>
-              <p class="mr-1">{{ biodata.role.toUpperCase() }}</p>
-            </div>
-            <div><p>|</p></div>
-            <div>
-              <button class="btn ml-1" style="color: #027a48">
-                <strong>{{ biodata.identity }}</strong>
-              </button>
-            </div>
+        <!-- <div class="line mt-1 mb-1"></div> -->
+        <div class="role mt-3">
+          <button @click="$router.push({ path: '/dashboard' })" class="btn-red">
+            <p>Kembali</p>
+          </button>
+          <div>
+            <button class="btn-green">
+              <p>Simpan</p>
+            </button>
           </div>
+        </div>
       </div>
       <div class="tools text-start">
         <div class="box-info">
           <div class="input-box">
-              <span class="details">Email Aktif *</span>
-              <input
-                type="text"
-                placeholder="Masukkan email lengkap"
-                required
-                v-model="biodata.username"
-              />
-            </div>
+            <span class="details d-flex"
+              ><p class="input-label text-strong">Nama </p>
+              <p class="text-muted fst-italic">* tidak dapat diubah</p></span
+            >
+            <input
+              type="text"
+              disabled
+              placeholder="Masukkan email lengkap"
+              required
+              v-model="biodata.nama_lengkap_users"
+            />
+          </div>
+          <div class="input-box">
+            <span class="details d-flex"
+              ><p class="input-label text-strong">Email Official </p>
+              <p class="text-muted fst-italic">* tidak dapat diubah</p></span
+            >
+            <input
+              type="text"
+              disabled
+              placeholder="Masukkan email lengkap"
+              required
+              v-model="biodata.username"
+            />
+          </div>
+          <div class="input-box">
+            <span class="details"><p>Mobile Phone</p></span>
+            <input
+              type="text"
+              placeholder="Masukkan email lengkap"
+              required
+              v-model="biodata.no_hp_users"
+            />
+          </div>
         </div>
+
         <div class="box-info">
-          <div class="box-title mb-3" style="color: #027a48">
-            Informasi Baru
+          <div class="input-box">
+            <span class="details d-flex"
+              ><p class="input-label text-strong">Identitas </p>
+              <p class="text-muted fst-italic">* tidak dapat diubah</p></span
+            >
+            <input
+              type="text"
+              disabled
+              placeholder="Masukkan email lengkap"
+              required
+              v-model="biodata.identity"
+            />
           </div>
-          <div class="box-content2">
-            <div>
-              <img class="icons2" src="https://picsum.photos/100/100" alt="" />
-            </div>
-            <div>
-              <h6>Lorem</h6>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-            </div>
+          <div class="input-box">
+            <span class="details d-flex"
+              ><p class="input-label text-strong">NIK </p>
+              <p class="text-muted fst-italic">* tidak dapat diubah</p></span
+            >
+            <input
+              type="text"
+              disabled
+              placeholder="Masukkan email lengkap"
+              required
+              v-model="biodata.NIK"
+            />
           </div>
-          <div class="box-content2">
-            <div>
-              <img class="icons2" src="https://picsum.photos/100/101" alt="" />
-            </div>
-            <div>
-              <h6>Lorem</h6>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-            </div>
-          </div>
-          <div class="box-title mb-3" style="color: #027a48">
-            Baca Informasi ->
+          <div class="input-box">
+            <span class="details"> <p>Email Pribadi</p></span>
+            <input
+              type="text"
+              placeholder="Masukkan email lengkap"
+              required
+              v-model="biodata.username"
+            />
           </div>
         </div>
       </div>
@@ -116,10 +153,10 @@ export default {
         console.log(error.response);
       }
     },
-    goApp(x) {
-      window.open(
-        x.redirect_uri + "?token=" + localStorage.getItem("SSO_access_token")
-      );
+    async update() {
+      let vm = this;
+      let update = await vm.$axios.post("users/update", vm.biodata);
+      console.log(update);
     },
   },
 };
@@ -232,7 +269,7 @@ export default {
 .role {
   display: flex;
   justify-content: space-between;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 24px;
   width: 100%;
 }
@@ -295,7 +332,7 @@ export default {
 .box-info {
   width: 80%;
   /* background-color: #027a48; */
-  padding: 2rem;
+  padding: 1.5rem;
   height: 100%;
   align-items: flex-start;
   justify-content: space-between;
@@ -394,5 +431,64 @@ h6 {
 
 img {
   cursor: pointer;
+}
+
+input {
+  height: 45px;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  padding-left: 1rem;
+  border-color: solid 1px #d0d5dd;
+  color: black;
+}
+
+input:disabled {
+  background-color: #d0d5dd;
+  color: black;
+  border-color: solid 1px #d0d5dd;
+}
+
+.input-label{
+  font-weight: 700;
+}
+
+.forms {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+}
+
+.input-box {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.btn-green {
+  width: 130px;
+  padding-top: 10px;
+  background-color: #027a48;
+  color: #ffffff;
+  border: transparent;
+  border-radius: 10px;
+  height: 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-red {
+  width: 130px;
+  padding-top: 10px;
+  background-color: #d92d20;
+  color: #ffffff;
+  border: transparent;
+  border-radius: 10px;
+  height: 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>

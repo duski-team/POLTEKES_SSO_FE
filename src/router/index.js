@@ -90,26 +90,33 @@ const router = createRouter({
 
 router.beforeEach(function (to, from, next) {
   let token = localStorage.getItem("SSO_access_token") != null;
-  // let otp = localStorage.getItem("kode_otp");
+  let otp = localStorage.getItem("kode_otp");
   let too = to.path;
   if (too == "/logout") next();
   if (!token) {
     if (to.meta.requiresAuth && too != "/") {
       next({ path: "/" });
     } else {
-      next();
+      if (to.meta.requiresOTP) {
+        if (otp) {
+          next();
+        } else {
+          next({ path: "/" });
+        }
+      } else {
+        next();
+      }
     }
   } else {
     if (too == "/logout") {
       localStorage.clear();
       next({ path: "/" });
     } else {
-      if(to.meta.requiresAuth){
-        next()
-      }else{
-        next({path:'/dashboard'})
+      if (to.meta.requiresAuth) {
+        next();
+      } else {
+        next({ path: "/dashboard" });
       }
-      
     }
   }
 });

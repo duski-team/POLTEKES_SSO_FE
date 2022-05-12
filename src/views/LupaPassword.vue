@@ -30,8 +30,7 @@
               <div class="d-flex justify-content-center">
                 <div class="col-12">
                   <button
-                    href="#"
-                    class="btn btn-outline-primary"
+                    class="btn btn-outline-success"
                     @click="kirim()"
                   >
                     Kirim Permintaan Reset Password

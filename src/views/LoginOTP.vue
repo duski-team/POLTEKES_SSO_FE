@@ -181,7 +181,7 @@ img {
   color: #ffffff;
   background-color: #027a48;
   border: solid 3px;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 input {
@@ -207,6 +207,5 @@ label {
 }
 .alert {
   font-size: 13px;
-  color: aqua;
 }
 </style>
