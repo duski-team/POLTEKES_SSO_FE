@@ -13,11 +13,22 @@
               You need to update your password because this is the first time
               you are signing in or because your password has expired.
             </h5>
+            <div v-if="show">
+              <div :class="color" role="alert">
+                <strong>Perhatian!</strong> {{ msg }}
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                ></button>
+              </div>
+            </div>
             <div class="mb-3">
               <input
-                type="text"
+                type="password"
                 class="form-control"
-                id="exampleInputpassword"
+                id="exampleInputpassword1"
                 v-model="state.password_lama"
                 placeholder="Password Saat Ini"
                 @keydown.enter.prevent="kirim()"
@@ -28,9 +39,9 @@
             </div>
             <div class="mb-3">
               <input
-                type="text"
+                type="password"
                 class="form-control"
-                id="exampleInputpassword"
+                id="exampleInputpassword2"
                 v-model="state.password_baru"
                 placeholder="Password Baru"
                 @keydown.enter.prevent="kirim()"
@@ -41,9 +52,9 @@
             </div>
             <div class="mb-3">
               <input
-                type="text"
+                type="password"
                 class="form-control"
-                id="exampleInputpassword"
+                id="exampleInputpassword3"
                 v-model="state.password2"
                 placeholder="Konfirm Password"
                 @keydown.enter.prevent="kirim()"
@@ -53,10 +64,21 @@
               > -->
             </div>
             <div class="mb-3 mt-3">
-              <div class="d-flex justify-content-center">
+              <div class="d-flex justify-content-center align-items-center">
                 <div class="col-12">
-                  <button class="btn btn-outline-primary" @click="kirim()">
-                    Update Password dan Sign in
+                  <button
+                    :disabled="!isValid || busy"
+                    class="btn btn-outline-success d-flex justify-content-center"
+                    @click="kirim()"
+                  >
+                    <div
+                      v-if="busy"
+                      class="spinner-grow text-dark spinner-grow-sm mt-1"
+                      role="status"
+                    >
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                    <div>Update Password dan Sign in</div>
                   </button>
                 </div>
               </div>
@@ -77,8 +99,11 @@ export default {
   name: "1stLogin",
   data() {
     return {
-      showing: false,
+      show: false,
       username: "",
+      busy: "",
+      msg: "",
+      color: "",
     };
   },
   setup() {
@@ -96,7 +121,7 @@ export default {
         },
         password_baru: {
           required,
-          minLength: minLength(10),
+          minLength: minLength(6),
         },
         password2: {
           required,
@@ -105,26 +130,70 @@ export default {
       };
     });
 
-    const v$ = useVuelidate(state, rules);
+    const v$ = useVuelidate(rules, state);
 
     return {
       v$,
       state,
     };
   },
+  computed: {
+    formString() {
+      return JSON.stringify(this.state);
+    },
+    isValid() {
+      return !this.v$.$invalid;
+    },
+    isDirty() {
+      return this.v$.$anyDirty;
+    },
+  },
   created() {
     this.username = localStorage.getItem("SSO_username");
   },
   methods: {
-    async login() {
+    async kirim() {
       let vm = this;
-      vm.state.username = localStorage.getItem("SSO_username");
-      let login = await vm.$axios.post("users/changepassword", vm.state);
-      console.log(login);
-      if (login.status == 200) {
-        console.log("ok");
-        this.$router.push({ path: "/login" });
+      if (vm.isValid) {
+        vm.busy = true;
+        vm.state.username = localStorage.getItem("SSO_username");
+        let login = await vm.$axios.post("users/changepassword", vm.state);
+        console.log(login);
+        if (login.data.status == 200) {
+          if (login.data.message == "sukses") {
+            console.log("ok", this.isValid, this.busy);
+            vm.busy = false;
+            vm.show = true;
+            vm.color = "alert alert-success alert-dismissible fade show";
+            vm.msg = login.data.message;
+            setTimeout(() => {
+              vm.show = false;
+            }, 4000);
+            this.$router.push({ path: "/dashboard" });
+          } else {
+            vm.busy = false;
+            vm.show = true;
+            vm.color = "alert alert-danger alert-dismissible fade show";
+            vm.msg = login.data.message;
+            setTimeout(() => {
+              vm.show = false;
+            }, 4000);
+          }
+        } else {
+          vm.busy = false;
+          vm.show = true;
+          vm.color = "alert alert-color alert-dismissible fade show";
+          vm.msg = login.data.message;
+          setTimeout(() => {
+            vm.show = false;
+          }, 4000);
+        }
       }
+    },
+  },
+  watch: {
+    isValid: function (val) {
+      console.log(val);
     },
   },
 };
@@ -188,9 +257,16 @@ img {
   background-color: #027a48;
   color: #ffffff;
 }
-.register:hover {
+
+.btn:disabled {
+  width: 100%;
+  height: 44px;
+  background-color: #027a48;
+  color: black;
+}
+/* .register:hover {
   font-size: 16px;
   font-weight: 500;
   color: blue;
-}
+} */
 </style>

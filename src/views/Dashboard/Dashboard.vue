@@ -198,7 +198,7 @@ export default {
       app: "",
     };
   },
-  mounted() {
+  created() {
     this.getData();
   },
   methods: {

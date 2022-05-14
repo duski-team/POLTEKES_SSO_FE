@@ -295,6 +295,12 @@ input {
   background-color: #027a48;
   color: #ffffff;
 }
+
+.btn:disabled {
+  width: 100%;
+  background-color: #027a48;
+  color: black;
+}
 .register {
   font-size: 14px;
 }

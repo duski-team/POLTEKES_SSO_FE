@@ -18,21 +18,20 @@
       </div>
     </div>
     <div class="row d-flex justify-content-center mt-4">
-      <div class="col-md-6 btn-green" @click="login()">
+      <button class="col-md-6 btn-green" @click="login()" :disabled="busy" >
         <p>Update Password Anda dan Login</p>
-      </div>
+      </button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props:['state'],
   data() {
     return {
-      data: {
-        syarat_kebijakan: 0,
-        step: "step4",
-      },
+      msg:"",
+      busy: false
     };
   },
   methods: {
@@ -42,17 +41,20 @@ export default {
     },
     async kirim() {
       let vm = this;
-      let kirim = await vm.$axios.post("users/kirimUlangOTP", vm.data);
+      vm.busy = true
+      let kirim = await vm.$axios.post("users/kirimUlangPassword", vm.state);
       console.log(kirim);
       if (kirim.data.status == 201) {
-        vm.msg = kirim.data.message;
-        vm.showing = true;
-        setTimeout(() => {
-          vm.showing = false;
-        }, 4000);
+        vm.busy = false
+        alert(kirim.data.message)
+        // vm.showing = true;
+        // setTimeout(() => {
+        //   vm.showing = false;
+        // }, 4000);
       } else {
-        localStorage.setItem("username", this.data.username);
-        this.$router.push({ path: "/OTP" });
+        vm.busy = false
+        localStorage.setItem("username", this.state.username);
+        this.$router.push({ path: "/" });
       }
     },
   },
@@ -114,5 +116,6 @@ export default {
 .kirim {
   font-weight: 700;
   color: #1c3aa9;
+  cursor: pointer;
 }
 </style>

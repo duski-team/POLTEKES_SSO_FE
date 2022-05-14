@@ -90,6 +90,7 @@ export default {
       username: "",
       password_baru: "",
       password2: "",
+      kode_otp: "",
     });
 
     const rules = computed(() => {
@@ -125,22 +126,32 @@ export default {
     },
   },
   created() {
-    this.username = localStorage.getItem("SSO_username");
+    this.username = localStorage.getItem("username");
   },
   methods: {
     async kirim() {
       let vm = this;
-      vm.state.username = localStorage.getItem("SSO_username");
+      vm.state.username = localStorage.getItem("username");
+      vm.state.kode_otp = localStorage.getItem("kode_otp");
       let login = await vm.$axios.post("users/changePasswordOTP", vm.state);
       console.log(login);
-      if (login.status == 200) {
-        vm.show = true;
-        vm.msg = login.data.message;
-        vm.color = "alert alert-success alert-dismissible fade show";
-        setTimeout(() => {
-          vm.show = false;
-          this.$router.push({ path: "/" });
-        }, 4000);
+      if (login.data.status == 200) {
+        if (login.data.status == "sukses") {
+          vm.show = true;
+          vm.msg = login.data.message;
+          vm.color = "alert alert-success alert-dismissible fade show";
+          setTimeout(() => {
+            vm.show = false;
+            this.$router.push({ path: "/" });
+          }, 4000);
+        } else {
+          vm.show = true;
+          vm.msg = login.data.message;
+          vm.color = "alert alert-danger alert-dismissible fade show";
+          setTimeout(() => {
+            vm.show = false;
+          }, 4000);
+        }
       } else {
         vm.show = true;
         vm.msg = login.data.message;

@@ -165,7 +165,7 @@
           @form="setForm($event)"
         />
         <Step3 v-if="aktiv == 'step3'" @kebijakan="setKebijakan($event)" />
-        <Step4 v-if="aktiv == 'step4'" />
+        <Step4 v-if="aktiv == 'step4'" :state="state" />
       </div>
     </div>
   </div>
@@ -175,7 +175,7 @@
 // import useValidate from "@vuelidate/core";
 // import { required, email, minLength, numeric } from "@vuelidate/validators";
 import { reactive } from "vue";
-import qs from "qs";
+// import qs from "qs";
 import Step1 from "./Register1.vue";
 import Step2 from "./Register2.vue";
 import Step3 from "./Register3.vue";
@@ -191,6 +191,7 @@ export default {
     return {
       aktiv: "step1",
       valid: false,
+      emails: false
     };
   },
   setup() {
@@ -288,7 +289,7 @@ export default {
           this.aktiv = "step3";
         }
       } else if (x == "step4") {
-        if (vm.state.syarat_kebijakan != 0) {
+        if (vm.state.syarat_kebijakan != 0 && vm.emails) {
           this.aktiv = "step4";
         }
       }
@@ -296,24 +297,19 @@ export default {
     async register() {
       let vm = this;
       vm.busy = true;
-      let register = await vm.$axios.post(
-        "users/register",
-        qs.stringify(vm.data),
-        {
-          headers: {
-            "content-type": "application/x-www-form-urlencoded;charset=utf-8",
-          },
-        }
-      );
+      console.log(vm.state);
+      let register = await vm.$axios.post("users/register", vm.state);
       console.log(register);
       if (register.data.status == 200) {
         if (register.data.message == "sukses") {
           this.aktiv = "step4";
+          this.emails = true
         } else {
           alert(register.data.message);
           console.log(vm.state.identity);
         }
       } else {
+        alert(register.data.message);
         console.log("error");
       }
     },

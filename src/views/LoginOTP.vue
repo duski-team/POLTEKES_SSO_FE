@@ -83,7 +83,7 @@ export default {
     },
   },
   created() {
-    this.data.username = localStorage.getItem("SSO_username");
+    this.data.username = localStorage.getItem("username");
   },
   methods: {
     async login() {
@@ -98,7 +98,7 @@ export default {
           vm.show = false;
         }, 4000);
       } else {
-        localStorage.getItem("kode_otp", vm.data.kode_otp);
+        localStorage.setItem("kode_otp", vm.data.kode_otp);
         this.$router.push({ path: "/gantiPassword2" });
       }
     },

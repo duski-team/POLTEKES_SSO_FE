@@ -31,7 +31,7 @@
             <p>Kembali</p>
           </button>
           <div>
-            <button class="btn-green">
+            <button class="btn-green" @click="update()">
               <p>Simpan</p>
             </button>
           </div>
@@ -41,7 +41,7 @@
         <div class="box-info">
           <div class="input-box">
             <span class="details d-flex"
-              ><p class="input-label text-strong">Nama </p>
+              ><p class="input-label text-strong">Nama</p>
               <p class="text-muted fst-italic">* tidak dapat diubah</p></span
             >
             <input
@@ -54,7 +54,7 @@
           </div>
           <div class="input-box">
             <span class="details d-flex"
-              ><p class="input-label text-strong">Email Official </p>
+              ><p class="input-label text-strong">Email Official</p>
               <p class="text-muted fst-italic">* tidak dapat diubah</p></span
             >
             <input
@@ -79,7 +79,7 @@
         <div class="box-info">
           <div class="input-box">
             <span class="details d-flex"
-              ><p class="input-label text-strong">Identitas </p>
+              ><p class="input-label text-strong">Identitas</p>
               <p class="text-muted fst-italic">* tidak dapat diubah</p></span
             >
             <input
@@ -92,7 +92,7 @@
           </div>
           <div class="input-box">
             <span class="details d-flex"
-              ><p class="input-label text-strong">NIK </p>
+              ><p class="input-label text-strong">NIK</p>
               <p class="text-muted fst-italic">* tidak dapat diubah</p></span
             >
             <input
@@ -156,6 +156,9 @@ export default {
     async update() {
       let vm = this;
       let update = await vm.$axios.post("users/update", vm.biodata);
+      if (update.data.status == 200) {
+        alert(update.data.message);
+      }
       console.log(update);
     },
   },
@@ -448,7 +451,7 @@ input:disabled {
   border-color: solid 1px #d0d5dd;
 }
 
-.input-label{
+.input-label {
   font-weight: 700;
 }
 
