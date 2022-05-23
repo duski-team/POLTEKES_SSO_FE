@@ -204,6 +204,7 @@ export default {
   methods: {
     async getData() {
       let vm = this;
+      this.$store.dispatch('set_loading', true)
       try {
         let biodata = await vm.$axios.get(
           "users/detailsById/" + vm.$store.state.sso_user_id
@@ -213,7 +214,9 @@ export default {
         let app = await vm.$axios.get("client/list");
         // console.log(biodata.data);
         vm.app = app.data.data;
+        this.$store.dispatch('set_loading', false)
       } catch (error) {
+        this.$store.dispatch('set_loading', false)
         console.log(error.response);
       }
     },

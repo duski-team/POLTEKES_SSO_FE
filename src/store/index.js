@@ -42,6 +42,9 @@ import createPersistedState from "vuex-persistedstate";
       state.expired = null
       state.username = null
       state.sso_user_status = null
+    },
+    set_loading_state(state, value){
+      state.loading = value
     }
   }
   const actions = {
@@ -54,6 +57,9 @@ import createPersistedState from "vuex-persistedstate";
     },
     clear_token({commit}){
       commit('set_clear_token')
+    },
+    set_loading({commit}, value){
+      commit('set_loading_state', value)
     }
 
   }

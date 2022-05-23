@@ -139,14 +139,16 @@ export default {
   methods: {
     async getData() {
       let vm = this;
+      this.$store.dispatch("set_loading", true);
       try {
         let biodata = await vm.$axios.get(
           "users/detailsById/" + vm.$store.state.sso_user_id
         );
         vm.biodata = biodata.data.data[0];
-
+        this.$store.dispatch("set_loading", false);
       } catch (error) {
         console.log(error.response);
+        this.$store.dispatch("set_loading", false);
       }
     },
     async update() {

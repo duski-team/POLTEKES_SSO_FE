@@ -102,9 +102,13 @@ export default {
       msg: "",
     };
   },
+  created(){
+    this.$store.dispatch('set_loading', false)
+  },  
   methods: {
     async login() {
       let vm = this;
+      this.$store.dispatch('set_loading', true)
       try {
         let login = await vm.$axios.post("oauth/login", qs.stringify(vm.data), {
           headers: {
@@ -116,19 +120,21 @@ export default {
           vm.$store.dispatch('save_token_login', login.data)
           console.log(vm.$store.state.sso_user_status, 'acc token')
 
-
           if (vm.$store.state.sso_user_status == 0) {
             vm.$router.push({ path: "/1stlogin" });
           } else {
             vm.$router.push({ path: "/dashboard" });
           }
+          this.$store.dispatch('set_loading', false)
         } else {
           console.log("error");
+          this.$store.dispatch('set_loading', false)
         }
       } catch (error) {
         if (error) {
           console.log(error);
           this.show = true;
+          this.$store.dispatch('set_loading', false)
         }
       }
     },
