@@ -55,7 +55,7 @@ export default {
       let vm = this;
       try {
         let biodata = await vm.$axios.get(
-          "users/detailsById/" + localStorage.getItem("SSO_user_id")
+          "users/detailsById/" + vm.$store.state.sso_user_id
         );
         vm.data = biodata.data.data[0];
       } catch (error) {
@@ -63,8 +63,8 @@ export default {
       }
     },
     logout() {
-      localStorage.clear();
-      this.$router.push({ path: "/" });
+      this.$store.dispatch('clear_token')
+      this.$router.push({path:'/'})
       console.log("logout");
     },
   },

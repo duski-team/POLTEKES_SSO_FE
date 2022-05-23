@@ -7,13 +7,13 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "bootstrap/dist/css/bootstrap.css";
-import axios from "@/axios";
+// import axios from "@/axios";
 import moment from "moment";
 import "moment/locale/id";
 import ip from "@/ip";
 import "bootstrap/dist/js/bootstrap.js";
 import qs from "qs";
-// import instance from "@/axios/index.js"
+import instance from "@/axios/index.js"
 
 /* import the fontawesome core */
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
@@ -34,7 +34,7 @@ const app = createApp(App)
   .use(bootstrap)
   .use(VueReCaptcha, { siteKey: "6LdGiIgfAAAAABQt0Cg0-iOrjyvsFGOd43NAqp1q" });
 
-app.config.globalProperties.$axios = axios;
+app.config.globalProperties.$axios = instance;
 app.config.globalProperties.$moment = moment;
 app.config.globalProperties.ip = ip;
 app.config.globalProperties.qs = qs;

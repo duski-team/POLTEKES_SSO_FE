@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- {{$store.state.sso_access_token}} {{$store.state.expired}} -->
     <router-view />
   </div>
 </template>

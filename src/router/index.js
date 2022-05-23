@@ -8,6 +8,7 @@ import LoginOTP from "../views/LoginOTP.vue";
 import LupaPassword from "../views/LupaPassword.vue";
 import GantiPassword from "../views/GantiPassword.vue";
 import GantiPasswordOTP from "../views/GantiPasswordOTP.vue";
+import store from '@/store/index.js';
 
 const routes = [
   {
@@ -89,7 +90,7 @@ const router = createRouter({
 });
 
 router.beforeEach(function (to, from, next) {
-  let token = localStorage.getItem("SSO_access_token") != null;
+  let token = store.state.sso_access_token != null;
   let otp = localStorage.getItem("kode_otp");
   let too = to.path;
   if (too == "/logout") next();
@@ -109,8 +110,7 @@ router.beforeEach(function (to, from, next) {
     }
   } else {
     if (too == "/logout") {
-      localStorage.clear();
-      next({ path: "/" });
+        next({ path: "/" });
     } else {
       if (to.meta.requiresAuth) {
         next();

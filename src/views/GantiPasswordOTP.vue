@@ -26,7 +26,7 @@
             </div>
             <div class="mb-3">
               <input
-                type="text"
+                type="password"
                 class="form-control"
                 id="exampleInputpassword"
                 v-model="state.password_baru"
@@ -39,7 +39,7 @@
             </div>
             <div class="mb-3">
               <input
-                type="text"
+                type="password"
                 class="form-control"
                 id="exampleInputpassword"
                 v-model="state.password2"
@@ -136,7 +136,7 @@ export default {
       let login = await vm.$axios.post("users/changePasswordOTP", vm.state);
       console.log(login);
       if (login.data.status == 200) {
-        if (login.data.status == "sukses") {
+        if (login.data.message == "sukses") {
           vm.show = true;
           vm.msg = login.data.message;
           vm.color = "alert alert-success alert-dismissible fade show";
@@ -217,11 +217,12 @@ img {
   font-size: 14px;
   line-height: 24px;
 }
-.btn {
+
+.btn:disabled {
   width: 100%;
   height: 44px;
   background-color: #027a48;
-  color: #ffffff;
+  color: black;
 }
 .register:hover {
   font-size: 16px;

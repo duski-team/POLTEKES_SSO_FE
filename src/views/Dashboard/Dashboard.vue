@@ -206,12 +206,12 @@ export default {
       let vm = this;
       try {
         let biodata = await vm.$axios.get(
-          "users/detailsById/" + localStorage.getItem("SSO_user_id")
+          "users/detailsById/" + vm.$store.state.sso_user_id
         );
         vm.biodata = biodata.data.data[0];
 
         let app = await vm.$axios.get("client/list");
-        console.log(app.data.data);
+        // console.log(biodata.data);
         vm.app = app.data.data;
       } catch (error) {
         console.log(error.response);

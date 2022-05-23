@@ -111,16 +111,13 @@ export default {
             "content-type": "application/x-www-form-urlencoded;charset=utf-8",
           },
         });
-        console.log(login);
+        // console.log(login);
         if (login.status == 200) {
-          localStorage.setItem("SSO_access_token", login.data.accessToken);
-          localStorage.setItem("SSO_refresh_token", login.data.refreshToken);
-          localStorage.setItem("SSO_user_id", login.data.user.id);
-          localStorage.setItem("SSO_client_id", login.data.client.id);
-          localStorage.setItem("SSO_username", login.data.user.username);
-          localStorage.setItem("expired", login.data.accessTokenExpiresAt);
+          vm.$store.dispatch('save_token_login', login.data)
+          console.log(vm.$store.state.sso_user_status, 'acc token')
 
-          if (login.data.user.user_status == 0) {
+
+          if (vm.$store.state.sso_user_status == 0) {
             vm.$router.push({ path: "/1stlogin" });
           } else {
             vm.$router.push({ path: "/dashboard" });
