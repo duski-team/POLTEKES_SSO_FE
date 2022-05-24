@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="row d-flex justify-content-center mt-4">
-      <button class="col-md-6 btn-green" @click="login()" :disabled="busy" >
+      <button class="col-md-6 btn-green" @click="login()" :disabled="busy">
         <p>Update Password Anda dan Login</p>
       </button>
     </div>
@@ -27,11 +27,11 @@
 
 <script>
 export default {
-  props:['state'],
+  props: ["state"],
   data() {
     return {
-      msg:"",
-      busy: false
+      msg: "",
+      busy: false,
     };
   },
   methods: {
@@ -41,18 +41,18 @@ export default {
     },
     async kirim() {
       let vm = this;
-      vm.busy = true
+      vm.busy = true;
       let kirim = await vm.$axios.post("users/kirimUlangPassword", vm.state);
       console.log(kirim);
       if (kirim.data.status == 201) {
-        vm.busy = false
-        alert(kirim.data.message)
+        vm.busy = false;
+        alert(kirim.data.message);
         // vm.showing = true;
         // setTimeout(() => {
         //   vm.showing = false;
         // }, 4000);
       } else {
-        vm.busy = false
+        vm.busy = false;
         localStorage.setItem("username", this.state.username);
         this.$router.push({ path: "/" });
       }

@@ -191,7 +191,7 @@ export default {
     return {
       aktiv: "step1",
       valid: false,
-      emails: false
+      emails: false,
     };
   },
   setup() {
@@ -303,7 +303,7 @@ export default {
       if (register.data.status == 200) {
         if (register.data.message == "sukses") {
           this.aktiv = "step4";
-          this.emails = true
+          this.emails = true;
         } else {
           alert(register.data.message);
           console.log(vm.state.identity);

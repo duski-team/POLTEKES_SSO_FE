@@ -29,7 +29,11 @@
             class="dropdown-menu text-start"
             aria-labelledby="dropdownMenuProfil"
           >
-            <a class="dropdown-item logout" @click="$router.push({path:'/profil'})">Lihat Profil</a>
+            <a
+              class="dropdown-item logout"
+              @click="$router.push({ path: '/profil' })"
+              >Lihat Profil</a
+            >
             <a class="dropdown-item logout" @click="logout()">Log out</a>
           </div>
         </div>
@@ -63,8 +67,8 @@ export default {
       }
     },
     logout() {
-      this.$store.dispatch('clear_token')
-      this.$router.push({path:'/'})
+      this.$store.dispatch("clear_token");
+      this.$router.push({ path: "/" });
       console.log("logout");
     },
   },

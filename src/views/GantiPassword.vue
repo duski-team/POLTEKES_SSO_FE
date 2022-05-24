@@ -101,7 +101,7 @@ export default {
     return {
       show: false,
       username: "",
-      busy:false,
+      busy: false,
       msg: "",
       color: "",
     };

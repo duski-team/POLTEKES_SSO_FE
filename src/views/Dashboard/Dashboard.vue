@@ -32,7 +32,13 @@
             </div>
           </div>
           <div class="btn-wrapper mb-2">
-            <div type="button" class="btn btn-lihat" @click="$router.push({path:'/profil'})">Lihat Selengkapnya</div>
+            <div
+              type="button"
+              class="btn btn-lihat"
+              @click="$router.push({ path: '/profil' })"
+            >
+              Lihat Selengkapnya
+            </div>
           </div>
         </div>
         <div class="line"></div>
@@ -183,19 +189,24 @@
   <div>
     <Footer />
   </div>
+  <Popup :popup="popup" />
 </template>
 <script>
+import bootstrap from "bootstrap/dist/js/bootstrap.js";
 import Header from "@/components/header.vue";
 import Footer from "@/components/footer.vue";
+import Popup from "@/components/popup.vue";
 export default {
   components: {
     Header,
     Footer,
+    Popup,
   },
   data() {
     return {
       biodata: "",
       app: "",
+      popup: "",
     };
   },
   created() {
@@ -204,7 +215,7 @@ export default {
   methods: {
     async getData() {
       let vm = this;
-      this.$store.dispatch('set_loading', true)
+      this.$store.dispatch("set_loading", true);
       try {
         let biodata = await vm.$axios.get(
           "users/detailsById/" + vm.$store.state.sso_user_id
@@ -214,12 +225,26 @@ export default {
         let app = await vm.$axios.get("client/list");
         // console.log(biodata.data);
         vm.app = app.data.data;
-        this.$store.dispatch('set_loading', false)
+
+        let popup = await vm.$axios.get("pop_up/list");
+        console.log(popup.data.data[0]);
+        vm.popup = popup.data.data[0];
+        if (popup) {
+          let x = new bootstrap.Modal(
+            document.getElementById("exampleModalCenter"),
+            {}
+          );
+          x.show();
+        }
+        this.$store.dispatch("set_loading", false);
       } catch (error) {
-        this.$store.dispatch('set_loading', false)
+        this.$store.dispatch("set_loading", false);
         console.log(error.response);
       }
     },
+    // async getpopup() {
+    //   let vm = this;
+    // },
     goApp(x) {
       window.open(
         x.redirect_uri + "?token=" + localStorage.getItem("SSO_access_token")

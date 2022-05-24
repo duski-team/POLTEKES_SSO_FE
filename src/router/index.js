@@ -8,7 +8,7 @@ import LoginOTP from "../views/LoginOTP.vue";
 import LupaPassword from "../views/LupaPassword.vue";
 import GantiPassword from "../views/GantiPassword.vue";
 import GantiPasswordOTP from "../views/GantiPasswordOTP.vue";
-import store from '@/store/index.js';
+import store from "@/store/index.js";
 
 const routes = [
   {
@@ -110,7 +110,7 @@ router.beforeEach(function (to, from, next) {
     }
   } else {
     if (too == "/logout") {
-        next({ path: "/" });
+      next({ path: "/" });
     } else {
       if (to.meta.requiresAuth) {
         next();

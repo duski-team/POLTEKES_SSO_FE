@@ -29,10 +29,7 @@
             <div class="mb-3 mt-3">
               <div class="d-flex justify-content-center">
                 <div class="col-12">
-                  <button
-                    class="btn btn-outline-success"
-                    @click="kirim()"
-                  >
+                  <button class="btn btn-outline-success" @click="kirim()">
                     Kirim Permintaan Reset Password
                   </button>
                 </div>
