@@ -189,10 +189,9 @@
   <div>
     <Footer />
   </div>
-  <Popup :popup="popup" />
+  <Popup />
 </template>
 <script>
-import bootstrap from "bootstrap/dist/js/bootstrap.js";
 import Header from "@/components/header.vue";
 import Footer from "@/components/footer.vue";
 import Popup from "@/components/popup.vue";
@@ -215,7 +214,7 @@ export default {
   methods: {
     async getData() {
       let vm = this;
-      this.$store.dispatch("set_loading", true);
+      vm.$store.dispatch("set_loading", true);
       try {
         let biodata = await vm.$axios.get(
           "users/detailsById/" + vm.$store.state.sso_user_id
@@ -225,20 +224,9 @@ export default {
         let app = await vm.$axios.get("client/list");
         // console.log(biodata.data);
         vm.app = app.data.data;
-
-        let popup = await vm.$axios.get("pop_up/list");
-        console.log(popup.data.data[0]);
-        vm.popup = popup.data.data[0];
-        if (popup) {
-          let x = new bootstrap.Modal(
-            document.getElementById("exampleModalCenter"),
-            {}
-          );
-          x.show();
-        }
-        this.$store.dispatch("set_loading", false);
+        vm.$store.dispatch("set_loading", false);
       } catch (error) {
-        this.$store.dispatch("set_loading", false);
+        vm.$store.dispatch("set_loading", false);
         console.log(error.response);
       }
     },

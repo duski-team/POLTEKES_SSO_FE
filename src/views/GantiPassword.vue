@@ -155,17 +155,19 @@ export default {
     async kirim() {
       let vm = this;
       if (vm.isValid) {
+        this.$store.dispatch("set_loading", true);
         vm.busy = true;
-        vm.state.username = localStorage.getItem("SSO_username");
+        vm.state.username = vm.$store.state.sso_username;
         let login = await vm.$axios.post("users/changepassword", vm.state);
         console.log(login);
         if (login.data.status == 200) {
           if (login.data.message == "sukses") {
-            console.log("ok", this.isValid, this.busy);
+            // console.log("ok", this.isValid, this.busy);
             vm.busy = false;
             vm.show = true;
             vm.color = "alert alert-success alert-dismissible fade show";
             vm.msg = login.data.message;
+            this.$store.dispatch("set_loading", false);
             setTimeout(() => {
               vm.show = false;
             }, 4000);
@@ -175,6 +177,7 @@ export default {
             vm.show = true;
             vm.color = "alert alert-danger alert-dismissible fade show";
             vm.msg = login.data.message;
+            this.$store.dispatch("set_loading", false);
             setTimeout(() => {
               vm.show = false;
             }, 4000);
@@ -184,6 +187,7 @@ export default {
           vm.show = true;
           vm.color = "alert alert-color alert-dismissible fade show";
           vm.msg = login.data.message;
+          this.$store.dispatch("set_loading", false);
           setTimeout(() => {
             vm.show = false;
           }, 4000);

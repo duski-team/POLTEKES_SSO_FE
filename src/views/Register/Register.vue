@@ -298,17 +298,21 @@ export default {
       let vm = this;
       vm.busy = true;
       console.log(vm.state);
+      this.$store.dispatch("set_loading", true);
       let register = await vm.$axios.post("users/register", vm.state);
       console.log(register);
       if (register.data.status == 200) {
         if (register.data.message == "sukses") {
           this.aktiv = "step4";
           this.emails = true;
+          this.$store.dispatch("set_loading", false);
         } else {
           alert(register.data.message);
           console.log(vm.state.identity);
+          this.$store.dispatch("set_loading", false);
         }
       } else {
+        this.$store.dispatch("set_loading", false);
         alert(register.data.message);
         console.log("error");
       }

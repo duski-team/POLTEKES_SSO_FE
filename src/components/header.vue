@@ -61,6 +61,7 @@ export default {
         let biodata = await vm.$axios.get(
           "users/detailsById/" + vm.$store.state.sso_user_id
         );
+        console.log(biodata);
         vm.data = biodata.data.data[0];
       } catch (error) {
         console.log(error.response);

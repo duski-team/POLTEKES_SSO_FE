@@ -10,8 +10,10 @@ const state = {
   sso_username: null,
   sso_user_status: null,
   username: null,
+  kode_otp: null,
   loading: false,
   alert: false,
+  biodata: {},
 };
 
 const mutations = {
@@ -40,11 +42,17 @@ const mutations = {
     state.sso_client_id = null;
     state.sso_user_id = null;
     state.expired = null;
-    state.username = null;
+    state.sso_username = null;
     state.sso_user_status = null;
   },
   set_loading_state(state, value) {
     state.loading = value;
+  },
+  set_username_lupa(state, value) {
+    state.username = value;
+  },
+  set_kode_otp_lupa(state, value) {
+    state.kode_otp = value;
   },
 };
 const actions = {
@@ -60,6 +68,12 @@ const actions = {
   },
   set_loading({ commit }, value) {
     commit("set_loading_state", value);
+  },
+  set_username({ commit }, value) {
+    commit("set_username_lupa", value);
+  },
+  set_otp({ commit }, value) {
+    commit("set_kode_otp_lupa", value);
   },
 };
 const modules = {};

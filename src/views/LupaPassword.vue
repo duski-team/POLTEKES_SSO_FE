@@ -57,16 +57,20 @@ export default {
   methods: {
     async kirim() {
       let vm = this;
+      this.$store.dispatch("set_loading", true);
       let login = await vm.$axios.post("users/kirimUlangOTP", vm.data);
       console.log(login);
       if (login.data.status == 201) {
+        this.$store.dispatch("set_loading", false);
         vm.msg = login.data.message;
         vm.showing = true;
         setTimeout(() => {
           vm.showing = false;
         }, 4000);
       } else {
-        localStorage.setItem("username", this.data.username);
+        this.$store.dispatch("set_loading", false);
+        // localStorage.setItem("username", this.data.username);
+        vm.$store.dispatch("set_username_lupa", vm.data.username);
         this.$router.push({ path: "/OTP" });
       }
     },

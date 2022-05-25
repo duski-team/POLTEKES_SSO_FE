@@ -43,16 +43,38 @@
 </template>
 
 <script>
+import bootstrap from "bootstrap/dist/js/bootstrap.js";
 export default {
-  props: ["popup"],
   data() {
-    return {};
+    return {
+      popup: "",
+    };
+  },
+  mounted() {
+    this.getpopup();
+  },
+  methods: {
+    async getpopup() {
+      let vm = this;
+      let popup = await vm.$axios.get("pop_up/list");
+      // console.log(popup.data.data[0]);
+      vm.popup = popup.data.data[0];
+      if (popup) {
+        let x = new bootstrap.Modal(
+          document.getElementById("exampleModalCenter"),
+          {}
+        );
+        x.show();
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
-.modal{
-    position: fixed;
+.card {
+  position: absolute;
+  z-index: 999;
+
 }
 </style>

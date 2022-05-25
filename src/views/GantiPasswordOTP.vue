@@ -131,8 +131,10 @@ export default {
   methods: {
     async kirim() {
       let vm = this;
-      vm.state.username = localStorage.getItem("username");
-      vm.state.kode_otp = localStorage.getItem("kode_otp");
+      // vm.state.username = localStorage.getItem("username");
+      vm.state.username = vm.$store.state.username;
+      vm.state.kode_otp = vm.$store.state.kode_otp;
+      // vm.state.kode_otp = localStorage.getItem("kode_otp");
       let login = await vm.$axios.post("users/changePasswordOTP", vm.state);
       console.log(login);
       if (login.data.status == 200) {
