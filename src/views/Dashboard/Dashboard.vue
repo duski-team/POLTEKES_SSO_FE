@@ -2,8 +2,8 @@
   <div><Header /></div>
 
   <div class="container">
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      <strong>Welcome!</strong> {{ biodata.nama_lengkap_users }}
+    <div v-if="$store.state.biodata" class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>Welcome!</strong> {{ $store.state.biodata.nama_lengkap_users }}
       <button
         type="button"
         class="btn-close"
@@ -11,23 +11,23 @@
         aria-label="Close"
       ></button>
     </div>
-    <section v-if="biodata" class="glass">
+    <section v-if="$store.state.biodata" class="glass">
       <div class="dashboard">
         <div class="user">
           <div>
             <img class="foto mb-3" src="https://picsum.photos/100/100" alt="" />
           </div>
           <div class="nama">
-            <p>{{ biodata.nama_lengkap_users }}</p>
+            <p>{{ $store.state.biodata.nama_lengkap_users }}</p>
           </div>
           <div class="role">
             <div>
-              <p class="mr-1">{{ biodata.role.toUpperCase() }}</p>
+              <p class="mr-1">{{ $store.state.biodata.role.toUpperCase() }}</p>
             </div>
             <div><p>|</p></div>
             <div>
               <p class="ml-1" style="color: #027a48">
-                <strong>{{ biodata.identity }}</strong>
+                <strong>{{ $store.state.biodata.identity }}</strong>
               </p>
             </div>
           </div>
@@ -209,6 +209,9 @@ export default {
     };
   },
   created() {
+    // if(!this.$store.state.biodata){
+    //   this.$store.dispatch('get_biodata', this.$store.state.sso_user_id)
+    // }
     this.getData();
   },
   methods: {
@@ -216,10 +219,10 @@ export default {
       let vm = this;
       vm.$store.dispatch("set_loading", true);
       try {
-        let biodata = await vm.$axios.get(
-          "users/detailsById/" + vm.$store.state.sso_user_id
-        );
-        vm.biodata = biodata.data.data[0];
+        // let biodata = await vm.$axios.get(
+        //   "users/detailsById/" + vm.$store.state.sso_user_id
+        // );
+        // vm.biodata = biodata.data.data[0];
 
         let app = await vm.$axios.get("client/list");
         // console.log(biodata.data);
@@ -230,12 +233,9 @@ export default {
         console.log(error.response);
       }
     },
-    // async getpopup() {
-    //   let vm = this;
-    // },
     goApp(x) {
       window.open(
-        x.redirect_uri + "?token=" + localStorage.getItem("SSO_access_token")
+        x.redirect_uri + "?token=" + this.$store.state.sso_access_token
       );
     },
   },

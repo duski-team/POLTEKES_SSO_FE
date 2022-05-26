@@ -90,7 +90,7 @@ export default {
       let vm = this;
       this.$store.dispatch("set_loading", true);
       let login = await vm.$axios.post("users/applyOTP", vm.data);
-      console.log(login);
+      console.log(login,'login otp');
       if (login.data.status == 201) {
         vm.show = true;
         vm.msg = login.data.message;
@@ -100,8 +100,7 @@ export default {
           vm.show = false;
         }, 4000);
       } else {
-        // localStorage.setItem("kode_otp", vm.data.kode_otp);
-        vm.$store.dispatch("set_kode_otp_lupa", vm.data.kode_otp);
+        vm.$store.dispatch("set_otp", vm.data.kode_otp);
         this.$store.dispatch("set_loading", false);
         this.$router.push({ path: "/gantiPassword2" });
       }

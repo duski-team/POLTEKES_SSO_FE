@@ -44,6 +44,7 @@ const mutations = {
     state.expired = null;
     state.sso_username = null;
     state.sso_user_status = null;
+    (state.username = null), (state.kode_otp = null), (state.biodata = null);
   },
   set_loading_state(state, value) {
     state.loading = value;
@@ -53,6 +54,9 @@ const mutations = {
   },
   set_kode_otp_lupa(state, value) {
     state.kode_otp = value;
+  },
+  set_data_biodata(state, value) {
+    state.biodata = value;
   },
 };
 const actions = {
@@ -75,6 +79,21 @@ const actions = {
   set_otp({ commit }, value) {
     commit("set_kode_otp_lupa", value);
   },
+  set_biodata({ commit }, value) {
+    commit("set_data_biodata", value);
+  },
+  // async get_biodata({ commit }, value) {
+  //   let vm = this
+  //   console.log(value)
+  //   try {
+  //     let biodata = await vm.$axios.get("users/detailsById/" + value);
+  //     console.log(biodata);
+  //     commit("set_data_biodata", biodata.data.data[0]);
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+    
+  // },
 };
 const modules = {};
 const plugins = [createPersistedState()];

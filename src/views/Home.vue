@@ -59,7 +59,7 @@
                     class="btn btn-outline-primary"
                     @click="recaptcha()"
                   >
-                    Login
+                    L o g i n
                   </button>
                 </div>
               </div>
@@ -115,7 +115,7 @@ export default {
             "content-type": "application/x-www-form-urlencoded;charset=utf-8",
           },
         });
-        // console.log(login);
+        console.log(login);
         if (login.status == 200) {
           vm.$store.dispatch("save_token_login", login.data);
           console.log(vm.$store.state.sso_user_status, "acc token");
@@ -123,6 +123,7 @@ export default {
           if (vm.$store.state.sso_user_status == 0) {
             vm.$router.push({ path: "/1stlogin" });
           } else {
+            // vm.$store.dispatch('get_biodata',login.data.user.id)
             vm.$router.push({ path: "/dashboard" });
           }
           this.$store.dispatch("set_loading", false);

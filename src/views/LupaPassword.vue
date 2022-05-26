@@ -59,7 +59,7 @@ export default {
       let vm = this;
       this.$store.dispatch("set_loading", true);
       let login = await vm.$axios.post("users/kirimUlangOTP", vm.data);
-      console.log(login);
+      // console.log(login);
       if (login.data.status == 201) {
         this.$store.dispatch("set_loading", false);
         vm.msg = login.data.message;
@@ -69,8 +69,7 @@ export default {
         }, 4000);
       } else {
         this.$store.dispatch("set_loading", false);
-        // localStorage.setItem("username", this.data.username);
-        vm.$store.dispatch("set_username_lupa", vm.data.username);
+        vm.$store.dispatch("set_username", vm.data.username);
         this.$router.push({ path: "/OTP" });
       }
     },

@@ -1,46 +1,50 @@
 <template>
-  <!-- <iv> -->
-  <div class="na">
-    <div class="row pt-2">
-      <div class="col-8" @click="$router.push({ path: '/' })">
-        <div class="d-flex">
-          <img class="logo" src="@/assets/logo2.svg" alt="" />
-          <p class="poltek">Poltekkes Semarang</p>
-        </div>
-      </div>
-      <div class="col-4">
-        <div class="dropdown">
-          <div
-            class="d-flex text-left dropdown"
-            id="dropdownMenuProfil"
-            data-bs-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            <div>
-              <img class="avatar" src="https://picsum.photos/100/100" alt="" />
-            </div>
-            <div>
-              <p class="nama mb-0">{{ data.nama_lengkap_users }}</p>
-              <p class="email">{{ data.username }}</p>
-            </div>
+  <div class="container-fluid">
+    <div class="na">
+      <div class="row pt-2">
+        <div class="col-8" @click="$router.push({ path: '/' })">
+          <div class="d-flex">
+            <img class="logo" src="@/assets/logo2.svg" alt="" />
+            <p class="poltek">Poltekkes Semarang</p>
           </div>
-          <div
-            class="dropdown-menu text-start"
-            aria-labelledby="dropdownMenuProfil"
-          >
-            <a
-              class="dropdown-item logout"
-              @click="$router.push({ path: '/profil' })"
-              >Lihat Profil</a
+        </div>
+        <div class="col-4">
+          <div class="dropdown">
+            <div
+              class="d-flex text-left dropdown"
+              id="dropdownMenuProfil"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
             >
-            <a class="dropdown-item logout" @click="logout()">Log out</a>
+              <div>
+                <img
+                  class="avatar"
+                  src="https://picsum.photos/100/100"
+                  alt=""
+                />
+              </div>
+              <div v-if="$store.state.biodata">
+                <p class="nama mb-0">{{ $store.state.biodata.nama_lengkap_users }}</p>
+                <p class="email">{{ $store.state.biodata.username }}</p>
+              </div>
+            </div>
+            <div
+              class="dropdown-menu text-start"
+              aria-labelledby="dropdownMenuProfil"
+            >
+              <a
+                class="dropdown-item logout"
+                @click="$router.push({ path: '/profil' })"
+                >Lihat Profil</a
+              >
+              <a class="dropdown-item logout" @click="logout()">Log out</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- </div> -->
 </template>
 
 <script>
@@ -57,14 +61,17 @@ export default {
   methods: {
     async getData() {
       let vm = this;
-      try {
-        let biodata = await vm.$axios.get(
-          "users/detailsById/" + vm.$store.state.sso_user_id
-        );
-        console.log(biodata);
-        vm.data = biodata.data.data[0];
-      } catch (error) {
-        console.log(error.response);
+      if (vm.$store.state.biodata == null) {
+        try {
+          let biodata = await vm.$axios.get(
+            "users/detailsById/" + vm.$store.state.sso_user_id
+          );
+          console.log(biodata);
+          vm.data = biodata.data.data[0];
+          vm.$store.dispatch("set_biodata", vm.data);
+        } catch (error) {
+          console.log(error.response);
+        }
       }
     },
     logout() {
@@ -77,11 +84,14 @@ export default {
 </script>
 
 <style scoped>
+/* .container-fluid{
+  padding: 0;
+} */
 .na {
   height: 73px;
   background-color: #027a48;
   color: #ffffff;
-  margin-bottom: 20px;
+  margin: 0 0 20px 0;
 }
 
 .logo {

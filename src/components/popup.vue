@@ -1,53 +1,39 @@
 <template>
   <div class="container-fluid">
-    <div
-      class="modal fade"
-      id="exampleModalCenter"
-      tabindex="-1"
-      aria-labelledby="exampleModalCenter"
-      aria-hidden="true"
-      role="dialog"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-              {{ popup.judul_pop_up }}
-            </h5>
-            <button
+    <div class="card" v-if="show">
+      <div class="card-header">
+        <h5 class="card-title">
+          {{ popup.judul_pop_up }}
+        </h5>
+        <!-- <button
               type="button"
               class="btn-close"
-              data-bs-dismiss="modal"
+              data-bs-dismiss="card"
               aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <span v-html="popup.text_pop_up"></span>
-          </div>
-          <div class="modal-footer">
-            <center>
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Tutup
-              </button>
-              <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-            </center>
-          </div>
-        </div>
+            ></button> -->
+      </div>
+      <div class="card-body">
+        <span v-html="popup.text_pop_up"></span>
+      </div>
+      <div class="card-footer">
+        <center>
+          <button type="button" class="btn btn-secondary" @click="show = false">
+            Tutup
+          </button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </center>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import bootstrap from "bootstrap/dist/js/bootstrap.js";
+// import bootstrap from "bootstrap/dist/js/bootstrap.js";
 export default {
   data() {
     return {
       popup: "",
+      show: false,
     };
   },
   mounted() {
@@ -60,11 +46,12 @@ export default {
       // console.log(popup.data.data[0]);
       vm.popup = popup.data.data[0];
       if (popup) {
-        let x = new bootstrap.Modal(
-          document.getElementById("exampleModalCenter"),
-          {}
-        );
-        x.show();
+        this.show = true;
+        // let x = new bootstrap.card(
+        //   document.getElementById("examplecardCenter"),
+        //   {}
+        // );
+        // x.show();
       }
     },
   },
@@ -73,8 +60,7 @@ export default {
 
 <style scoped>
 .card {
-  position: absolute;
+  position: fixed;
   z-index: 999;
-
 }
 </style>

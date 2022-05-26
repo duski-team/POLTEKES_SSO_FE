@@ -28,7 +28,7 @@
               <input
                 type="password"
                 class="form-control"
-                id="exampleInputpassword"
+                id="exampleInputpassword1"
                 v-model="state.password_baru"
                 placeholder="Password Baru"
                 @keydown.enter.prevent="kirim()"
@@ -41,7 +41,7 @@
               <input
                 type="password"
                 class="form-control"
-                id="exampleInputpassword"
+                id="exampleInputpassword2"
                 v-model="state.password2"
                 placeholder="Konfirm Password"
                 @keydown.enter.prevent="kirim()"
@@ -131,10 +131,8 @@ export default {
   methods: {
     async kirim() {
       let vm = this;
-      // vm.state.username = localStorage.getItem("username");
       vm.state.username = vm.$store.state.username;
       vm.state.kode_otp = vm.$store.state.kode_otp;
-      // vm.state.kode_otp = localStorage.getItem("kode_otp");
       let login = await vm.$axios.post("users/changePasswordOTP", vm.state);
       console.log(login);
       if (login.data.status == 200) {
@@ -218,6 +216,12 @@ img {
   font-weight: 200;
   font-size: 14px;
   line-height: 24px;
+}
+.btn {
+  width: 100%;
+  height: 44px;
+  background-color: #027a48;
+  color: #FFFFFF;
 }
 
 .btn:disabled {
