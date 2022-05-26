@@ -61,6 +61,12 @@ export default {
 <style scoped>
 .card {
   position: fixed;
-  z-index: 999;
+  left: 25%;
+  top: 25%;
+  width: 50%;
+  height: 40%;
+  z-index: 9999999999;
+  overflow: hidden;
+  backdrop-filter: blur(0.09rem);
 }
 </style>

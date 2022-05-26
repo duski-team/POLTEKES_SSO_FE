@@ -1,8 +1,11 @@
 <template>
   <div><Header /></div>
-
   <div class="container">
-    <div v-if="$store.state.biodata" class="alert alert-success alert-dismissible fade show" role="alert">
+    <div
+      v-if="$store.state.biodata"
+      class="alert alert-success alert-dismissible fade show"
+      role="alert"
+    >
       <strong>Welcome!</strong> {{ $store.state.biodata.nama_lengkap_users }}
       <button
         type="button"
@@ -189,7 +192,7 @@
   <div>
     <Footer />
   </div>
-  <Popup />
+  <div><Popup /></div>
 </template>
 <script>
 import Header from "@/components/header.vue";
@@ -219,10 +222,12 @@ export default {
       let vm = this;
       vm.$store.dispatch("set_loading", true);
       try {
-        // let biodata = await vm.$axios.get(
-        //   "users/detailsById/" + vm.$store.state.sso_user_id
-        // );
+        let biodata = await vm.$axios.get(
+          "users/detailsById/" + vm.$store.state.sso_user_id
+        );
         // vm.biodata = biodata.data.data[0];
+
+        vm.$store.dispatch("set_biodata", biodata.data.data[0]);
 
         let app = await vm.$axios.get("client/list");
         // console.log(biodata.data);

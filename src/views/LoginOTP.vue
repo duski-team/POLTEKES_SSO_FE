@@ -90,7 +90,7 @@ export default {
       let vm = this;
       this.$store.dispatch("set_loading", true);
       let login = await vm.$axios.post("users/applyOTP", vm.data);
-      console.log(login,'login otp');
+      console.log(login, "login otp");
       if (login.data.status == 201) {
         vm.show = true;
         vm.msg = login.data.message;

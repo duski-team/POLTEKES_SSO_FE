@@ -8,11 +8,18 @@
     </div>
     <router-view />
   </div>
+  <div>
+    <Alert />
+  </div>
 </template>
 
 <script>
 // import { setToken } from "@/axios/index.js";
+import Alert from "@/components/alert";
 export default {
+  components: {
+    Alert,
+  },
   mounted() {
     // setToken(localStorage.getItem("SSO_access_token"));
   },

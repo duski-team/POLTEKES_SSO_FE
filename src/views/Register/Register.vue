@@ -180,6 +180,7 @@ import Step1 from "./Register1.vue";
 import Step2 from "./Register2.vue";
 import Step3 from "./Register3.vue";
 import Step4 from "./Register4.vue";
+
 export default {
   components: {
     Step1,
@@ -192,6 +193,8 @@ export default {
       aktiv: "step1",
       valid: false,
       emails: false,
+      alert: "",
+      show: "",
     };
   },
   setup() {
@@ -303,17 +306,27 @@ export default {
       console.log(register);
       if (register.data.status == 200) {
         if (register.data.message == "sukses") {
-          this.aktiv = "step4";
-          this.emails = true;
-          this.$store.dispatch("set_loading", false);
+          vm.aktiv = "step4";
+          vm.emails = true;
+          vm.$store.dispatch("set_loading", false);
+          vm.$store.dispatch("set_alert_show_success", register.data.message);
+          setTimeout(() => {
+            vm.$store.dispatch("set_alert_hide");
+          }, 4000);
         } else {
-          alert(register.data.message);
-          console.log(vm.state.identity);
-          this.$store.dispatch("set_loading", false);
+          // alert(register.data.message);
+          vm.$store.dispatch("set_alert_show_fail", register.data.message);
+          setTimeout(() => {
+            vm.$store.dispatch("set_alert_hide");
+          }, 4000);
+          vm.$store.dispatch("set_loading", false);
         }
       } else {
-        this.$store.dispatch("set_loading", false);
-        alert(register.data.message);
+        vm.$store.dispatch("set_loading", false);
+        vm.$store.dispatch("set_alert_show_fail", register.data.message);
+        setTimeout(() => {
+          vm.$store.dispatch("set_alert_hide");
+        }, 4000);
         console.log("error");
       }
     },

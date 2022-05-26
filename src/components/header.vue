@@ -25,7 +25,9 @@
                 />
               </div>
               <div v-if="$store.state.biodata">
-                <p class="nama mb-0">{{ $store.state.biodata.nama_lengkap_users }}</p>
+                <p class="nama mb-0">
+                  {{ $store.state.biodata.nama_lengkap_users }}
+                </p>
                 <p class="email">{{ $store.state.biodata.username }}</p>
               </div>
             </div>
@@ -56,12 +58,15 @@ export default {
     };
   },
   created() {
-    this.getData();
+    // this.getData();
   },
   methods: {
     async getData() {
       let vm = this;
-      if (vm.$store.state.biodata == null) {
+      console.log(vm.$store.state.sso_user_id);
+      vm.data = vm.$store.state.biodata;
+      console.log(vm.data);
+      if (!vm.data) {
         try {
           let biodata = await vm.$axios.get(
             "users/detailsById/" + vm.$store.state.sso_user_id

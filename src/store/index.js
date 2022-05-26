@@ -12,7 +12,9 @@ const state = {
   username: null,
   kode_otp: null,
   loading: false,
-  alert: false,
+  alert: "",
+  show: false,
+  backColor: "",
   biodata: {},
 };
 
@@ -44,7 +46,9 @@ const mutations = {
     state.expired = null;
     state.sso_username = null;
     state.sso_user_status = null;
-    (state.username = null), (state.kode_otp = null), (state.biodata = null);
+    state.username = null;
+    state.kode_otp = null;
+    state.biodata = {};
   },
   set_loading_state(state, value) {
     state.loading = value;
@@ -57,6 +61,20 @@ const mutations = {
   },
   set_data_biodata(state, value) {
     state.biodata = value;
+  },
+  show_alert_success(state, value) {
+    state.alert = value.toUpperCase();
+    state.backColor = "background-color: #91f086";
+    state.show = true;
+  },
+  show_alert_fail(state, value) {
+    state.alert = value.toUpperCase();
+    state.backColor = "background-color: #FF6962";
+    state.show = true;
+  },
+  hide_alert(state) {
+    state.alert = "";
+    state.show = false;
   },
 };
 const actions = {
@@ -82,18 +100,15 @@ const actions = {
   set_biodata({ commit }, value) {
     commit("set_data_biodata", value);
   },
-  // async get_biodata({ commit }, value) {
-  //   let vm = this
-  //   console.log(value)
-  //   try {
-  //     let biodata = await vm.$axios.get("users/detailsById/" + value);
-  //     console.log(biodata);
-  //     commit("set_data_biodata", biodata.data.data[0]);
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-    
-  // },
+  set_alert_show_success({ commit }, value) {
+    commit("show_alert_success", value);
+  },
+  set_alert_show_fail({ commit }, value) {
+    commit("show_alert_fail", value);
+  },
+  set_alert_hide({ commit }) {
+    commit("hide_alert");
+  },
 };
 const modules = {};
 const plugins = [createPersistedState()];
