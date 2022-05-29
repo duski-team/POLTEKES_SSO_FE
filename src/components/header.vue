@@ -65,7 +65,7 @@ export default {
       let vm = this;
       console.log(vm.$store.state.sso_user_id);
       vm.data = vm.$store.state.biodata;
-      console.log(vm.data);
+      // console.log(vm.data);
       if (!vm.data) {
         try {
           let biodata = await vm.$axios.get(

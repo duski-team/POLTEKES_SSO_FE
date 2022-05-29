@@ -123,7 +123,6 @@ export default {
           if (vm.$store.state.sso_user_status == 0) {
             vm.$router.push({ path: "/1stlogin" });
           } else {
-            // vm.$store.dispatch('get_biodata',login.data.user.id)
             vm.$router.push({ path: "/dashboard" });
           }
           this.$store.dispatch("set_loading", false);

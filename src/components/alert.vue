@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid" @click="$store.dispatch('set_alert_hide')">
     <div
       v-if="$store.state.show"
       class="card text-white"

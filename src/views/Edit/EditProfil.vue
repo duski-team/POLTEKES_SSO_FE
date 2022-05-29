@@ -139,23 +139,34 @@ export default {
   methods: {
     async getData() {
       let vm = this;
-      this.$store.dispatch("set_loading", true);
+      vm.$store.dispatch("set_loading", true);
       try {
         let biodata = await vm.$axios.get(
           "users/detailsById/" + vm.$store.state.sso_user_id
         );
         vm.biodata = biodata.data.data[0];
-        this.$store.dispatch("set_loading", false);
+        vm.$store.dispatch("set_loading", false);
       } catch (error) {
         console.log(error.response);
-        this.$store.dispatch("set_loading", false);
+        vm.$store.dispatch("set_loading", false);
       }
     },
     async update() {
       let vm = this;
+      vm.$store.dispatch("set_loading", true);
       let update = await vm.$axios.post("users/update", vm.biodata);
       if (update.data.status == 200) {
-        alert(update.data.message);
+        vm.$store.dispatch("set_loading", false);
+        vm.$store.dispatch("set_alert_show_success", update.data.message);
+        setTimeout(() => {
+          vm.$store.dispatch("set_alert_hide");
+        }, 4000);
+      } else {
+        vm.$store.dispatch("set_loading", false);
+        vm.$store.dispatch("set_alert_show_fail", update.data.message);
+        setTimeout(() => {
+          vm.$store.dispatch("set_alert_hide");
+        }, 4000);
       }
       console.log(update);
     },

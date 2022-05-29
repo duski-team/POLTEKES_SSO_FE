@@ -22,9 +22,9 @@
                 placeholder="E-mail"
                 @keydown.enter.prevent="kirim()"
               />
-              <span v-if="showing" class="text-danger fst-italic mt-2"
+              <!-- <span v-if="showing" class="text-danger fst-italic mt-2"
                 >"{{ msg }}</span
-              >
+              > -->
             </div>
             <div class="mb-3 mt-3">
               <div class="d-flex justify-content-center">
@@ -57,20 +57,23 @@ export default {
   methods: {
     async kirim() {
       let vm = this;
-      this.$store.dispatch("set_loading", true);
+      vm.$store.dispatch("set_loading", true);
       let login = await vm.$axios.post("users/kirimUlangOTP", vm.data);
-      // console.log(login);
       if (login.data.status == 201) {
-        this.$store.dispatch("set_loading", false);
-        vm.msg = login.data.message;
-        vm.showing = true;
+        vm.$store.dispatch("set_loading", false);
+        vm.$store.dispatch("set_alert_show_fail", login.data.message);
         setTimeout(() => {
-          vm.showing = false;
+          vm.$store.dispatch("set_alert_hide");
         }, 4000);
       } else {
-        this.$store.dispatch("set_loading", false);
         vm.$store.dispatch("set_username", vm.data.username);
-        this.$router.push({ path: "/OTP" });
+        vm.$store.dispatch("set_loading", false);
+        vm.$store.dispatch("set_alert_show_success", login.data.message);
+        setTimeout(() => {
+          vm.$store.dispatch("set_alert_hide");
+          vm.$router.push({ path: "/OTP" });
+        }, 4000);
+        
       }
     },
     async recaptcha() {

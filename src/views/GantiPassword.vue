@@ -162,34 +162,27 @@ export default {
         console.log(login);
         if (login.data.status == 200) {
           if (login.data.message == "sukses") {
-            // console.log("ok", this.isValid, this.busy);
             vm.busy = false;
-            vm.show = true;
-            vm.color = "alert alert-success alert-dismissible fade show";
-            vm.msg = login.data.message;
-            this.$store.dispatch("set_loading", false);
+            vm.$store.dispatch("set_alert_show_success", login.data.message);
+            vm.$store.dispatch("set_loading", false);
             setTimeout(() => {
-              vm.show = false;
+              vm.$store.dispatch("set_alert_hide");
             }, 4000);
-            this.$router.push({ path: "/dashboard" });
+            vm.$router.push({ path: "/dashboard" });
           } else {
             vm.busy = false;
-            vm.show = true;
-            vm.color = "alert alert-danger alert-dismissible fade show";
-            vm.msg = login.data.message;
-            this.$store.dispatch("set_loading", false);
+            vm.$store.dispatch("set_alert_show_fail", login.data.message);
+            vm.$store.dispatch("set_loading", false);
             setTimeout(() => {
-              vm.show = false;
+              vm.$store.dispatch("set_alert_hide");
             }, 4000);
           }
         } else {
           vm.busy = false;
-          vm.show = true;
-          vm.color = "alert alert-color alert-dismissible fade show";
-          vm.msg = login.data.message;
-          this.$store.dispatch("set_loading", false);
+          vm.$store.dispatch("set_alert_show_fail", login.data.message);
+          vm.$store.dispatch("set_loading", false);
           setTimeout(() => {
-            vm.show = false;
+            vm.$store.dispatch("set_alert_hide");
           }, 4000);
         }
       }

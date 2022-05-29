@@ -131,33 +131,31 @@ export default {
   methods: {
     async kirim() {
       let vm = this;
+      vm.$store.dispatch("set_loading", true);
       vm.state.username = vm.$store.state.username;
       vm.state.kode_otp = vm.$store.state.kode_otp;
       let login = await vm.$axios.post("users/changePasswordOTP", vm.state);
       console.log(login);
       if (login.data.status == 200) {
         if (login.data.message == "sukses") {
-          vm.show = true;
-          vm.msg = login.data.message;
-          vm.color = "alert alert-success alert-dismissible fade show";
+          vm.$store.dispatch("set_loading", false);
+          vm.$store.dispatch("set_alert_show_success", login.data.message);
           setTimeout(() => {
-            vm.show = false;
+            vm.$store.dispatch("set_alert_hide");
             this.$router.push({ path: "/" });
           }, 4000);
         } else {
-          vm.show = true;
-          vm.msg = login.data.message;
-          vm.color = "alert alert-danger alert-dismissible fade show";
+          vm.$store.dispatch("set_loading", false);
+          vm.$store.dispatch("set_alert_show_fail", login.data.message);
           setTimeout(() => {
-            vm.show = false;
+            vm.$store.dispatch("set_alert_hide");
           }, 4000);
         }
       } else {
-        vm.show = true;
-        vm.msg = login.data.message;
-        vm.color = "alert alert-danger alert-dismissible fade show";
+        vm.$store.dispatch("set_loading", false);
+        vm.$store.dispatch("set_alert_show_fail", login.data.message);
         setTimeout(() => {
-          vm.show = false;
+          vm.$store.dispatch("set_alert_hide");
         }, 4000);
       }
     },

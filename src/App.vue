@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <!-- {{$store.state.sso_access_token}} {{$store.state.expired}} -->
+  <div @click="hideAlert()">
     <div class="page" v-if="showSpinner">
       <div class="spinner-border" variant="primary" key="primary">
         <span class="sr-only">Loading...</span>
@@ -26,6 +25,14 @@ export default {
   computed: {
     showSpinner() {
       return this.$store.state.loading;
+    },
+  },
+  methods: {
+    hideAlert() {
+      if (this.$store.state.show) {
+        // console.log('iki')
+        this.$store.dispatch("set_alert_hide");
+      }
     },
   },
 };

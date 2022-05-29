@@ -9,9 +9,9 @@
             <!-- <span class="card-number">01</span> -->
             <img class="mb-4" src="@/assets/logo-poltekes.jpg" alt="" />
             <p class="card-title mb-4">Verifikasi Kode Authentifikasi</p>
-            <p class="card-email mb-4">Kirim ke {{ data.username }}</p>
+            <p class="card-email mb-4">Terkirim ke {{ data.username }}</p>
 
-            <div v-if="show">
+            <!-- <div v-if="show">
               <div :class="color" role="alert">
                 <strong>Perhatian!</strong> {{ msg }}
                 <button
@@ -21,7 +21,7 @@
                   aria-label="Close"
                 ></button>
               </div>
-            </div>
+            </div> -->
 
             <div class="mb-3">
               <!-- <label for="exampleInputpassword" class="form-label">OTP</label> -->
@@ -88,34 +88,45 @@ export default {
   methods: {
     async login() {
       let vm = this;
-      this.$store.dispatch("set_loading", true);
+      vm.$store.dispatch("set_loading", true);
       let login = await vm.$axios.post("users/applyOTP", vm.data);
       console.log(login, "login otp");
       if (login.data.status == 201) {
-        vm.show = true;
-        vm.msg = login.data.message;
-        vm.color = "alert alert-danger alert-dismissible fade show";
-        this.$store.dispatch("set_loading", false);
+        vm.$store.dispatch("set_alert_show_fail", login.data.message);
+        vm.$store.dispatch("set_loading", false);
         setTimeout(() => {
-          vm.show = false;
+          vm.$store.dispatch("set_alert_hide");
         }, 4000);
       } else {
         vm.$store.dispatch("set_otp", vm.data.kode_otp);
-        this.$store.dispatch("set_loading", false);
-        this.$router.push({ path: "/gantiPassword2" });
+        vm.$store.dispatch("set_loading", false);
+        vm.$store.dispatch("set_alert_show_success", login.data.message);
+        setTimeout(() => {
+          vm.$store.dispatch("set_alert_hide");
+          vm.$router.push({ path: "/gantiPassword2" });
+        }, 4000);
       }
     },
     async kirimUlang() {
       if (this.countdown == 0) {
         let vm = this;
+        vm.$store.dispatch("set_loading", true);
         let kirim = await vm.$axios.post("users/kirimUlangOTP", vm.data);
         console.log(kirim);
         vm.show = true;
-        vm.msg = "Kode OTP Baru sudah dikirim";
-        vm.color = "alert alert-success alert-dismissible fade show";
+        if (kirim.data.status == 200) {
+        vm.$store.dispatch("set_loading", false);
+        vm.$store.dispatch("set_alert_show_success", 'Kode OTP berhasil di kirim');
         setTimeout(() => {
-          vm.show = false;
+          vm.$store.dispatch("set_alert_hide");
         }, 4000);
+      } else {
+        vm.$store.dispatch("set_loading", false);
+        vm.$store.dispatch("set_alert_show_fail", kirim.data.message);
+        setTimeout(() => {
+          vm.$store.dispatch("set_alert_hide");
+        }, 4000);
+      }
       }
     },
   },
