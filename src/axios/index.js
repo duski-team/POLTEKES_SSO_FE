@@ -4,7 +4,8 @@ import "moment/locale/id";
 import store from "@/store/index.js";
 import qs from "qs";
 
-const ip = "http://localhost:8869/";
+// const ip = "http://localhost:8869/";
+const ip = "http://123.231.148.147:8101";
 
 // export function setToken(token) {
 //   axios.defaults.headers.common = { Authorization: `Bearer ${token}` };

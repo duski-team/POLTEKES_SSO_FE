@@ -73,7 +73,6 @@ export default {
           vm.$store.dispatch("set_alert_hide");
           vm.$router.push({ path: "/OTP" });
         }, 4000);
-        
       }
     },
     async recaptcha() {

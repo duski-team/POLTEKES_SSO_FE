@@ -66,11 +66,7 @@
             <p class="SSO">Tenaga Pendidik</p>
           </div>
         </div>
-        <div
-          class="card"
-          v-if="data.role == 'tenaga pendidik'"
-          @click="data.role = ''"
-        >
+        <div class="card" v-if="data.role == 'pegawai'" @click="data.role = ''">
           <img src="@/assets/tenagaPendidik.jpg" alt="" />
           <!-- <i class="fa-regular fa-face-flushed fa-10x"></i> -->
           <div>

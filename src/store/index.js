@@ -15,7 +15,10 @@ const state = {
   alert: "",
   show: false,
   backColor: "",
-  biodata: {},
+  biodata: null,
+  profil: null,
+  pop_up: true,
+  app: null,
 };
 
 const mutations = {
@@ -26,7 +29,7 @@ const mutations = {
     state.sso_client_id = tokens.client.id;
     state.sso_user_id = tokens.user.id;
     state.expired = tokens.accessTokenExpiresAt;
-    state.username = tokens.user.username;
+    state.sso_username = tokens.user.username;
     state.sso_user_status = tokens.user.user_status;
   },
   set_intercept_token(state, tokens) {
@@ -36,7 +39,7 @@ const mutations = {
     state.sso_client_id = tokens.client.id;
     state.sso_user_id = tokens.user.id;
     state.expired = tokens.accessTokenExpiresAt;
-    state.username = tokens.user.username;
+    state.sso_username = tokens.user.username;
   },
   set_clear_token(state) {
     state.sso_access_token = null;
@@ -48,7 +51,7 @@ const mutations = {
     state.sso_user_status = null;
     state.username = null;
     state.kode_otp = null;
-    state.biodata = {};
+    state.biodata = null;
   },
   set_loading_state(state, value) {
     state.loading = value;
@@ -60,7 +63,17 @@ const mutations = {
     state.kode_otp = value;
   },
   set_data_biodata(state, value) {
+    if (value.role == "mahasiswa") {
+      value.foto = `https://simadu.poltekkes-smg.ac.id/foto/${value.identity}`;
+      // value.foto = ''
+    } else {
+      value.foto =
+        "http://simpeg.poltekkes-smg.ac.id/packages/upload/photo/pegawai/198810202010121002_1598278038.JPG";
+    }
     state.biodata = value;
+  },
+  set_data_profil(state, value) {
+    state.profil = value;
   },
   show_alert_success(state, value) {
     state.alert = value.toUpperCase();
@@ -75,6 +88,15 @@ const mutations = {
   hide_alert(state) {
     state.alert = "";
     state.show = false;
+  },
+  popup(state, value) {
+    state.popup = value;
+  },
+  data_app(state, value) {
+    state.app = value;
+  },
+  biodata_foto(state, value) {
+    state.biodata.foto = value;
   },
 };
 const actions = {
@@ -100,6 +122,9 @@ const actions = {
   set_biodata({ commit }, value) {
     commit("set_data_biodata", value);
   },
+  set_profil({ commit }, value) {
+    commit("set_data_profil", value);
+  },
   set_alert_show_success({ commit }, value) {
     commit("show_alert_success", value);
   },
@@ -108,6 +133,15 @@ const actions = {
   },
   set_alert_hide({ commit }) {
     commit("hide_alert");
+  },
+  set_popup({ commit }, value) {
+    commit("popup", value);
+  },
+  set_app({ commit }, value) {
+    commit("data_app", value);
+  },
+  set_foto({ commit }, value) {
+    commit("biodata_foto", value);
   },
 };
 const modules = {};

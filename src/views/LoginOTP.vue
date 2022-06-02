@@ -115,18 +115,21 @@ export default {
         console.log(kirim);
         vm.show = true;
         if (kirim.data.status == 200) {
-        vm.$store.dispatch("set_loading", false);
-        vm.$store.dispatch("set_alert_show_success", 'Kode OTP berhasil di kirim');
-        setTimeout(() => {
-          vm.$store.dispatch("set_alert_hide");
-        }, 4000);
-      } else {
-        vm.$store.dispatch("set_loading", false);
-        vm.$store.dispatch("set_alert_show_fail", kirim.data.message);
-        setTimeout(() => {
-          vm.$store.dispatch("set_alert_hide");
-        }, 4000);
-      }
+          vm.$store.dispatch("set_loading", false);
+          vm.$store.dispatch(
+            "set_alert_show_success",
+            "Kode OTP berhasil di kirim"
+          );
+          setTimeout(() => {
+            vm.$store.dispatch("set_alert_hide");
+          }, 4000);
+        } else {
+          vm.$store.dispatch("set_loading", false);
+          vm.$store.dispatch("set_alert_show_fail", kirim.data.message);
+          setTimeout(() => {
+            vm.$store.dispatch("set_alert_hide");
+          }, 4000);
+        }
       }
     },
   },

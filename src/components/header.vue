@@ -17,12 +17,15 @@
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <div>
+              <div v-if="$store.state.biodata">
                 <img
+                  v-if="!backup"
                   class="avatar"
-                  src="https://picsum.photos/100/100"
+                  :src="$store.state.biodata.foto"
                   alt=""
+                  @error="backup = true"
                 />
+                <img v-else class="avatar" src="@/assets/noprofil.png" alt="" />
               </div>
               <div v-if="$store.state.biodata">
                 <p class="nama mb-0">
@@ -55,6 +58,7 @@ export default {
     return {
       data: "",
       options: false,
+      backup: false,
     };
   },
   created() {

@@ -18,13 +18,28 @@
       <div class="dashboard">
         <div class="user">
           <div>
-            <img class="foto mb-3" src="https://picsum.photos/100/100" alt="" />
+            <img
+              v-if="!backup"
+              class="foto mb-3"
+              :src="$store.state.biodata.foto"
+              alt="user photo profil"
+              @error="backup = true"
+            />
+            <img
+              v-else
+              class="foto mb-3"
+              src="@/assets/noprofil.png"
+              alt="user photo profil"
+            />
           </div>
           <div class="nama">
             <p>{{ $store.state.biodata.nama_lengkap_users }}</p>
           </div>
           <div class="role">
-            <div>
+            <div v-if="$store.state.biodata.role == 'pegawai'">
+              <p class="mr-1">TENDIK</p>
+            </div>
+            <div v-else>
               <p class="mr-1">{{ $store.state.biodata.role.toUpperCase() }}</p>
             </div>
             <div><p>|</p></div>
@@ -45,9 +60,18 @@
           </div>
         </div>
         <div class="line"></div>
-        <div class="jurusan-wrapper mt-3">
+        <div
+          class="jurusan-wrapper mt-3"
+          v-if="$store.state.biodata.role == 'mahasiswa'"
+        >
           <h5 style="line-height: 14px">Jurusan</h5>
           <p style="line-height: 14px; font-size: 14px">Prodi Jurusan</p>
+        </div>
+        <div class="jurusan-wrapper mt-3" v-else>
+          <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
+          <p style="line-height: 14px; font-size: 14px">
+            {{ $store.state.profil.skpd }}
+          </p>
         </div>
       </div>
       <div class="tools text-start">
@@ -171,7 +195,7 @@
       </div>
       <div class="row">
         <div
-          v-for="item in app"
+          v-for="item in $store.state.app"
           :key="item.id"
           class="col-md-3 col-sm-4 mb-3"
           @click="goApp(item)"
@@ -209,13 +233,13 @@ export default {
       biodata: "",
       app: "",
       popup: "",
+      backup: false,
     };
   },
-  created() {
-    // if(!this.$store.state.biodata){
-    //   this.$store.dispatch('get_biodata', this.$store.state.sso_user_id)
-    // }
-    this.getData();
+  mounted() {
+    if (!this.$store.state.biodata || !this.$store.state.app) {
+      this.getData();
+    }
   },
   methods: {
     async getData() {
@@ -226,12 +250,14 @@ export default {
           "users/detailsById/" + vm.$store.state.sso_user_id
         );
         // vm.biodata = biodata.data.data[0];
-
         vm.$store.dispatch("set_biodata", biodata.data.data[0]);
+        vm.$store.dispatch("set_profil", biodata.data.profil[0]);
 
         let app = await vm.$axios.get("client/list");
-        // console.log(biodata.data);
-        vm.app = app.data.data;
+
+        vm.$store.dispatch("set_app", app.data.data);
+        // vm.app = app.data.data;
+        // console.log(this.$store.state.profil);
         vm.$store.dispatch("set_loading", false);
       } catch (error) {
         vm.$store.dispatch("set_loading", false);
@@ -338,6 +364,8 @@ export default {
 
 .foto {
   border-radius: 30px;
+  width: 100px;
+  height: 100px;
 }
 
 .role {
