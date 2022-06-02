@@ -17,7 +17,7 @@ const state = {
   backColor: "",
   biodata: null,
   profil: null,
-  pop_up: true,
+  popup: true,
   app: null,
 };
 
@@ -52,6 +52,8 @@ const mutations = {
     state.username = null;
     state.kode_otp = null;
     state.biodata = null;
+    state.profil =null;
+    state.popup = true
   },
   set_loading_state(state, value) {
     state.loading = value;

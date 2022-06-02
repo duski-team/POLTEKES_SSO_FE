@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <div class="card" v-if="show">
+    <div class="card" v-if="show && popup">
       <div class="card-header">
         <h5 class="card-title">
           {{ popup.judul_pop_up }}
@@ -30,7 +30,7 @@
                   id="flexCheckChecked"
                 />
                 <label class="form-check-label" for="flexCheckChecked">
-                  Jangan Tampilkan Lagi
+                  Selalu Tampilkan
                 </label>
               </div>
               <!-- <b-form-checkbox
@@ -71,25 +71,21 @@ export default {
     };
   },
   mounted() {
-    if (!this.$store.state.popup) {
+    console.log(this.$store.state.popup);
+    if (this.$store.state.popup) {
       this.getpopup();
     }
   },
   methods: {
     async getpopup() {
       let vm = this;
-      console.log(vm.$store.state.biodata);
       let popup = await vm.$axios.get(
         "pop_up/listByRole/" + vm.$store.state.biodata.role
       );
       vm.popup = popup.data.data[0];
+      console.log(popup)
       if (popup) {
         this.show = true;
-        // let x = new bootstrap.card(
-        //   document.getElementById("examplecardCenter"),
-        //   {}
-        // );
-        // x.show();
       }
     },
     ihir() {

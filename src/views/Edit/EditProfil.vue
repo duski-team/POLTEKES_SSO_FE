@@ -17,13 +17,34 @@
       <div class="dashboard">
         <div class="user">
           <div class="edit mb-4">Edit - Account Profile</div>
-          <div>
-            <img class="foto mb-3" src="https://picsum.photos/100/100" alt="" />
+         <div>
+            <img
+              v-if="!backup"
+              class="foto mb-3"
+              :src="$store.state.biodata.foto"
+              alt="user photo profil"
+              @error="backup = true"
+            />
+            <img
+              v-else
+              class="foto mb-3"
+              src="@/assets/noprofil.png"
+              alt="user photo profil"
+            />
           </div>
         </div>
-        <div class="jurusan-wrapper mt-3">
-          <h5 style="line-height: 14px; font-weight: 700">Jurusan</h5>
+        <div
+          class="jurusan-wrapper mt-3"
+          v-if="$store.state.biodata.role == 'mahasiswa'"
+        >
+          <h5 style="line-height: 14px">Jurusan</h5>
           <p style="line-height: 14px; font-size: 14px">Prodi Jurusan</p>
+        </div>
+        <div class="jurusan-wrapper mt-3" v-else>
+          <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
+          <p style="line-height: 14px; font-size: 14px">
+            {{ $store.state.profil.skpd }}
+          </p>
         </div>
         <!-- <div class="line mt-1 mb-1"></div> -->
         <div class="role mt-3">
