@@ -5,7 +5,7 @@ import store from "@/store/index.js";
 import qs from "qs";
 
 // const ip = "http://localhost:8869/";
-const ip = "http://123.231.148.147:8101";
+const ip = "https://sso.poltekkes-smg.ac.id/api";
 
 // export function setToken(token) {
 //   axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
