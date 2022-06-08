@@ -9,6 +9,7 @@ const state = {
   sso_client_id: null,
   sso_username: null,
   sso_user_status: null,
+  sso_user_role: "",
   username: null,
   kode_otp: null,
   loading: false,
@@ -23,7 +24,7 @@ const state = {
 
 const mutations = {
   set_login_token(state, tokens) {
-    // console.log(tokens, 'set store login')
+    console.log(tokens, "set store login");
     state.sso_access_token = tokens.accessToken;
     state.sso_refresh_token = tokens.refreshToken;
     state.sso_client_id = tokens.client.id;
@@ -31,6 +32,7 @@ const mutations = {
     state.expired = tokens.accessTokenExpiresAt;
     state.sso_username = tokens.user.username;
     state.sso_user_status = tokens.user.user_status;
+    state.sso_user_role = tokens.user.role;
   },
   set_intercept_token(state, tokens) {
     // console.log(tokens)
@@ -52,8 +54,9 @@ const mutations = {
     state.username = null;
     state.kode_otp = null;
     state.biodata = null;
-    state.profil =null;
-    state.popup = true
+    state.profil = null;
+    state.popup = true;
+    state.sso_user_role = null;
   },
   set_loading_state(state, value) {
     state.loading = value;

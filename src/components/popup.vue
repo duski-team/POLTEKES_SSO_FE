@@ -2,19 +2,17 @@
   <div class="container-fluid">
     <div class="card" v-if="show && popup">
       <div class="card-header">
-        <h5 class="card-title">
-          {{ popup.judul_pop_up }}
-        </h5>
-        <!-- <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="card"
-              aria-label="Close"
-            ></button> -->
+        <h5 class="card-title">INFORMASI</h5>
       </div>
       <div class="card-body">
-        <span v-html="popup.text_pop_up"></span>
+        <div v-for="(item, idx) in popup" :key="idx">
+          <div>{{ item.judul_pop_up }}</div>
+          <div class="card-body">
+            <span v-html="item.text_pop_up"></span>
+          </div>
+        </div>
       </div>
+
       <div class="card-footer">
         <div>
           <!-- <hr /> -->
@@ -71,7 +69,7 @@ export default {
     };
   },
   mounted() {
-    console.log(this.$store.state.popup);
+    console.log(this.$store.state.sso_user_role);
     if (this.$store.state.popup) {
       this.getpopup();
     }
@@ -80,10 +78,10 @@ export default {
     async getpopup() {
       let vm = this;
       let popup = await vm.$axios.get(
-        "pop_up/listByRole/" + vm.$store.state.biodata.role
+        "pop_up/listByRole/" + vm.$store.state.sso_user_role
       );
-      vm.popup = popup.data.data[0];
-      console.log(popup)
+      vm.popup = popup.data.data;
+      console.log(popup);
       if (popup) {
         this.show = true;
       }
@@ -101,9 +99,12 @@ export default {
   left: 25%;
   top: 25%;
   width: 50%;
-  height: 40%;
+  height: 50%;
   z-index: 9999999999;
-  overflow: hidden;
   backdrop-filter: blur(0.09rem);
+}
+
+.card-body {
+  overflow-y: auto;
 }
 </style>

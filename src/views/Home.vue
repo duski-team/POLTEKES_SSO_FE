@@ -1,79 +1,83 @@
 <template>
-  <div class="container-fluid">
-    <!-- <h1 class="title text-center py-4">SSO POLTEKES</h1> -->
-    <div class="row">
-      <div class="col d-flex justify-content-center">
-        <div class="card cb1 m-2 text-center">
-          <div class="card-body">
-            <!-- <span class="card-number">01</span> -->
-            <img src="@/assets/logo-poltekes.jpg" alt="" />
+  <div
+    class="container-fluid"
+    :style="{
+      backgroundImage: `url(${require('@/assets/gedung.jpeg')})`,
+    }"
+  ></div>
+  <!-- <h1 class="title text-center py-4">SSO POLTEKES</h1> -->
+  <div class="row bg-text">
+    <div class="col d-flex justify-content-center">
+      <div class="card cb1 m-2 text-center">
+        <div class="card-body">
+          <!-- <span class="card-number">01</span> -->
+          <img src="@/assets/logo-poltekes.jpg" alt="" />
 
-            <h5 class="SSO mb-4">Single Sign On (SSO)</h5>
-            <h5 class="card-title mb-4">Poltekes Semarang</h5>
-            <div v-if="show">
-              <div
-                class="alert alert-danger alert-dismissible fade show"
-                role="alert"
-              >
-                <strong>Perhatian!</strong> Username salah atau tidak terdaftar
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="alert"
-                  aria-label="Close"
-                ></button>
-              </div>
+          <h5 class="SSO mb-4">Single Sign On (SSO)</h5>
+          <h5 class="card-title mb-4">Poltekes Semarang</h5>
+          <div v-if="show">
+            <div
+              class="alert alert-danger alert-dismissible fade show"
+              role="alert"
+            >
+              <strong>Perhatian!</strong> Username salah atau tidak terdaftar
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
             </div>
-            <div class="mb-3 mt-4">
-              <input
-                type="email"
-                class="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-                v-model="data.username"
-                placeholder="Username / e-mail"
-              />
-            </div>
-            <div class="mb-3">
-              <!-- <label for="exampleInputpassword" class="form-label"
+          </div>
+          <div class="mb-3 mt-4">
+            <input
+              type="email"
+              class="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              v-model="data.username"
+              placeholder="Username / e-mail"
+            />
+          </div>
+          <div class="mb-3">
+            <!-- <label for="exampleInputpassword" class="form-label"
                 >Password</label
               > -->
-              <input
-                type="password"
-                class="form-control"
-                id="exampleInputpassword"
-                v-model="data.password"
-                placeholder="password"
-                @keydown.enter.prevent="login()"
-              />
-            </div>
-            <div class="lupa" @click="$router.push('/lupaPassword')">
-              <p></p>
-              <p>Forgot Password</p>
-            </div>
-            <div class="mb-3 mt-3">
-              <div class="d-flex justify-content-center">
-                <div class="col-12">
-                  <button
-                    href="#"
-                    class="btn btn-outline-primary"
-                    @click="recaptcha()"
-                  >
-                    L o g i n
-                  </button>
-                </div>
+            <input
+              type="password"
+              class="form-control"
+              id="exampleInputpassword"
+              v-model="data.password"
+              placeholder="password"
+              @keydown.enter.prevent="login()"
+            />
+          </div>
+          <div class="lupa" @click="$router.push('/lupaPassword')">
+            <p></p>
+            <p>Forgot Password</p>
+          </div>
+          <div class="mb-3 mt-3">
+            <div class="d-flex justify-content-center">
+              <div class="col-12">
+                <button
+                  href="#"
+                  class="btn btn-outline-primary"
+                  @click="recaptcha()"
+                >
+                  L o g i n
+                </button>
               </div>
             </div>
+          </div>
 
-            <div class="register mt-3">
-              <div class="row register=box">
-                <div class="col-6">Belum Memiliki Akun?</div>
-                <div
-                  class="register-text col-6"
-                  @click="$router.push({ path: '/register' })"
-                >
-                  Daftar Sekarang
-                </div>
+          <div class="register mt-3">
+            <div class="row register=box">
+              <div class="col-6">Belum Memiliki Akun?</div>
+              <div
+                class="register-text col-6"
+                @click="$router.push({ path: '/register' })"
+              >
+                Daftar Sekarang
               </div>
             </div>
           </div>
@@ -118,8 +122,10 @@ export default {
         console.log(login);
         if (login.status == 200) {
           vm.$store.dispatch("save_token_login", login.data);
-          console.log(vm.$store.state.sso_user_status, "acc token");
-
+          vm.$store.dispatch("set_alert_show_success", "Sukses");
+          setTimeout(() => {
+            vm.$store.dispatch("set_alert_hide");
+          }, 4000);
           if (vm.$store.state.sso_user_status == 0) {
             vm.$router.push({ path: "/1stlogin" });
           } else {
@@ -127,12 +133,18 @@ export default {
           }
           this.$store.dispatch("set_loading", false);
         } else {
-          console.log("error");
+          vm.$store.dispatch("set_alert_show_fail", login.data.message);
+          setTimeout(() => {
+            vm.$store.dispatch("set_alert_hide");
+          }, 4000);
           this.$store.dispatch("set_loading", false);
         }
       } catch (error) {
         if (error) {
-          console.log(error);
+          vm.$store.dispatch("set_alert_show_fail", error.message);
+          setTimeout(() => {
+            vm.$store.dispatch("set_alert_hide");
+          }, 4000);
           this.show = true;
           this.$store.dispatch("set_loading", false);
         }
@@ -162,13 +174,15 @@ export default {
   font-family: "Poppins", sans-serif;
 }
 .container-fluid {
-  /* background-image: url("https://picsum.photos/seed/picsum/200/300"); */
+  /* background-image: url('@/assets/gedung.jpeg') */
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
   min-height: 100vh;
-  background-color: #ffffff;
+  /* background-color:  rgba(225, 225, 225, 0.1); */
   padding: 7%;
+  filter: blur(1rem);
+
   /* color: aqua; */
 }
 
@@ -203,10 +217,16 @@ export default {
 
   border-radius: 1rem;
   border: 1px solid transparent;
-  background-color: rgba(225, 225, 225, 0.1);
+  /* background-color: rgba(225, 225, 225, 0.1); */
+  background-color: #ffffff;
 
   backdrop-filter: blur(1rem);
   box-shadow: 1.3rem 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.5);
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   /* border-top-color: rgba(225, 225, 225, 0.5);
   border-left-color: rgba(225, 225, 225, 0.5);
@@ -223,14 +243,21 @@ export default {
   border-radius: 1rem;
   border: 1px solid transparent;
   color: black;
-  background-color: linear-gradient(
+  background-color: #ffffff;
+  /* background-color: linear-gradient(
     to right bottom,
     rgba(225, 225, 225, 0.5),
     rgba(225, 225, 225, 0.1)
-  );
+  ); */
 
   backdrop-filter: blur(1rem);
   box-shadow: 1.3rem 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.5);
+
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   /* border-top-color: rgba(225, 225, 225, 0.5);
   border-left-color: rgba(225, 225, 225, 0.5);

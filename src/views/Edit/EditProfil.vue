@@ -17,7 +17,7 @@
       <div class="dashboard">
         <div class="user">
           <div class="edit mb-4">Edit - Account Profile</div>
-         <div>
+          <div>
             <img
               v-if="!backup"
               class="foto mb-3"
@@ -152,6 +152,7 @@ export default {
   data() {
     return {
       biodata: "",
+      backup: false,
     };
   },
   mounted() {
