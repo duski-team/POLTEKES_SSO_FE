@@ -143,20 +143,20 @@ export default {
           setTimeout(() => {
             vm.$store.dispatch("set_alert_hide");
             this.$router.push({ path: "/" });
-          }, 4000);
+          }, 2000);
         } else {
           vm.$store.dispatch("set_loading", false);
           vm.$store.dispatch("set_alert_show_fail", login.data.message);
           setTimeout(() => {
             vm.$store.dispatch("set_alert_hide");
-          }, 4000);
+          }, 2000);
         }
       } else {
         vm.$store.dispatch("set_loading", false);
         vm.$store.dispatch("set_alert_show_fail", login.data.message);
         setTimeout(() => {
           vm.$store.dispatch("set_alert_hide");
-        }, 4000);
+        }, 2000);
       }
     },
   },

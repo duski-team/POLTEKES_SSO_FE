@@ -167,7 +167,7 @@ export default {
             vm.$store.dispatch("set_loading", false);
             setTimeout(() => {
               vm.$store.dispatch("set_alert_hide");
-            }, 4000);
+            }, 2000);
             vm.$router.push({ path: "/dashboard" });
           } else {
             vm.busy = false;
@@ -175,7 +175,7 @@ export default {
             vm.$store.dispatch("set_loading", false);
             setTimeout(() => {
               vm.$store.dispatch("set_alert_hide");
-            }, 4000);
+            }, 2000);
           }
         } else {
           vm.busy = false;
@@ -183,7 +183,7 @@ export default {
           vm.$store.dispatch("set_loading", false);
           setTimeout(() => {
             vm.$store.dispatch("set_alert_hide");
-          }, 4000);
+          }, 2000);
         }
       }
     },

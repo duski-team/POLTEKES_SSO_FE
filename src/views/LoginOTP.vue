@@ -96,7 +96,7 @@ export default {
         vm.$store.dispatch("set_loading", false);
         setTimeout(() => {
           vm.$store.dispatch("set_alert_hide");
-        }, 4000);
+        }, 2000);
       } else {
         vm.$store.dispatch("set_otp", vm.data.kode_otp);
         vm.$store.dispatch("set_loading", false);
@@ -104,7 +104,7 @@ export default {
         setTimeout(() => {
           vm.$store.dispatch("set_alert_hide");
           vm.$router.push({ path: "/gantiPassword2" });
-        }, 4000);
+        }, 2000);
       }
     },
     async kirimUlang() {
@@ -122,13 +122,13 @@ export default {
           );
           setTimeout(() => {
             vm.$store.dispatch("set_alert_hide");
-          }, 4000);
+          }, 2000);
         } else {
           vm.$store.dispatch("set_loading", false);
           vm.$store.dispatch("set_alert_show_fail", kirim.data.message);
           setTimeout(() => {
             vm.$store.dispatch("set_alert_hide");
-          }, 4000);
+          }, 2000);
         }
       }
     },

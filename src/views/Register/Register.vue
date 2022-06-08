@@ -312,13 +312,13 @@ export default {
           vm.$store.dispatch("set_alert_show_success", register.data.message);
           setTimeout(() => {
             vm.$store.dispatch("set_alert_hide");
-          }, 4000);
+          }, 2000);
         } else {
           // alert(register.data.message);
           vm.$store.dispatch("set_alert_show_fail", register.data.message);
           setTimeout(() => {
             vm.$store.dispatch("set_alert_hide");
-          }, 4000);
+          }, 2000);
           vm.$store.dispatch("set_loading", false);
         }
       } else {
@@ -326,7 +326,7 @@ export default {
         vm.$store.dispatch("set_alert_show_fail", register.data.message);
         setTimeout(() => {
           vm.$store.dispatch("set_alert_hide");
-        }, 4000);
+        }, 2000);
         console.log("error");
       }
     },

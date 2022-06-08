@@ -68,9 +68,9 @@ const mutations = {
     state.kode_otp = value;
   },
   set_data_biodata(state, value) {
+    console.log(value)
     if (value.role == "mahasiswa") {
       value.foto = `https://simadu.poltekkes-smg.ac.id/foto/${value.identity}`;
-      // value.foto = ''
     } else {
       value.foto =
         "http://simpeg.poltekkes-smg.ac.id/packages/upload/photo/pegawai/198810202010121002_1598278038.JPG";

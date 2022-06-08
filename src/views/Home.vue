@@ -136,7 +136,7 @@ export default {
           vm.$store.dispatch("set_alert_show_fail", login.data.message);
           setTimeout(() => {
             vm.$store.dispatch("set_alert_hide");
-          }, 4000);
+          }, 2000);
           this.$store.dispatch("set_loading", false);
         }
       } catch (error) {
@@ -144,7 +144,7 @@ export default {
           vm.$store.dispatch("set_alert_show_fail", error.message);
           setTimeout(() => {
             vm.$store.dispatch("set_alert_hide");
-          }, 4000);
+          }, 2000);
           this.show = true;
           this.$store.dispatch("set_loading", false);
         }

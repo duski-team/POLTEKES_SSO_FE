@@ -57,8 +57,8 @@
       <div class="col-md-4 d-flex justify-content-center">
         <div
           class="card2"
-          v-if="data.role != 'tenaga pendidik'"
-          @click="data.role = 'tenaga pendidik'"
+          v-if="data.role != 'pegawai'"
+          @click="data.role = 'pegawai'"
         >
           <img src="@/assets/tenagaPendidik.jpg" alt="" />
           <!-- <i class="fa-regular fa-face-flushed fa-10x"></i> -->

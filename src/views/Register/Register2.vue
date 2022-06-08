@@ -24,7 +24,7 @@
             </div>
           </div>
           <div class="forms">
-            <div class="input-box">
+            <!-- <div class="input-box">
               <span class="details">Nama Lengkap</span>
               <input
                 type="text"
@@ -35,7 +35,7 @@
               <span class="text-danger fst-italic">{{
                 ifValid("nama_lengkap_users")
               }}</span>
-            </div>
+            </div> -->
             <div class="input-box">
               <span class="details">Email Aktif *</span>
               <input
@@ -128,9 +128,9 @@ export default {
           required,
           numeric,
         },
-        nama_lengkap_users: {
-          required,
-        },
+        // nama_lengkap_users: {
+        //   required,
+        // },
       };
     });
 
