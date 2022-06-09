@@ -46,7 +46,6 @@
                   v-if="
                     aktiv != 'step2' &&
                     state.identity != '' &&
-                    state.nama_lengkap_users != '' &&
                     state.no_hp_users != '' &&
                     state.username != '' &&
                     state.NIK != ''
@@ -68,7 +67,6 @@
                   v-if="
                     aktiv != 'step2' &&
                     state.identity == '' &&
-                    state.nama_lengkap_users == '' &&
                     state.no_hp_users == '' &&
                     state.username == '' &&
                     state.NIK == ''
@@ -272,7 +270,7 @@ export default {
       vm.state.identity = x.identity;
       vm.state.no_hp_users = x.no_hp_users;
       vm.state.syarat_kebijakan = x.syarat_kebijakan;
-      vm.state.nama_lengkap_users = x.nama_lengkap_users;
+      // vm.state.nama_lengkap_users = x.nama_lengkap_users;
       vm.valid = true;
       vm.aktiv = "step3";
     },

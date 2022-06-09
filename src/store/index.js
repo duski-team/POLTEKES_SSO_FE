@@ -158,3 +158,4 @@ export default new createStore({
   modules,
   plugins,
 });
+
