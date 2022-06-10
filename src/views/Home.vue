@@ -15,7 +15,7 @@
 
           <h5 class="SSO mb-4">Single Sign On (SSO)</h5>
           <h5 class="card-title mb-4">Poltekes Semarang</h5>
-          <div v-if="show">
+          <!-- <div v-if="show">
             <div
               class="alert alert-danger alert-dismissible fade show"
               role="alert"
@@ -27,8 +27,8 @@
                 data-bs-dismiss="alert"
                 aria-label="Close"
               ></button>
-            </div>
-          </div>
+            </div> -->
+          <!-- </div> -->
           <div class="mb-3 mt-4">
             <input
               type="email"

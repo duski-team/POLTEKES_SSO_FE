@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 import createPersistedState from "vuex-persistedstate";
+import ip from "@/ip.js"
 
 const state = {
   sso_access_token: null,
@@ -68,16 +69,18 @@ const mutations = {
     state.kode_otp = value;
   },
   set_data_biodata(state, value) {
-    console.log(value)
+    // console.log(value)
     if (value.role == "mahasiswa") {
       value.foto = `https://simadu.poltekkes-smg.ac.id/foto/${value.identity}`;
-    } else {
-      value.foto =
-        "http://simpeg.poltekkes-smg.ac.id/packages/upload/photo/pegawai/198810202010121002_1598278038.JPG";
     }
     state.biodata = value;
   },
   set_data_profil(state, value) {
+    // console.log(value,'profil')
+    if(state.sso_user_role != 'mahasiswa') {
+      state.biodata.foto =
+      `http://simpeg.poltekkes-smg.ac.id/packages/upload/photo/pegawai/${value.photo}`;
+    }
     state.profil = value;
   },
   show_alert_success(state, value) {
@@ -98,7 +101,12 @@ const mutations = {
     state.popup = value;
   },
   data_app(state, value) {
+    console.log(value,'app')
+    value.map(item=>{
+      item.src1 = ip + '/' + item.logo_client
+    })
     state.app = value;
+    console.log(state.app,'appp')
   },
   biodata_foto(state, value) {
     state.biodata.foto = value;

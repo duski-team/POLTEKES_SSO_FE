@@ -201,7 +201,10 @@
           @click="goApp(item)"
         >
           <div class="cards">
-            <div>
+            <div v-if="item.logo_client">
+              <img class="icons" :src="item.src1" alt="" />
+            </div>
+            <div v-else>
               <img class="icons" src="@/assets/Icon1.jpg" alt="" />
             </div>
             <div>
@@ -254,6 +257,7 @@ export default {
         vm.$store.dispatch("set_profil", biodata.data.profil[0]);
 
         let app = await vm.$axios.get("client/list");
+        
 
         vm.$store.dispatch("set_app", app.data.data);
         // vm.app = app.data.data;
