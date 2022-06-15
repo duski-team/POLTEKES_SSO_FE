@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
+import HomeClient from "../views/HomeClient.vue";
 import Dashboard from "../views/Dashboard/Dashboard.vue";
 import Register from "../views/Register/Register.vue";
 import Profil from "../views/Edit/EditProfil.vue";
@@ -16,11 +17,19 @@ const routes = [
     name: "Home",
     component: Home,
   },
-  // {
-  //   path: "/home",
-  //   name: "Home",
-  //   component: Home,
-  // },
+  {
+    path: "/client_login/:client_id",
+    name: "HomeClient",
+    component: HomeClient,
+    beforeRouteUpdate(to, from, next) {
+      console.log(to);
+      if (to.path == "/client_login/:client_id") {
+        next({
+          path: "/client_login/",
+        });
+      }
+    },
+  },
   {
     path: "/dashboard",
     name: "Dashboard",
