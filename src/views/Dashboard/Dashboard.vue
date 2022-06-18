@@ -1,140 +1,151 @@
 <template>
-  <div><Header /></div>
-  <div class="container">
-    <div
-      v-if="$store.state.biodata"
-      class="alert alert-success alert-dismissible fade show"
-      role="alert"
-    >
-      <strong>Welcome!</strong> {{ $store.state.biodata.nama_lengkap_users }}
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-      ></button>
-    </div>
-    <section v-if="$store.state.biodata" class="glass">
-      <div class="dashboard">
-        <div class="user">
-          <div>
-            <img
-              v-if="!backup"
-              class="foto mb-3"
-              :src="$store.state.biodata.foto"
-              alt="user photo profil"
-              @error="backup = true"
-            />
-            <img
-              v-else
-              class="foto mb-3"
-              src="@/assets/noprofil.png"
-              alt="user photo profil"
-            />
-          </div>
-          <div class="nama">
-            <p>{{ $store.state.biodata.nama_lengkap_users }}</p>
-          </div>
-          <div class="role">
-            <div v-if="$store.state.biodata.role == 'pegawai'">
-              <p class="mr-1">TENDIK</p>
-            </div>
-            <div v-else>
-              <p class="mr-1">{{ $store.state.biodata.role.toUpperCase() }}</p>
-            </div>
-            <div><p>|</p></div>
-            <div>
-              <p class="ml-1" style="color: #027a48">
-                <strong>{{ $store.state.biodata.identity }}</strong>
-              </p>
-            </div>
-          </div>
-          <div class="btn-wrapper mb-2">
-            <div
-              type="button"
-              class="btn btn-lihat"
-              @click="$router.push({ path: '/profil' })"
-            >
-              Lihat Selengkapnya
-            </div>
-          </div>
-        </div>
-        <div class="line"></div>
-        <div
-          class="jurusan-wrapper mt-3"
-          v-if="$store.state.biodata.role == 'mahasiswa'"
-        >
-          <h5 style="line-height: 14px">Jurusan</h5>
-          <p style="line-height: 14px; font-size: 14px">Prodi Jurusan</p>
-        </div>
-        <div class="jurusan-wrapper mt-3" v-else>
-          <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
-          <p style="line-height: 14px; font-size: 14px">
-            {{ $store.state.profil.skpd }}
-          </p>
-        </div>
+  <div>
+    <div><Header /></div>
+    <div class="container">
+      <div
+        v-if="$store.state.biodata"
+        class="alert alert-success alert-dismissible fade show"
+        role="alert"
+      >
+        <strong>Welcome!</strong> {{ $store.state.biodata.nama_lengkap_users }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
       </div>
-      <div class="tools text-start">
-        <div class="box-info">
-          <div class="box-title mb-3" style="color: #027a48">Resource</div>
-          <div class="box-content">
+      <section v-if="$store.state.biodata" class="glass">
+        <div class="dashboard">
+          <div class="user">
             <div>
-              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
+              <img
+                v-if="!backup"
+                class="foto mb-3"
+                :src="$store.state.biodata.foto"
+                alt="user photo profil"
+                @error="backup = true"
+              />
+              <img
+                v-else
+                class="foto mb-3"
+                src="@/assets/noprofil.png"
+                alt="user photo profil"
+              />
             </div>
-            <div>
-              <h6>Lorem</h6>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+            <div class="nama">
+              <p>{{ $store.state.biodata.nama_lengkap_users }}</p>
+            </div>
+            <div class="role">
+              <div v-if="$store.state.biodata.role == 'pegawai'">
+                <p class="mr-1">TENDIK</p>
+              </div>
+              <div v-else>
+                <p class="mr-1">
+                  {{ $store.state.biodata.role.toUpperCase() }}
+                </p>
+              </div>
+              <div><p>|</p></div>
+              <div>
+                <p class="ml-1" style="color: #027a48">
+                  <strong>{{ $store.state.biodata.identity }}</strong>
+                </p>
+              </div>
+            </div>
+            <div class="btn-wrapper mb-2">
+              <div
+                type="button"
+                class="btn btn-lihat"
+                @click="$router.push({ path: '/profil' })"
+              >
+                Lihat Selengkapnya
+              </div>
             </div>
           </div>
+          <div class="line"></div>
+          <div
+            class="jurusan-wrapper mt-3"
+            v-if="$store.state.biodata.role == 'mahasiswa'"
+          >
+            <h5 style="line-height: 14px">Jurusan</h5>
+            <p style="line-height: 14px; font-size: 14px">Prodi Jurusan</p>
+          </div>
+          <div class="jurusan-wrapper mt-3" v-else>
+            <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
+            <p style="line-height: 14px; font-size: 14px">
+              {{ $store.state.profil.skpd }}
+            </p>
+          </div>
+        </div>
+        <div class="tools text-start">
+          <div class="box-info">
+            <div class="box-title mb-3" style="color: #027a48">Resource</div>
+            <div class="box-content">
+              <div>
+                <img class="icons" src="@/assets/Icon1.jpg" alt="" />
+              </div>
+              <div>
+                <h6>Lorem</h6>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+              </div>
+            </div>
 
-          <div class="box-content">
-            <div>
-              <img class="icons" src="@/assets/Icon2.jpg" alt="" />
+            <div class="box-content">
+              <div>
+                <img class="icons" src="@/assets/Icon2.jpg" alt="" />
+              </div>
+              <div>
+                <h6>Lorem</h6>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+              </div>
             </div>
-            <div>
-              <h6>Lorem</h6>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+            <div class="box-content">
+              <div>
+                <img class="icons" src="@/assets/Icon3.jpg" alt="" />
+              </div>
+              <div>
+                <h6>Lorem</h6>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+              </div>
             </div>
           </div>
-          <div class="box-content">
-            <div>
-              <img class="icons" src="@/assets/Icon3.jpg" alt="" />
+          <div class="box-info">
+            <div class="box-title mb-3" style="color: #027a48">
+              Informasi Baru
             </div>
-            <div>
-              <h6>Lorem</h6>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+            <div class="box-content2">
+              <div>
+                <img
+                  class="icons2"
+                  src="https://picsum.photos/100/100"
+                  alt=""
+                />
+              </div>
+              <div>
+                <h6>Lorem</h6>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+              </div>
+            </div>
+            <div class="box-content2">
+              <div>
+                <img
+                  class="icons2"
+                  src="https://picsum.photos/100/101"
+                  alt=""
+                />
+              </div>
+              <div>
+                <h6>Lorem</h6>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+              </div>
+            </div>
+            <div class="box-title mb-3" style="color: #027a48">
+              Baca Informasi ->
             </div>
           </div>
         </div>
-        <div class="box-info">
-          <div class="box-title mb-3" style="color: #027a48">
-            Informasi Baru
-          </div>
-          <div class="box-content2">
-            <div>
-              <img class="icons2" src="https://picsum.photos/100/100" alt="" />
-            </div>
-            <div>
-              <h6>Lorem</h6>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-            </div>
-          </div>
-          <div class="box-content2">
-            <div>
-              <img class="icons2" src="https://picsum.photos/100/101" alt="" />
-            </div>
-            <div>
-              <h6>Lorem</h6>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-            </div>
-          </div>
-          <div class="box-title mb-3" style="color: #027a48">
-            Baca Informasi ->
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="fas-wrapper">
+      </section>
+      <!-- <section class="fas-wrapper">
       <div class="app-title d-flex">
         <p>Fasilitas</p>
         /
@@ -186,40 +197,41 @@
           </div>
         </div>
       </div>
-    </section>
-    <section class="fas-wrapper">
-      <div class="app-title d-flex">
-        <p>Aplikasi & Layanan</p>
-        /
-        <p>applications & services</p>
-      </div>
-      <div class="row">
-        <div
-          v-for="item in $store.state.app"
-          :key="item.id"
-          class="col-md-3 col-sm-4 mb-3"
-          @click="goApp(item)"
-        >
-          <div class="cards">
-            <div v-if="item.logo_client">
-              <img class="icons" :src="item.src1" alt="" />
-            </div>
-            <div v-else>
-              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
-            </div>
-            <div>
-              <h6>{{ item.nama_client }}</h6>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+    </section> -->
+      <section class="fas-wrapper">
+        <div class="app-title d-flex">
+          <p>Aplikasi & Layanan</p>
+          /
+          <p>applications & services</p>
+        </div>
+        <div class="row">
+          <div
+            v-for="item in $store.state.app"
+            :key="item.id"
+            class="col-md-3 col-sm-4 mb-3"
+            @click="goApp(item)"
+          >
+            <div class="cards">
+              <div v-if="item.logo_client">
+                <img class="icons" :src="item.src1" alt="" />
+              </div>
+              <div v-else>
+                <img class="icons" src="@/assets/Icon1.jpg" alt="" />
+              </div>
+              <div>
+                <h6>{{ item.nama_client }}</h6>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
+    <div class="footer">
+      <Footer />
+    </div>
+    <div class="popup"><Popup /></div>
   </div>
-  <div>
-    <Footer />
-  </div>
-  <div><Popup /></div>
 </template>
 <script>
 import Header from "@/components/header.vue";
@@ -257,7 +269,6 @@ export default {
         vm.$store.dispatch("set_profil", biodata.data.profil[0]);
 
         let app = await vm.$axios.get("client/list");
-        
 
         vm.$store.dispatch("set_app", app.data.data);
         // vm.app = app.data.data;

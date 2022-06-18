@@ -7,7 +7,7 @@
       <div class="card-body">
         <div v-for="(item, idx) in popup" :key="idx">
           <div v-if="item.file_pop_up">
-            <img :src="item.src1" alt="" style="height: 100px;width:150px">
+            <img :src="item.src1" alt="" style="height: auto; width: 100%" />
           </div>
           <div>{{ item.judul_pop_up }}</div>
           <div class="card-body">
@@ -83,12 +83,12 @@ export default {
       let popup = await vm.$axios.get(
         "pop_up/listByRole/" + vm.$store.state.sso_user_role
       );
-      vm.popup = await popup.data.data.map(item=>{
-        if(item.file_pop_up){
-          item.src1 = this.ip +'/'+ item.file_pop_up
+      vm.popup = await popup.data.data.map((item) => {
+        if (item.file_pop_up) {
+          item.src1 = this.ip + "/" + item.file_pop_up;
         }
-        return item
-      })
+        return item;
+      });
       console.log(popup);
       if (popup) {
         this.show = true;
@@ -103,11 +103,11 @@ export default {
 
 <style scoped>
 .card {
-  position: fixed;
-  left: 15%;
+  position: absolute;
+  left: 25%;
   top: 25%;
-  width: 70%;
-  height: 50%;
+  width: 50%;
+  height: 100%;
   z-index: 9999999999;
   backdrop-filter: blur(0.09rem);
 }

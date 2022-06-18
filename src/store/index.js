@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
 import createPersistedState from "vuex-persistedstate";
-import ip from "@/ip.js"
+import ip from "@/ip.js";
 
 const state = {
   sso_access_token: null,
@@ -77,9 +77,8 @@ const mutations = {
   },
   set_data_profil(state, value) {
     // console.log(value,'profil')
-    if(state.sso_user_role != 'mahasiswa') {
-      state.biodata.foto =
-      `http://simpeg.poltekkes-smg.ac.id/packages/upload/photo/pegawai/${value.photo}`;
+    if (state.sso_user_role != "mahasiswa") {
+      state.biodata.foto = `http://simpeg.poltekkes-smg.ac.id/packages/upload/photo/pegawai/${value.photo}`;
     }
     state.profil = value;
   },
@@ -101,12 +100,12 @@ const mutations = {
     state.popup = value;
   },
   data_app(state, value) {
-    console.log(value,'app')
-    value.map(item=>{
-      item.src1 = ip + '/' + item.logo_client
-    })
+    console.log(value, "app");
+    value.map((item) => {
+      item.src1 = ip + "/" + item.logo_client;
+    });
     state.app = value;
-    console.log(state.app,'appp')
+    console.log(state.app, "appp");
   },
   biodata_foto(state, value) {
     state.biodata.foto = value;
@@ -166,4 +165,3 @@ export default new createStore({
   modules,
   plugins,
 });
-

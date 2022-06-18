@@ -128,9 +128,8 @@ export default {
           setTimeout(() => {
             vm.$store.dispatch("set_alert_hide");
           }, 4000);
-          console.log(this.client.redirect_uri)
+          console.log(this.client.redirect_uri);
           window.open(
-            
             this.client.redirect_uri + "?token=" + login.data.accessToken
           );
           this.$store.dispatch("set_loading", false);
