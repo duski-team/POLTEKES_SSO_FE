@@ -9,7 +9,7 @@
           </div>
         </div>
         <div class="col-4">
-          <div class="dropdown">
+          <div class="dropdown" style="cursor:pointer;">
             <div
               class="d-flex text-left dropdown"
               id="dropdownMenuProfil"
@@ -107,6 +107,7 @@ export default {
   height: 44px;
   width: 44px;
   margin-left: 54px;
+  cursor: pointer;
 }
 .avatar {
   height: 44px;
@@ -123,6 +124,7 @@ export default {
   margin-left: 37px;
   text-align: center;
   margin-top: 7px;
+  cursor: pointer;
 }
 .nama {
   text-align: start;

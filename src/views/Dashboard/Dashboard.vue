@@ -208,7 +208,7 @@
           <div
             v-for="item in $store.state.app"
             :key="item.id"
-            class="col-md-3 col-sm-4 mb-3"
+            class="box-app col-md-3 col-sm-4 mb-3"
             @click="goApp(item)"
           >
             <div class="cards">
@@ -547,6 +547,11 @@ h6 {
 }
 
 img {
+  cursor: pointer;
+}
+
+
+.box-app {
   cursor: pointer;
 }
 </style>

@@ -191,6 +191,7 @@ export default {
   font-size: 16px;
   font-weight: 500;
   color: blue;
+  cursor: pointer;
 }
 
 .lupa:hover {
@@ -198,5 +199,6 @@ export default {
   font-size: 16px;
   font-weight: 500;
   color: blue;
+  cursor: pointer;
 }
 </style>

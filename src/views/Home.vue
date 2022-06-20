@@ -279,6 +279,7 @@ export default {
 }
 .register-text {
   color: #027a48;
+  cursor: pointer;
 }
 /* .register:hover {
   transform: scale(1.1);
@@ -294,6 +295,7 @@ export default {
   display: flex;
   justify-content: space-between;
   line-height: 16px;
+  cursor: pointer;
 }
 
 .lupa:hover {
@@ -302,5 +304,6 @@ export default {
   font-weight: 500;
   color: #d92d20;
   line-height: 16px;
+  cursor: pointer;
 }
 </style>
