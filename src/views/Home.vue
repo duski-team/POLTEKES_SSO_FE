@@ -37,6 +37,7 @@
               aria-describedby="emailHelp"
               v-model="data.username"
               placeholder="Username / e-mail"
+              @keydown.enter.prevent="login()"
             />
           </div>
           <div class="mb-3">
@@ -119,7 +120,7 @@ export default {
             "content-type": "application/x-www-form-urlencoded;charset=utf-8",
           },
         });
-        console.log(login);
+        console.log(login,'login');
         if (login.status == 200) {
           vm.$store.dispatch("save_token_login", login.data);
           vm.$store.dispatch("set_alert_show_success", "Sukses");
@@ -280,6 +281,7 @@ export default {
 .register-text {
   color: #027a48;
   cursor: pointer;
+  text-align: right;
 }
 /* .register:hover {
   transform: scale(1.1);

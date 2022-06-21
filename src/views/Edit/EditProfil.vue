@@ -37,8 +37,8 @@
           class="jurusan-wrapper mt-3"
           v-if="$store.state.biodata.role == 'mahasiswa'"
         >
-          <h5 style="line-height: 14px">Jurusan</h5>
-          <p style="line-height: 14px; font-size: 14px">Prodi Jurusan</p>
+          <h5 style="line-height: 14px">{{$store.state.profil.f_jenjang}}</h5>
+            <p style="line-height: 14px; font-size: 14px">{{$store.state.profil.f_namaprogdi_baru}}</p>
         </div>
         <div class="jurusan-wrapper mt-3" v-else>
           <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
@@ -70,7 +70,7 @@
               disabled
               placeholder="Masukkan email lengkap"
               required
-              v-model="biodata.nama_lengkap_users"
+              v-model="$store.state.biodata.nama_lengkap_users"
             />
           </div>
           <div class="input-box">
@@ -130,7 +130,7 @@
               type="text"
               placeholder="Masukkan email lengkap"
               required
-              v-model="biodata.username"
+              v-model="biodata.email_pribadi"
             />
           </div>
         </div>

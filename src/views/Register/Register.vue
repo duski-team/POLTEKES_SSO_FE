@@ -48,6 +48,7 @@
                     state.identity != '' &&
                     state.no_hp_users != '' &&
                     state.username != '' &&
+                    state.email_pribadi !='' &&
                     state.NIK != ''
                   "
                   class="circle"
@@ -69,6 +70,7 @@
                     state.identity == '' &&
                     state.no_hp_users == '' &&
                     state.username == '' &&
+                    state.email_pribadi =='' &&
                     state.NIK == ''
                   "
                   class="circle2"
@@ -202,7 +204,7 @@ export default {
       identity: "",
       NIK: "",
       no_hp_users: "",
-      nama_lengkap_users: "",
+      email_pribadi: "",
       syarat_kebijakan: "",
     });
 
@@ -270,7 +272,7 @@ export default {
       vm.state.identity = x.identity;
       vm.state.no_hp_users = x.no_hp_users;
       vm.state.syarat_kebijakan = x.syarat_kebijakan;
-      // vm.state.nama_lengkap_users = x.nama_lengkap_users;
+      vm.state.email_pribadi = x.email_pribadi;
       vm.valid = true;
       vm.aktiv = "step3";
     },

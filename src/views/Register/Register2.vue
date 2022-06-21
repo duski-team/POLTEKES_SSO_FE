@@ -14,7 +14,7 @@
               <span class="details">NIM / NIP *</span>
               <input
                 type="text"
-                placeholder="Masukkan email lengkap"
+                placeholder="Masukkan nomor identitas akademik"
                 required
                 v-model="data.identity"
               />
@@ -37,7 +37,7 @@
               }}</span>
             </div> -->
             <div class="input-box">
-              <span class="details">Email Aktif *</span>
+              <span class="details">Email Official *</span>
               <input
                 type="text"
                 placeholder="Masukkan email lengkap"
@@ -46,6 +46,18 @@
               />
               <span class="text-danger fst-italic">{{
                 ifValid("username")
+              }}</span>
+            </div>
+            <div class="input-box">
+              <span class="details">Email Pribadi *</span>
+              <input
+                type="text"
+                placeholder="Masukkan email lengkap"
+                required
+                v-model="data.email_pribadi"
+              />
+              <span class="text-danger fst-italic">{{
+                ifValid("email_pribadi")
               }}</span>
             </div>
             <div class="input-box">
@@ -95,7 +107,7 @@
 
 <script>
 import useValidate from "@vuelidate/core";
-import { required, email, minLength, numeric } from "@vuelidate/validators";
+import { required, email, minLength, numeric, maxLength } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
 export default {
   props: ["aktiv", "state"],
@@ -107,6 +119,7 @@ export default {
       NIK: "",
       no_hp_users: "",
       nama_lengkap_users: "",
+      email_pribadi:"",
       step: "step3",
     });
 
@@ -123,14 +136,16 @@ export default {
         NIK: {
           required,
           minLength: minLength(16),
+          maxLength: maxLength(16)
         },
         no_hp_users: {
           required,
           numeric,
         },
-        // nama_lengkap_users: {
-        //   required,
-        // },
+        email_pribadi: {
+          required,
+          email
+        },
       };
     });
 
@@ -175,6 +190,8 @@ export default {
             return "* Data harus terdiri hanya dari angka";
           } else if (y == "minLength") {
             return `* Data minimal ${l} digits`;
+          }else if (y == "maxLength") {
+            return `* Data maksimal ${l} digits`;
           }
         }
       }
