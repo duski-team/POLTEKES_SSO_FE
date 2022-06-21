@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-import createPersistedState from "vuex-persistedstate";
+// import createPersistedState from "vuex-persistedstate";
 import ip from "@/ip.js";
 
 const state = {
@@ -160,11 +160,11 @@ const actions = {
   },
 };
 const modules = {};
-const plugins = [createPersistedState()];
+// const plugins = [createPersistedState()];
 export default new createStore({
   state,
   mutations,
   actions,
   modules,
-  plugins,
+  // plugins,
 });

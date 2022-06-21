@@ -90,6 +90,7 @@ export default {
   display: block;
   position: absolute;
   top: 50%;
+  left:50%;
   margin-top: -4.05em;
 }
 </style>

@@ -162,7 +162,7 @@ export default {
         }
       } catch (error) {
         if (error) {
-          vm.$store.dispatch("set_alert_show_fail", error.message);
+          vm.$store.dispatch("set_alert_show_fail", 'Username salah atau tidak terdaftar');
           setTimeout(() => {
             vm.$store.dispatch("set_alert_hide");
           }, 2000);
