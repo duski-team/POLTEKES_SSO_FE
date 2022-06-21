@@ -69,20 +69,19 @@ const mutations = {
     state.kode_otp = value;
   },
   set_data_biodata(state, value) {
-    console.log(value,'biodata')
+    console.log(value, "biodata");
     if (value.role == "mahasiswa") {
       value.foto = `https://simadu.poltekkes-smg.ac.id/foto/${value.identity}`;
     }
     state.biodata = value;
   },
   set_data_profil(state, value) {
-    console.log(value,'profil')
+    console.log(value, "profil");
     if (state.sso_user_role != "mahasiswa") {
       state.biodata.foto = `http://simpeg.poltekkes-smg.ac.id/packages/upload/photo/pegawai/${value.photo}`;
-      state.biodata.nama_lengkap_users = value.nama
-    }else{
-      
-      state.biodata.nama_lengkap_users = value.f_namamahasiswa
+      state.biodata.nama_lengkap_users = value.nama;
+    } else {
+      state.biodata.nama_lengkap_users = value.f_namamahasiswa;
     }
     state.profil = value;
   },

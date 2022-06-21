@@ -30,28 +30,48 @@
             </div> -->
           <!-- </div> -->
           <div class="mb-3 mt-4">
-            <input
-              type="email"
-              class="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              v-model="data.username"
-              placeholder="Username / e-mail"
-              @keydown.enter.prevent="login()"
-            />
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">@</span>
+              </div>
+              <input
+                type="email"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                v-model="data.username"
+                placeholder="Username / e-mail"
+                @keydown.enter.prevent="login()"
+              />
+            </div>
           </div>
           <div class="mb-3">
-            <!-- <label for="exampleInputpassword" class="form-label"
-                >Password</label
-              > -->
-            <input
-              type="password"
-              class="form-control"
-              id="exampleInputpassword"
-              v-model="data.password"
-              placeholder="password"
-              @keydown.enter.prevent="login()"
-            />
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="24"
+                    fill="currentColor"
+                    class="bi bi-key"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z"
+                    />
+                    <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" /></svg
+                ></span>
+              </div>
+              <input
+                type="password"
+                class="form-control"
+                id="exampleInputpassword"
+                v-model="data.password"
+                placeholder="password"
+                @keydown.enter.prevent="login()"
+              />
+            </div>
           </div>
           <div class="lupa" @click="$router.push('/lupaPassword')">
             <p></p>
@@ -120,7 +140,7 @@ export default {
             "content-type": "application/x-www-form-urlencoded;charset=utf-8",
           },
         });
-        console.log(login,'login');
+        console.log(login, "login");
         if (login.status == 200) {
           vm.$store.dispatch("save_token_login", login.data);
           vm.$store.dispatch("set_alert_show_success", "Sukses");
