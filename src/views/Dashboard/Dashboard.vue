@@ -15,142 +15,331 @@
           aria-label="Close"
         ></button>
       </div>
-      <section v-if="$store.state.biodata" class="glass">
-        <div class="dashboard">
-          <div class="user">
-            <div>
-              <img
-                v-if="!backup"
-                class="foto mb-3"
-                :src="$store.state.biodata.foto"
-                alt="user photo profil"
-                @error="backup = true"
-              />
-              <img
-                v-else
-                class="foto mb-3"
-                src="@/assets/noprofil.png"
-                alt="user photo profil"
-              />
-            </div>
-            <div class="nama">
-              <p>{{ $store.state.biodata.nama_lengkap_users }}</p>
-            </div>
-            <div class="role">
-              <div v-if="$store.state.biodata.role == 'pegawai'">
-                <p class="mr-1">TENDIK</p>
-              </div>
-              <div v-else>
-                <p class="mr-1">
-                  {{ $store.state.biodata.role.toUpperCase() }}
-                </p>
-              </div>
-              <div><p>|</p></div>
+      <div class="d-none d-sm-block">
+        <section v-if="$store.state.biodata" class="glass">
+          <div class="dashboard">
+            <div class="user">
               <div>
-                <p class="ml-1" style="color: #027a48">
-                  <strong>{{ $store.state.biodata.identity }}</strong>
-                </p>
+                <img
+                  v-if="!backup"
+                  class="foto mb-3"
+                  :src="$store.state.biodata.foto"
+                  alt="user photo profil"
+                  @error="backup = true"
+                />
+                <img
+                  v-else
+                  class="foto mb-3"
+                  src="@/assets/noprofil.png"
+                  alt="user photo profil"
+                />
+              </div>
+              <div class="nama">
+                <p>{{ $store.state.biodata.nama_lengkap_users }}</p>
+              </div>
+              <div class="role">
+                <div v-if="$store.state.biodata.role == 'pegawai'">
+                  <p class="mr-1">TENDIK</p>
+                </div>
+                <div v-else>
+                  <p class="mr-1">
+                    {{ $store.state.biodata.role.toUpperCase() }}
+                  </p>
+                </div>
+                <div><p>|</p></div>
+                <div>
+                  <p class="ml-1" style="color: #027a48">
+                    <strong>{{ $store.state.biodata.identity }}</strong>
+                  </p>
+                </div>
+              </div>
+              <div class="btn-wrapper mb-2">
+                <div
+                  type="button"
+                  class="btn btn-lihat"
+                  @click="$router.push({ path: '/profil' })"
+                >
+                  Lihat Selengkapnya
+                </div>
               </div>
             </div>
-            <div class="btn-wrapper mb-2">
-              <div
-                type="button"
-                class="btn btn-lihat"
-                @click="$router.push({ path: '/profil' })"
-              >
-                Lihat Selengkapnya
-              </div>
+            <div class="line"></div>
+            <div
+              class="jurusan-wrapper mt-3"
+              v-if="$store.state.biodata.role == 'mahasiswa'"
+            >
+              <h5 style="line-height: 14px">
+                {{ $store.state.profil.f_jenjang }}
+              </h5>
+              <p style="line-height: 14px; font-size: 14px">
+                {{ $store.state.profil.f_namaprogdi_baru }}
+              </p>
+            </div>
+            <div
+              class="jurusan-wrapper mt-3"
+              v-if="
+                $store.state.biodata.role == 'dosen' ||
+                $store.state.biodata.role == 'pegawai'
+              "
+            >
+              <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
+              <p style="line-height: 14px; font-size: 14px">
+                {{ $store.state.profil.skpd }}
+              </p>
+            </div>
+            <div
+              class="jurusan-wrapper mt-3"
+              v-if="$store.state.biodata.role == 'admin'"
+            >
+              <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
+              <p style="line-height: 14px; font-size: 14px">Admin</p>
             </div>
           </div>
-          <div class="line"></div>
-          <div
-            class="jurusan-wrapper mt-3"
-            v-if="$store.state.biodata.role == 'mahasiswa'"
-          >
-            <h5 style="line-height: 14px">{{$store.state.profil.f_jenjang}}</h5>
-            <p style="line-height: 14px; font-size: 14px">{{$store.state.profil.f_namaprogdi_baru}}</p>
-          </div>
-          <div class="jurusan-wrapper mt-3" v-if="$store.state.biodata.role == 'dosen'|| $store.state.biodata.role == 'pegawai'">
-            <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
-            <p style="line-height: 14px; font-size: 14px">
-              {{ $store.state.profil.skpd }}
-            </p>
-          </div>
-          <div class="jurusan-wrapper mt-3" v-if="$store.state.biodata.role == 'admin'">
-            <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
-            <p style="line-height: 14px; font-size: 14px">
-              Admin
-            </p>
-          </div>
-        </div>
-        <div class="tools text-start">
-          <div class="box-info">
-            <div class="box-title mb-3" style="color: #027a48">Resource</div>
-            <div class="box-content">
-              <div>
-                <img class="icons" src="@/assets/Icon1.jpg" alt="" />
+          <div class="tools text-start">
+            <div class="box-info">
+              <div class="box-title mb-3" style="color: #027a48">Resource</div>
+              <div class="box-content">
+                <div>
+                  <img class="icons" src="@/assets/Icon1.jpg" alt="" />
+                </div>
+                <div>
+                  <h6>Lorem</h6>
+                  <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+                </div>
               </div>
-              <div>
-                <h6>Lorem</h6>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-              </div>
-            </div>
 
-            <div class="box-content">
-              <div>
-                <img class="icons" src="@/assets/Icon2.jpg" alt="" />
+              <div class="box-content">
+                <div>
+                  <img class="icons" src="@/assets/Icon2.jpg" alt="" />
+                </div>
+                <div>
+                  <h6>Lorem</h6>
+                  <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+                </div>
               </div>
-              <div>
-                <h6>Lorem</h6>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+              <div class="box-content">
+                <div>
+                  <img class="icons" src="@/assets/Icon3.jpg" alt="" />
+                </div>
+                <div>
+                  <h6>Lorem</h6>
+                  <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+                </div>
               </div>
             </div>
-            <div class="box-content">
-              <div>
-                <img class="icons" src="@/assets/Icon3.jpg" alt="" />
+            <div class="box-info">
+              <div class="box-title mb-3" style="color: #027a48">
+                Informasi Baru
               </div>
-              <div>
-                <h6>Lorem</h6>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+              <div class="box-content2">
+                <div>
+                  <img
+                    class="icons2"
+                    src="http://placekitten.com/700/500"
+                    alt=""
+                  />
+                </div>
+                <div>
+                  <h6>Lorem</h6>
+                  <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+                </div>
+              </div>
+              <div class="box-content2">
+                <div>
+                  <img
+                    class="icons2"
+                    src="http://placekitten.com/700/500"
+                    alt=""
+                  />
+                </div>
+                <div>
+                  <h6>Lorem</h6>
+                  <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+                </div>
+              </div>
+              <div class="box-title mb-3" style="color: #027a48">
+                Baca Informasi ->
               </div>
             </div>
           </div>
-          <div class="box-info">
-            <div class="box-title mb-3" style="color: #027a48">
-              Informasi Baru
-            </div>
-            <div class="box-content2">
-              <div>
-                <img
-                  class="icons2"
-                  src="http://placekitten.com/700/500"
-                  alt=""
-                />
+        </section>
+      </div>
+      <div class="d-xl-none d-lg-none d-md-none">
+        <section v-if="$store.state.biodata">
+          <div class="row glass-hp">
+            <div class="col">
+              <div class="dashboard-hp">
+                <div class="user">
+                  <div>
+                    <img
+                      v-if="!backup"
+                      class="foto mb-3"
+                      :src="$store.state.biodata.foto"
+                      alt="user photo profil"
+                      @error="backup = true"
+                    />
+                    <img
+                      v-else
+                      class="foto mb-3"
+                      src="@/assets/noprofil.png"
+                      alt="user photo profil"
+                    />
+                  </div>
+                  <div class="nama">
+                    <p>{{ $store.state.biodata.nama_lengkap_users }}</p>
+                  </div>
+                  <div class="role">
+                    <div v-if="$store.state.biodata.role == 'pegawai'">
+                      <p class="mr-1">TENDIK</p>
+                    </div>
+                    <div v-else>
+                      <p class="mr-1">
+                        {{ $store.state.biodata.role.toUpperCase() }}
+                      </p>
+                    </div>
+                    <div><p>|</p></div>
+                    <div>
+                      <p class="ml-1" style="color: #027a48">
+                        <strong>{{ $store.state.biodata.identity }}</strong>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="btn-wrapper mb-2">
+                    <div
+                      type="button"
+                      class="btn btn-lihat"
+                      @click="$router.push({ path: '/profil' })"
+                    >
+                      Lihat Selengkapnya
+                    </div>
+                  </div>
+                </div>
+                <div class="line"></div>
+                <div
+                  class="jurusan-wrapper mt-3"
+                  v-if="$store.state.biodata.role == 'mahasiswa'"
+                >
+                  <h5 style="line-height: 14px">
+                    {{ $store.state.profil.f_jenjang }}
+                  </h5>
+                  <p style="line-height: 14px; font-size: 14px">
+                    {{ $store.state.profil.f_namaprogdi_baru }}
+                  </p>
+                </div>
+                <div
+                  class="jurusan-wrapper mt-3"
+                  v-if="
+                    $store.state.biodata.role == 'dosen' ||
+                    $store.state.biodata.role == 'pegawai'
+                  "
+                >
+                  <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
+                  <p style="line-height: 14px; font-size: 14px">
+                    {{ $store.state.profil.skpd }}
+                  </p>
+                </div>
+                <div
+                  class="jurusan-wrapper mt-3"
+                  v-if="$store.state.biodata.role == 'admin'"
+                >
+                  <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
+                  <p style="line-height: 14px; font-size: 14px">Admin</p>
+                </div>
               </div>
-              <div>
-                <h6>Lorem</h6>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-              </div>
-            </div>
-            <div class="box-content2">
-              <div>
-                <img
-                  class="icons2"
-                  src="http://placekitten.com/700/500"
-                  alt=""
-                />
-              </div>
-              <div>
-                <h6>Lorem</h6>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-              </div>
-            </div>
-            <div class="box-title mb-3" style="color: #027a48">
-              Baca Informasi ->
             </div>
           </div>
-        </div>
-      </section>
+          <div class="row glass-hp">
+            <div class="col">
+              <div class="tools-hp text-start">
+                <div class="box-info-hp">
+                  <div class="box-title mb-3" style="color: #027a48">
+                    Resource
+                  </div>
+                  <div class="box-content-hp">
+                    <div>
+                      <img class="icons" src="@/assets/Icon1.jpg" alt="" />
+                    </div>
+                    <div>
+                      <h6>Lorem</h6>
+                      <p>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="box-content-hp">
+                    <div>
+                      <img class="icons" src="@/assets/Icon2.jpg" alt="" />
+                    </div>
+                    <div>
+                      <h6>Lorem</h6>
+                      <p>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="box-content-hp">
+                    <div>
+                      <img class="icons" src="@/assets/Icon3.jpg" alt="" />
+                    </div>
+                    <div>
+                      <h6>Lorem</h6>
+                      <p>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row glass-hp">
+            <div class="col">
+              <div class="tools-hp">
+                <div class="box-info-hp">
+                  <div class="box-title mb-3" style="color: #027a48">
+                    Informasi Baru
+                  </div>
+                  <div class="box-content2-hp">
+                    <div>
+                      <img
+                        class="icons2-hp"
+                        src="http://placekitten.com/700/500"
+                        alt=""
+                      />
+                    </div>
+                    <div>
+                      <h6>Lorem</h6>
+                      <p>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="box-content2-hp">
+                    <div>
+                      <img
+                        class="icons2-hp"
+                        src="http://placekitten.com/700/500"
+                        alt=""
+                      />
+                    </div>
+                    <div>
+                      <h6>Lorem</h6>
+                      <p>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="box-title mb-3" style="color: #027a48">
+                    Baca Informasi ->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
       <!-- <section class="fas-wrapper">
       <div class="app-title d-flex">
         <p>Fasilitas</p>
@@ -272,12 +461,11 @@ export default {
         );
         // vm.biodata = biodata.data.data[0];
         vm.$store.dispatch("set_biodata", biodata.data.data[0]);
-        if(biodata.data.profil[0]){
+        if (biodata.data.profil[0]) {
           vm.$store.dispatch("set_profil", biodata.data.profil[0]);
-        }else{
+        } else {
           vm.$store.dispatch("set_profil", {});
         }
-        
 
         let app = await vm.$axios.get("client/list");
 
@@ -328,6 +516,14 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
+.glass-hp {
+  width: 100%;
+  padding: 1rem 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
 .fas-wrapper {
   width: 100%;
   padding: 1rem 0.5rem;
@@ -357,6 +553,22 @@ export default {
 
 .dashboard {
   width: 280px;
+  height: 349px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 24px;
+  background-color: #ffffff;
+  border: 1px solid #eaecf0;
+  box-sizing: border-box;
+  /* Shadow/sm */
+
+  box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
+    0px 1px 2px rgba(16, 24, 40, 0.06);
+  border-radius: 8px;
+}
+.dashboard-hp {
+  width: 100%;
   height: 349px;
   display: flex;
   flex-direction: column;
@@ -439,6 +651,7 @@ export default {
 }
 
 .tools {
+  display: flex;
   width: 906px;
   height: 349px;
   display: flex;
@@ -457,9 +670,36 @@ export default {
     0px 1px 2px rgba(16, 24, 40, 0.06);
   border-radius: 8px;
 }
+
+.tools-hp {
+  display: flex;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  /* White */
+  background: #ffffff;
+  /* Gray/200 */
+  border: 1px solid #eaecf0;
+  box-sizing: border-box;
+  /* Shadow/sm */
+  box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
+    0px 1px 2px rgba(16, 24, 40, 0.06);
+  border-radius: 8px;
+}
+
 .box-info {
   width: 80%;
   /* background-color: #027a48; */
+  padding: 2rem;
+  height: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.box-info-hp {
+  width: 100%;
   padding: 2rem;
   height: 100%;
   align-items: flex-start;
@@ -477,11 +717,28 @@ export default {
   cursor: pointer;
 }
 
+.box-content-hp {
+  display: flex;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
 .box-content2 {
   display: flex;
   margin-bottom: 10px;
   margin-top: 10px;
   cursor: pointer;
+}
+
+.box-content2-hp {
+  display: flex;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  width: 100%;
+  /* background-color: #027a48; */
 }
 
 .icons {
@@ -494,6 +751,13 @@ export default {
   margin-right: 15px;
   width: 144px;
   height: 90px;
+  border-radius: 15px;
+}
+
+.icons2-hp {
+  margin-right: 5px;
+  width: 100px;
+  height: 100px;
   border-radius: 15px;
 }
 h6 {
@@ -560,7 +824,6 @@ h6 {
 img {
   cursor: pointer;
 }
-
 
 .box-app {
   cursor: pointer;

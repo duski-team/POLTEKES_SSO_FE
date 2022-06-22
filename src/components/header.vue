@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <div class="na">
+    <div class="na d-none d-sm-block">
       <div class="row pt-2">
         <div class="col-8" @click="$router.push({ path: '/' })">
           <div class="d-flex">
@@ -32,6 +32,55 @@
                   {{ $store.state.biodata.nama_lengkap_users }}
                 </p>
                 <p class="email">{{ $store.state.biodata.username }}</p>
+              </div>
+            </div>
+            <div
+              class="dropdown-menu text-start"
+              aria-labelledby="dropdownMenuProfil"
+            >
+              <a
+                class="dropdown-item logout"
+                @click="$router.push({ path: '/profil' })"
+                >Lihat Profil</a
+              >
+              <a class="dropdown-item logout" @click="logout()">Log out</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="na d-xl-none d-lg-none d-md-none">
+      <div class="row pt-2">
+        <div class="col-9" @click="$router.push({ path: '/' })">
+          <div class="d-flex">
+            <img class="logo-hp" src="@/assets/logo2.svg" alt="" />
+            <!-- <p class="poltek">Poltekkes Semarang</p> -->
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="dropdown" style="cursor:pointer;">
+            <div
+              class="d-flex text-left dropdown"
+              id="dropdownMenuProfil"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <div v-if="$store.state.biodata" >
+                <img
+                  v-if="!backup"
+                  class="avatar-hp"
+                  :src="$store.state.biodata.foto"
+                  alt=""
+                  @error="backup = true"
+                />
+                <img v-else class="avatar-hp" src="@/assets/noprofil.png" alt="" />
+              </div>
+              <div v-if="$store.state.biodata">
+                <!-- <p class="nama mb-0">
+                  {{ $store.state.biodata.nama_lengkap_users }}
+                </p>
+                <p class="email">{{ $store.state.biodata.username }}</p> -->
               </div>
             </div>
             <div
@@ -109,10 +158,25 @@ export default {
   margin-left: 54px;
   cursor: pointer;
 }
+
+.logo-hp {
+  height: 44px;
+  width: 44px;
+  margin-left: 14px;
+  cursor: pointer;
+}
+
 .avatar {
   height: 44px;
   width: 44px;
   margin-right: 20px;
+  border-radius: 50px;
+}
+
+.avatar-hp {
+  height: 44px;
+  width: 44px;
+  margin-right: 10px;
   border-radius: 50px;
 }
 
