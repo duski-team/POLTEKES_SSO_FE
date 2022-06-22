@@ -70,10 +70,16 @@
             <h5 style="line-height: 14px">{{$store.state.profil.f_jenjang}}</h5>
             <p style="line-height: 14px; font-size: 14px">{{$store.state.profil.f_namaprogdi_baru}}</p>
           </div>
-          <div class="jurusan-wrapper mt-3" v-else>
+          <div class="jurusan-wrapper mt-3" v-if="$store.state.biodata.role == 'dosen'|| $store.state.biodata.role == 'pegawai'">
             <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
             <p style="line-height: 14px; font-size: 14px">
               {{ $store.state.profil.skpd }}
+            </p>
+          </div>
+          <div class="jurusan-wrapper mt-3" v-if="$store.state.biodata.role == 'admin'">
+            <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
+            <p style="line-height: 14px; font-size: 14px">
+              Admin
             </p>
           </div>
         </div>
@@ -266,7 +272,12 @@ export default {
         );
         // vm.biodata = biodata.data.data[0];
         vm.$store.dispatch("set_biodata", biodata.data.data[0]);
-        vm.$store.dispatch("set_profil", biodata.data.profil[0]);
+        if(biodata.data.profil[0]){
+          vm.$store.dispatch("set_profil", biodata.data.profil[0]);
+        }else{
+          vm.$store.dispatch("set_profil", {});
+        }
+        
 
         let app = await vm.$axios.get("client/list");
 

@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-// import createPersistedState from "vuex-persistedstate";
+import createPersistedState from "vuex-persistedstate";
 import ip from "@/ip.js";
 
 const state = {
@@ -77,13 +77,18 @@ const mutations = {
   },
   set_data_profil(state, value) {
     console.log(value, "profil");
-    if (state.sso_user_role != "mahasiswa") {
+    if (state.sso_user_role == "dosen" || state.sso_user_role == "pegawai") {
       state.biodata.foto = `http://simpeg.poltekkes-smg.ac.id/packages/upload/photo/pegawai/${value.photo}`;
       state.biodata.nama_lengkap_users = value.nama;
-    } else {
+    } else if (state.sso_user_role == "mahasiswa") {
       state.biodata.nama_lengkap_users = value.f_namamahasiswa;
+    } else if (state.sso_user_role == "admin") {
+      value = { photo: "" };
+      state.biodata.nama_lengkap_users = "admin";
+      state.biodata.foto = "http://placekitten.com/700/500";
     }
     state.profil = value;
+    console.log(state.profil, "iki");
   },
   show_alert_success(state, value) {
     state.alert = value.toUpperCase();
@@ -160,11 +165,11 @@ const actions = {
   },
 };
 const modules = {};
-// const plugins = [createPersistedState()];
+const plugins = [createPersistedState()];
 export default new createStore({
   state,
   mutations,
   actions,
   modules,
-  // plugins,
+  plugins,
 });
