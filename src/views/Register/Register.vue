@@ -48,7 +48,7 @@
                     state.identity != '' &&
                     state.no_hp_users != '' &&
                     state.username != '' &&
-                    state.email_pribadi !='' &&
+                    state.email_pribadi != '' &&
                     state.NIK != ''
                   "
                   class="circle"
@@ -70,7 +70,7 @@
                     state.identity == '' &&
                     state.no_hp_users == '' &&
                     state.username == '' &&
-                    state.email_pribadi =='' &&
+                    state.email_pribadi == '' &&
                     state.NIK == ''
                   "
                   class="circle2"
@@ -447,7 +447,7 @@ p {
 .card {
   width: 90%;
   max-width: 640px;
-  height: 100vh;
+  height: 100%;
   margin-left: 0px;
   border: 1px solid transparent;
   background-color: #027a48;

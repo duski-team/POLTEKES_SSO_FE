@@ -37,8 +37,10 @@
           class="jurusan-wrapper mt-3"
           v-if="$store.state.biodata.role == 'mahasiswa'"
         >
-          <h5 style="line-height: 14px">{{$store.state.profil.f_jenjang}}</h5>
-            <p style="line-height: 14px; font-size: 14px">{{$store.state.profil.f_namaprogdi_baru}}</p>
+          <h5 style="line-height: 14px">{{ $store.state.profil.f_jenjang }}</h5>
+          <p style="line-height: 14px; font-size: 14px">
+            {{ $store.state.profil.f_namaprogdi_baru }}
+          </p>
         </div>
         <div class="jurusan-wrapper mt-3" v-else>
           <!-- <h5 style="line-height: 14px">Jurusan</h5> -->

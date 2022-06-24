@@ -1,11 +1,11 @@
 <template>
-  <!-- <iv> -->
-  <div class="na">
-    <div class="row pt-2">
-      <p class="copyright">TIM IT @ POLTEKKES. All right reserved</p>
+  <div class="footer">
+    <div class="na">
+      <div class="row pt-2">
+        <p class="copyright">TIM IT @ POLTEKKES. All right reserved</p>
+      </div>
     </div>
   </div>
-  <!-- </div> -->
 </template>
 
 <style scoped>

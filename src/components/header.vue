@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="header">
     <div class="na d-none d-sm-block">
       <div class="row pt-2">
         <div class="col-8" @click="$router.push({ path: '/' })">
@@ -9,7 +9,7 @@
           </div>
         </div>
         <div class="col-4">
-          <div class="dropdown" style="cursor:pointer;">
+          <div class="dropdown" style="cursor: pointer">
             <div
               class="d-flex text-left dropdown"
               id="dropdownMenuProfil"
@@ -58,7 +58,7 @@
           </div>
         </div>
         <div class="col-3">
-          <div class="dropdown" style="cursor:pointer;">
+          <div class="dropdown" style="cursor: pointer">
             <div
               class="d-flex text-left dropdown"
               id="dropdownMenuProfil"
@@ -66,7 +66,7 @@
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <div v-if="$store.state.biodata" >
+              <div v-if="$store.state.biodata">
                 <img
                   v-if="!backup"
                   class="avatar-hp"
@@ -74,7 +74,12 @@
                   alt=""
                   @error="backup = true"
                 />
-                <img v-else class="avatar-hp" src="@/assets/noprofil.png" alt="" />
+                <img
+                  v-else
+                  class="avatar-hp"
+                  src="@/assets/noprofil.png"
+                  alt=""
+                />
               </div>
               <div v-if="$store.state.biodata">
                 <!-- <p class="nama mb-0">
@@ -142,9 +147,16 @@ export default {
 </script>
 
 <style scoped>
-/* .container-fluid{
+#header {
+  margin: 0;
   padding: 0;
-} */
+  width: 100vh;
+}
+
+#header #content {
+  margin: 0px auto;
+}
+
 .na {
   height: 73px;
   background-color: #027a48;
@@ -192,6 +204,9 @@ export default {
 }
 .nama {
   text-align: start;
+}
+.row{
+  --bs-gutter-x:0
 }
 
 .email {

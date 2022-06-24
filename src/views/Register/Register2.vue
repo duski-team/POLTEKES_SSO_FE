@@ -7,7 +7,7 @@
             <div><h1>Formulir</h1></div>
           </div>
           <div>
-            <p>Isi data diri Anda sesuai dengan formulir yang ada</p>
+            <h6>Isi data diri Anda sesuai dengan formulir yang ada</h6>
           </div>
           <div class="forms">
             <div class="input-box">
@@ -38,12 +38,18 @@
             </div> -->
             <div class="input-box">
               <span class="details">Email Official *</span>
-              <input
-                type="text"
-                placeholder="Masukkan email lengkap"
-                required
-                v-model="data.username"
-              />
+              <div class="input-group2">
+                <input
+                  class="input2"
+                  type="text"
+                  placeholder="Masukkan email lengkap"
+                  required
+                  v-model="data.username"
+                />
+                <span class="input-group-text" id="basic-addon2"
+                  >@poltekkes-smg.ac.id</span
+                >
+              </div>
               <span class="text-danger fst-italic">{{
                 ifValid("username")
               }}</span>
@@ -107,7 +113,13 @@
 
 <script>
 import useValidate from "@vuelidate/core";
-import { required, email, minLength, numeric, maxLength } from "@vuelidate/validators";
+import {
+  required,
+  email,
+  minLength,
+  numeric,
+  maxLength,
+} from "@vuelidate/validators";
 import { reactive, computed } from "vue";
 export default {
   props: ["aktiv", "state"],
@@ -119,7 +131,7 @@ export default {
       NIK: "",
       no_hp_users: "",
       nama_lengkap_users: "",
-      email_pribadi:"",
+      email_pribadi: "",
       step: "step3",
     });
 
@@ -136,7 +148,7 @@ export default {
         NIK: {
           required,
           minLength: minLength(16),
-          maxLength: maxLength(16)
+          maxLength: maxLength(16),
         },
         no_hp_users: {
           required,
@@ -144,7 +156,7 @@ export default {
         },
         email_pribadi: {
           required,
-          email
+          email,
         },
       };
     });
@@ -190,7 +202,7 @@ export default {
             return "* Data harus terdiri hanya dari angka";
           } else if (y == "minLength") {
             return `* Data minimal ${l} digits`;
-          }else if (y == "maxLength") {
+          } else if (y == "maxLength") {
             return `* Data maksimal ${l} digits`;
           }
         }
@@ -293,6 +305,19 @@ p {
 input {
   height: 45px;
   border-radius: 5px;
+}
+.input2 {
+  height: 45px;
+  border-radius: 5px;
+  width: 70%;
+}
+
+.input-group2 {
+  height: 45px;
+  border-radius: 5px;
+  display: flex;
+  margin-right: 0px;
+  padding-right: 0px;
 }
 
 .forms {

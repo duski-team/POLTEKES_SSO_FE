@@ -10,6 +10,7 @@ import LupaPassword from "../views/LupaPassword.vue";
 import GantiPassword from "../views/GantiPassword.vue";
 import GantiPasswordOTP from "../views/GantiPasswordOTP.vue";
 import store from "@/store/index.js";
+import payment from "../views/Payment/payment.vue";
 
 const routes = [
   {
@@ -78,6 +79,14 @@ const routes = [
     path: "/profil",
     name: "Edit Profil",
     component: Profil,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/payment",
+    name: "Payment",
+    component: payment,
     meta: {
       requiresAuth: true,
     },

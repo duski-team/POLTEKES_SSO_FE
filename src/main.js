@@ -32,12 +32,12 @@ const app = createApp(App)
   .use(store)
   .use(router)
   .use(bootstrap)
-  .use(VueReCaptcha, { siteKey: "6LdGiIgfAAAAABQt0Cg0-iOrjyvsFGOd43NAqp1q" });
+  .use(VueReCaptcha, { siteKey: "6LdGiIgfAAAAABQt0Cg0-iOrjyvsFGOd43NAqp1q" })
+  .component("font-awesome-icon", FontAwesomeIcon);
 
 app.config.globalProperties.$axios = instance;
 app.config.globalProperties.$moment = moment;
 app.config.globalProperties.ip = ip;
 app.config.globalProperties.qs = qs;
-app.component("font-awesome-icon", FontAwesomeIcon);
 
 app.mount("#app");

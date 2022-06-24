@@ -1,118 +1,68 @@
 <template>
-  <div
-    class="container-fluid"
-    :style="{
-      backgroundImage: `url(${require('@/assets/gedung.jpeg')})`,
-    }"
-  ></div>
-  <!-- <h1 class="title text-center py-4">SSO POLTEKES</h1> -->
-  <div class="row bg-text">
-    <div class="col d-flex justify-content-center">
-      <div class="card cb1 m-2 text-center">
-        <div class="card-body">
-          <!-- <span class="card-number">01</span> -->
-          <img src="@/assets/logo-poltekes.jpg" alt="" />
-
-          <h5 class="SSO mb-4">Single Sign On (SSO)</h5>
-          <h5 class="card-title mb-4">Poltekes Semarang</h5>
-          <!-- <div v-if="show">
-            <div
-              class="alert alert-danger alert-dismissible fade show"
-              role="alert"
-            >
-              <strong>Perhatian!</strong> Username salah atau tidak terdaftar
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close"
-              ></button>
-            </div> -->
-          <!-- </div> -->
-          <div class="mb-3 mt-4">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">@</span>
-              </div>
-              <input
-                type="email"
-                class="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-                v-model="data.username"
-                placeholder="Username / e-mail"
-                @keydown.enter.prevent="login()"
+  <div><Header /></div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <div class="box-bill" v-if="!open">
+          <div class="card text-center">
+            <div class="card-body">
+              <img
+                src="@/assets/logo-poltekes.jpg"
+                alt=""
+                style="height: 70px; width: 70px; margin-bottom: 5mm"
               />
-            </div>
-          </div>
-          <div class="mb-3">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1"
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="24"
-                    fill="currentColor"
-                    class="bi bi-key"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z"
-                    />
-                    <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" /></svg
-                ></span>
-              </div>
-              <input
-                type="password"
-                class="form-control"
-                id="exampleInputpassword"
-                v-model="data.password"
-                placeholder="password"
-                @keydown.enter.prevent="login()"
-              />
-            </div>
-          </div>
-          <div class="lupa" @click="$router.push('/lupaPassword')">
-            <p></p>
-            <p>Forgot Password</p>
-          </div>
-          <div class="mb-3 mt-3">
-            <div class="d-flex justify-content-center">
-              <div class="col-12">
-                <button
-                  href="#"
-                  class="btn btn-outline-primary"
-                  @click="recaptcha()"
-                >
-                  L o g i n
-                </button>
-              </div>
-            </div>
-          </div>
 
-          <div class="register mt-3">
-            <div class="row register=box">
-              <div class="col-6">Belum Memiliki Akun?</div>
-              <div
-                class="register-text col-6"
-                @click="$router.push({ path: '/register' })"
-              >
-                Daftar Sekarang
+              <h5 class="SSO mb-4">TAGIHAN BIAYA</h5>
+              <!-- <h5 class="card-title mb-4">Poltekes Semarang</h5> -->
+              <div class="card-body">
+                <div class="row box-title">
+                  <div class="col title">Nama Mahasiswa</div>
+                  <div class="col title">
+                    <span>: </span>{{ $store.state.biodata.nama_lengkap_users }}
+                  </div>
+                </div>
+                <div class="row box-title">
+                  <div class="col title">Tahun Ajaran</div>
+                  <div class="col title"><span>: </span></div>
+                </div>
+                <div class="row box-title">
+                  <div class="col title">Jurusan</div>
+                  <div class="col title"><span>: </span></div>
+                </div>
+                <div class="row box-title">
+                  <div class="col title">Prodi</div>
+                  <div class="col title"><span>: </span></div>
+                </div>
+                <div class="row box-title">
+                  <div class="col title">Jumlah Tagihan</div>
+                  <div class="col title"><span>: </span></div>
+                </div>
+                <div class="row box-title mt-4">
+                  <button class="btn btn-outline-primary" @click="open = true">
+                    Checkout
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <method :open="open" @close="open = false" />
   </div>
 </template>
 
 <script>
 import qs from "qs";
+import method from "./paymentMethod.vue";
+import Header from "@/components/header";
 
 export default {
   name: "Home",
+  components: {
+    method,
+    Header,
+  },
   data() {
     return {
       data: {
@@ -125,6 +75,7 @@ export default {
       variant: "",
       show: false,
       msg: "",
+      open: false,
     };
   },
   created() {
@@ -204,10 +155,8 @@ export default {
   background-attachment: fixed;
   min-height: 100vh;
   /* background-color:  rgba(225, 225, 225, 0.1); */
-  padding: 7%;
-  filter: blur(1rem);
-
-  /* color: aqua; */
+  /* padding: 7%; */
+ 
 }
 
 .SSO {
@@ -217,14 +166,34 @@ export default {
   color: #101828;
   margin-bottom: 0px;
 }
+.box-title {
+  margin-bottom: 5mm;
+
+  font-size: 30px;
+  line-height: 38px;
+  font-weight: 600;
+  color: #101828;
+  margin-bottom: 0px;
+}
+.box-title {
+  margin-bottom: 5mm;
+  font-size: 30px;
+  line-height: 38px;
+  font-weight: 600;
+  color: #101828;
+  margin-bottom: 0px;
+}
+.box-title {
+  margin-bottom: 5mm;
+}
+
 .title {
-  margin: 0 auto;
   width: 100%;
-  max-width: 40rem;
+  /* max-width: 40rem; */
   font-size: 16px;
   line-height: 24px;
-  text-align: center;
-  font-weight: 400;
+  text-align: start;
+  font-weight: 800;
   color: #667085;
 }
 
@@ -234,18 +203,14 @@ export default {
 }
 
 .card {
-  width: 90%;
-  max-width: 440px;
-  padding: 5rem 2.5rem;
+  width: 100%;
+  max-width: 540px;
+  padding: 3rem 1.5rem;
   height: 696px;
 
   border-radius: 1rem;
   border: 1px solid transparent;
-  /* background-color: rgba(225, 225, 225, 0.1); */
   background-color: #ffffff;
-
-  backdrop-filter: blur(1rem);
-  box-shadow: 1.3rem 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.5);
   position: absolute;
   z-index: 2;
   top: 50%;
@@ -258,7 +223,7 @@ export default {
   border-right-color: rgba(225, 225, 225, 0.1); */
 }
 
-.card:hover {
+/* .card:hover {
   width: 90%;
   max-width: 440px;
   padding: 5rem 2.5rem;
@@ -267,27 +232,28 @@ export default {
   border-radius: 1rem;
   border: 1px solid transparent;
   color: black;
-  background-color: #ffffff;
-  /* background-color: linear-gradient(
+  background-color: #ffffff; */
+/* background-color: linear-gradient(
     to right bottom,
     rgba(225, 225, 225, 0.5),
     rgba(225, 225, 225, 0.1)
   ); */
 
-  backdrop-filter: blur(1rem);
+/* backdrop-filter: blur(1rem);
   box-shadow: 1.3rem 1.3rem 1.3rem 1.3rem rgba(0, 0, 0, 0.5);
 
   position: absolute;
   z-index: 2;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
 
-  /* border-top-color: rgba(225, 225, 225, 0.5);
+/* border-top-color: rgba(225, 225, 225, 0.5);
   border-left-color: rgba(225, 225, 225, 0.5);
   border-bottom-color: rgba(225, 225, 225, 0.1);
   border-right-color: rgba(225, 225, 225, 0.1); */
-}
+/* } */
+
 .btn {
   width: 100%;
   background-color: #027a48;

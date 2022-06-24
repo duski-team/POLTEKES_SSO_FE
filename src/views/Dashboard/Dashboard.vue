@@ -98,13 +98,13 @@
           <div class="tools text-start">
             <div class="box-info">
               <div class="box-title mb-3" style="color: #027a48">Resource</div>
-              <div class="box-content">
+              <div class="box-content" @click="$router.push('/payment')">
                 <div>
                   <img class="icons" src="@/assets/Icon1.jpg" alt="" />
                 </div>
                 <div>
-                  <h6>Lorem</h6>
-                  <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+                  <h6>Tagihan</h6>
+                  <p>Pembayaran Tagihan Biaya Pendidikan Tahun 2022</p>
                 </div>
               </div>
 
