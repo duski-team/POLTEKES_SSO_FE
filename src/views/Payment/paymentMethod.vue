@@ -27,13 +27,13 @@
           </div>
         </div>
         <div class="cara" v-if="show == 2 && bank == 'BNI'">
-          <BNI />
+          <BNI :tagihan="tagihan" />
         </div>
         <div class="cara" v-if="show == 2 && bank == 'BSI'">
-          <BSI />
+          <BSI :tagihan="tagihan" />
         </div>
         <div class="cara" v-if="show == 2 && bank == 'BTN'">
-          <BTN />
+          <BTN :tagihan="tagihan" />
         </div>
       </div>
 
@@ -58,7 +58,7 @@ import BSI from "./BSI.vue";
 import BTN from "./BTN.vue";
 export default {
   components: { BNI, BSI, BTN },
-  props: ["open"],
+  props: ["open",'tagihan'],
   data() {
     return {
       popup: "",

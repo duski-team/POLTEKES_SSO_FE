@@ -13,7 +13,8 @@ import "moment/locale/id";
 import ip from "@/ip";
 import "bootstrap/dist/js/bootstrap.js";
 import qs from "qs";
-import instance from "@/axios/index.js";
+import ipsso from "@/axios/sso.js";
+import ipbilling from "@/axios/billing.js"
 
 /* import the fontawesome core */
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
@@ -35,7 +36,8 @@ const app = createApp(App)
   .use(VueReCaptcha, { siteKey: "6LdGiIgfAAAAABQt0Cg0-iOrjyvsFGOd43NAqp1q" })
   .component("font-awesome-icon", FontAwesomeIcon);
 
-app.config.globalProperties.$axios = instance;
+app.config.globalProperties.$axios = ipsso;
+app.config.globalProperties.$axiosbilling = ipbilling;
 app.config.globalProperties.$moment = moment;
 app.config.globalProperties.ip = ip;
 app.config.globalProperties.qs = qs;

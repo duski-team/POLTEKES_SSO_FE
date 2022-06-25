@@ -1,14 +1,19 @@
 <template>
   <div class="container-fluid">
     <div class="cara-box">
-      <div>Total Tagihan</div>
-      <div>Rp. {{ "" }}</div>
       <div class="bank">
-        <div>BANK BTN</div>
+        <div>Total Tagihan</div>
+      <div>Rp. {{ convert($store.state.payment.totalTagihan) }}</div>
+      </div>
+      
+      <div class="bank">
+        <div>BANK</div>
         <div><img src="@/assets/BTNLOGO.png" alt="" /></div>
       </div>
-
-      <div>Nomor VA</div>
+      <div class="bank">
+        <div>Nomor VA</div>
+        <div>{{Va}}</div>
+      </div>
       <div class="mb-4 mt-4">
         <center>
           <button class="btn btn-outline-success CreateVa">
@@ -70,7 +75,7 @@
             <div class="text-cara-line">
               <p>8.</p>
               <p>
-                Masukkan nomor Virtual Account Anda (contoh: 903107822105074011)
+                Masukkan nomor Virtual Account Anda <span style="color:green">{{Va}}</span>
               </p>
             </div>
             <div class="text-cara-line">
@@ -120,7 +125,7 @@
             <div class="text-cara-line">
               <p>4.</p>
               <p>
-                Masukkan nomor Virtual Account Anda (contoh: 903107822105074011)
+                Masukkan nomor Virtual Account Anda <span style="color:green">{{Va}}</span>
               </p>
             </div>
             <div class="text-cara-line">
@@ -164,12 +169,31 @@ export default {
       step: "",
     };
   },
+  computed:{
+   Va(){
+      let vm = this
+      let x = vm.$store.state.biodata.identity
+      return  vm.$store.state.btn_prefix + x.substring(x.length-8)
+    }
+  },
   methods: {
     steps(x) {
       if (this.step == x) {
         this.step = "";
       } else {
         this.step = x;
+      }
+    },
+    async createVA(){
+      let vm = this
+      let create = await vm.$axiosbilling.post('btn/register',{
+        nim: vm.$store.state.biodata.identity 
+      })
+      console.log(create)
+    },
+    convert(x) {
+      if (x) {
+        return x.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
       }
     },
   },

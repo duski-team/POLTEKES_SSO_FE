@@ -1,5 +1,5 @@
 <template>
-  <div><Header /></div>
+  <!-- <div><Header /></div> -->
   <div class="container-fluid">
     <div class="row">
       <div class="col">
@@ -26,16 +26,31 @@
                   <div class="col title"><span>: </span></div>
                 </div>
                 <div class="row box-title">
-                  <div class="col title">Jurusan</div>
-                  <div class="col title"><span>: </span></div>
+                  <div class="col title">Jenis Tagihan</div>
+                  <div class="col title">
+                    <span>: {{ $store.state.payment.nama_kategori }} </span>
+                  </div>
                 </div>
                 <div class="row box-title">
                   <div class="col title">Prodi</div>
-                  <div class="col title"><span>: </span></div>
+                  <div class="col title">
+                    <span>: {{ $store.state.payment.nama_prodi }} </span>
+                  </div>
                 </div>
                 <div class="row box-title">
                   <div class="col title">Jumlah Tagihan</div>
-                  <div class="col title"><span>: </span></div>
+                  <div class="col title">
+                    <span>: Rp. {{ convert($store.state.payment.totalTagihan) }} </span>
+                  </div>
+                </div>
+                <div class="row box-title">
+                  <div class="col title">Status Tagihan</div>
+                  <div class="col title">
+                    <span v-if="$store.state.payment.status_tagihan == 1">: Lunas </span>
+                    <span v-if="$store.state.payment.status_tagihan == 0"
+                      >: Belum Lunas
+                    </span>
+                  </div>
                 </div>
                 <div class="row box-title mt-4">
                   <button class="btn btn-outline-primary" @click="open = true">
@@ -48,20 +63,20 @@
         </div>
       </div>
     </div>
-    <method :open="open" @close="open = false" />
+    <method :open="open" @close="open = false" :tagihan="tagihan" />
   </div>
 </template>
 
 <script>
-import qs from "qs";
+// import qs from "qs";
 import method from "./paymentMethod.vue";
-import Header from "@/components/header";
+// import Header from "@/components/header";
 
 export default {
   name: "Home",
   components: {
     method,
-    Header,
+    // Header,
   },
   data() {
     return {
@@ -72,6 +87,7 @@ export default {
         client_secret: "SSO",
         client_id: "a5e1397c-c227-42c4-b188-0297f9afa990",
       },
+      tagihan: "",
       variant: "",
       show: false,
       msg: "",
@@ -80,60 +96,24 @@ export default {
   },
   created() {
     this.$store.dispatch("set_loading", false);
+    this.getTagihan();
   },
   methods: {
-    async login() {
+    async getTagihan() {
       let vm = this;
-      this.$store.dispatch("set_loading", true);
-      try {
-        let login = await vm.$axios.post("oauth/login", qs.stringify(vm.data), {
-          headers: {
-            "content-type": "application/x-www-form-urlencoded;charset=utf-8",
-          },
-        });
-        console.log(login, "login");
-        if (login.status == 200) {
-          vm.$store.dispatch("save_token_login", login.data);
-          vm.$store.dispatch("set_alert_show_success", "Sukses");
-          setTimeout(() => {
-            vm.$store.dispatch("set_alert_hide");
-          }, 4000);
-          if (vm.$store.state.sso_user_status == 0) {
-            vm.$router.push({ path: "/1stlogin" });
-          } else {
-            vm.$router.push({ path: "/dashboard" });
-          }
-          this.$store.dispatch("set_loading", false);
-        } else {
-          vm.$store.dispatch("set_alert_show_fail", login.data.message);
-          setTimeout(() => {
-            vm.$store.dispatch("set_alert_hide");
-          }, 2000);
-          this.$store.dispatch("set_loading", false);
+      let tagihan = await vm.$axiosbilling.post(
+        "detailsTagihanStudi/listDetailsTagihanStudiByNIM",
+        {
+          nim: "12345678900",
         }
-      } catch (error) {
-        if (error) {
-          vm.$store.dispatch(
-            "set_alert_show_fail",
-            "Username salah atau tidak terdaftar"
-          );
-          setTimeout(() => {
-            vm.$store.dispatch("set_alert_hide");
-          }, 2000);
-          this.show = true;
-          this.$store.dispatch("set_loading", false);
-        }
-      }
+      );
+      console.log(tagihan)
+      vm.$store.dispatch('payment', tagihan.data.data[0])
     },
-    async recaptcha() {
-      // (optional) Wait until recaptcha has been loaded.
-      await this.$recaptchaLoaded();
-
-      // Execute reCAPTCHA with action "login".
-      const token = await this.$recaptcha("login");
-      if (token) {
-        console.log("ok");
-        this.login();
+    
+    convert(x) {
+      if (x) {
+        return x.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
       }
     },
   },
@@ -156,7 +136,6 @@ export default {
   min-height: 100vh;
   /* background-color:  rgba(225, 225, 225, 0.1); */
   /* padding: 7%; */
- 
 }
 
 .SSO {
@@ -181,7 +160,7 @@ export default {
   line-height: 38px;
   font-weight: 600;
   color: #101828;
-  margin-bottom: 0px;
+  margin-bottom: 20px;
 }
 .box-title {
   margin-bottom: 5mm;

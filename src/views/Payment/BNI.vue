@@ -1,17 +1,23 @@
 <template>
   <div class="container">
     <div class="cara-box">
-      <div>Total Tagihan</div>
-      <div>Rp. {{ "" }}</div>
       <div class="bank">
-        <div>BANK BNI</div>
+        <div>Total Tagihan</div>
+      <div>Rp. {{ convert($store.state.payment.totalTagihan) }}</div>
+      </div>
+      
+      <div class="bank">
+        <div>BANK</div>
         <div><img src="@/assets/BNILOGO.png" alt="" /></div>
       </div>
-
-      <div>Nomor VA</div>
+      <div class="bank">
+        <div>Nomor VA</div>
+        <div>{{Va}}</div>
+      </div>
+      
       <div class="mb-4 mt-4">
         <center>
-          <button class="btn btn-outline-success CreateVa">
+          <button class="btn btn-outline-success CreateVa" @click="createVA()">
             Create Virtual Account
           </button>
         </center>
@@ -66,7 +72,7 @@
               <p>6.</p>
               <p>
                 Pilih Virtual Account Billing. Masukkan nomor Virtual Account
-                Anda (Contoh: 8277087781881441).
+                Anda <span style="color:green">{{Va}}</span> .
               </p>
             </div>
             <div class="text-cara-line">
@@ -119,7 +125,7 @@
             <div class="text-cara-line">
               <p>5.</p>
               <p>
-                Masukkan nomor Virtual Account Anda (Contoh: 8277087781881441)
+                Masukkan nomor Virtual Account Anda <span style="color:green">{{Va}}</span>
                 pada menu Input Baru.
               </p>
             </div>
@@ -146,12 +152,24 @@
 
 <script>
 export default {
+  props:['tagihan'],
   data() {
     return {
       cara: false,
       metode: 0,
       step: "",
+      cek:""
     };
+  },
+  computed:{
+    Va(){
+      let vm = this
+      let x = vm.$store.state.biodata.identity
+      return vm.$store.state.bni_prefix + vm.$store.state.bni_client_id + x.substring(x.length-8)
+    }
+  },
+  mounted(){
+    this.cekCreated()
   },
   methods: {
     steps(x) {
@@ -159,6 +177,27 @@ export default {
         this.step = "";
       } else {
         this.step = x;
+      }
+    },
+    async cekCreated(){
+      let vm = this
+      let cek = await vm.$axiosbilling.post('bni/detailsById',{
+        trx_id: vm.$store.state.payment.trx_id
+      })
+      vm.cek = cek.data.data
+      console.log(vm.cek)
+    },
+    async createVA(){
+      let vm = this
+      let create = await vm.$axiosbilling.post('bni/register',{
+        nim: vm.$store.state.biodata.identity 
+      })
+      console.log(create)
+      this.cekCreated()
+    },
+    convert(x) {
+      if (x) {
+        return x.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
       }
     },
   },

@@ -1,14 +1,19 @@
 <template>
   <div class="container-fluid">
     <div class="cara-box">
-      <div>Total Tagihan</div>
-      <div>Rp. {{ "" }}</div>
       <div class="bank">
-        <div>BANK BSI</div>
+        <div>Total Tagihan</div>
+      <div>Rp. {{ convert($store.state.payment.totalTagihan) }}</div>
+      </div>
+      
+      <div class="bank">
+        <div>BANK</div>
         <div><img src="@/assets/BSILOGO.png" alt="" /></div>
       </div>
-
-      <div>Nomor VA</div>
+      <div class="bank">
+        <div>Nomor VA</div>
+        <div>{{Va}}</div>
+      </div>
       <div class="mb-4 mt-4">
         <center>
           <button class="btn btn-outline-success CreateVa">
@@ -66,7 +71,7 @@
               <p>6.</p>
               <p>
                 Pilih Virtual Account Billing. Masukkan nomor Virtual Account
-                Anda (Contoh: 8277087781881441).
+                Anda <span style="color:green">{{Va}}</span> .
               </p>
             </div>
             <div class="text-cara-line">
@@ -119,7 +124,7 @@
             <div class="text-cara-line">
               <p>5.</p>
               <p>
-                Masukkan nomor Virtual Account Anda (Contoh: 8277087781881441)
+                Masukkan nomor Virtual Account Anda <span style="color:green">{{Va}}</span>
                 pada menu Input Baru.
               </p>
             </div>
@@ -153,12 +158,31 @@ export default {
       step: "",
     };
   },
+  computed:{
+    Va(){
+      let vm = this
+      let x = vm.$store.state.biodata.identity
+      return  vm.$store.state.bsi_client_id + x.substring(x.length-8)
+    }
+  },
   methods: {
     steps(x) {
       if (this.step == x) {
         this.step = "";
       } else {
         this.step = x;
+      }
+    },
+    async createVA(){
+      let vm = this
+      let create = await vm.$axiosbilling.post('bsi/register',{
+        nim: vm.$store.state.biodata.identity 
+      })
+      console.log(create)
+    },
+    convert(x) {
+      if (x) {
+        return x.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
       }
     },
   },
