@@ -4,8 +4,9 @@ import "moment/locale/id";
 import store from "@/store/index.js";
 import qs from "qs";
 
-// const ip = "http://localhost:8869/";
+// const ip = "http://localhost:8104/";
 const ip = "https://billing.poltekkes-smg.ac.id/api/";
+const ipsso = "https://sso.poltekkes-smg.ac.id/api/";
 
 // export function setToken(token) {
 //   axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
@@ -54,7 +55,7 @@ instance.interceptors.request.use(async (req) => {
             now.diff(expired, "seconds")
           );
           let response = await axios.post(
-            ip + "oauth/token",
+            ipsso + "oauth/token",
             qs.stringify(datas)
           );
           // console.log(response.data);

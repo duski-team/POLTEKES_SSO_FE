@@ -14,9 +14,13 @@
         <div>Nomor VA</div>
         <div>{{Va}}</div>
       </div>
+      <div class="bank" v-if="cek.datetime_expired">
+        <div>Kadaluarsa VA</div>
+        <div>{{kadaluarsaVa}}</div>
+      </div>
       <div class="mb-4 mt-4">
         <center>
-          <button class="btn btn-outline-success CreateVa">
+          <button class="btn btn-outline-success CreateVa" @click="createVA()" :disabled="cek.datetime_created">
             Create Virtual Account
           </button>
         </center>
@@ -156,6 +160,7 @@ export default {
       cara: false,
       metode: 0,
       step: "",
+      cek:""
     };
   },
   computed:{
@@ -163,7 +168,14 @@ export default {
       let vm = this
       let x = vm.$store.state.biodata.identity
       return  vm.$store.state.bsi_client_id + x.substring(x.length-8)
+    },
+    kadaluarsaVa(){
+      let vm = this
+      return vm.$moment(vm.cek.datetime_expired).format('lll')
     }
+  },
+  mounted(){
+    this.cekCreated()
   },
   methods: {
     steps(x) {
@@ -172,6 +184,15 @@ export default {
       } else {
         this.step = x;
       }
+    },
+    async cekCreated(){
+      let vm = this
+      let cek = await vm.$axiosbilling.post('bsi/detailsById',{
+        trx_id: vm.$store.state.payment.trx_id
+      })
+       console.log(cek,'cek')
+      vm.cek = cek.data.data[0]
+     
     },
     async createVA(){
       let vm = this
@@ -247,8 +268,9 @@ img {
   height: 20px;
 }
 
-.createVa {
+.CreateVa:hover {
   color: #ffffff;
   background-color: #027a48;
+  transform: scale(1.09);
 }
 </style>

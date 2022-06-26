@@ -1,7 +1,7 @@
 <template>
-  <!-- <div><Header /></div> -->
+  <div><Header /></div>
   <div class="container-fluid">
-    <div class="row">
+    <div class="row" v-if="$store.state.payment">
       <div class="col">
         <div class="box-bill" v-if="!open">
           <div class="card text-center">
@@ -53,9 +53,9 @@
                   </div>
                 </div>
                 <div class="row box-title mt-4">
-                  <button class="btn btn-outline-primary" @click="open = true">
+                  <center><button class="btn btn-outline-success" @click="open = true" :disabled='$store.state.payment.status_tagihan == 1'>
                     Checkout
-                  </button>
+                  </button></center>
                 </div>
               </div>
             </div>
@@ -70,13 +70,13 @@
 <script>
 // import qs from "qs";
 import method from "./paymentMethod.vue";
-// import Header from "@/components/header";
+import Header from "@/components/header";
 
 export default {
   name: "Home",
   components: {
     method,
-    // Header,
+    Header,
   },
   data() {
     return {
@@ -104,7 +104,7 @@ export default {
       let tagihan = await vm.$axiosbilling.post(
         "detailsTagihanStudi/listDetailsTagihanStudiByNIM",
         {
-          nim: "12345678900",
+          nim: vm.$store.state.biodata.identity,
         }
       );
       console.log(tagihan)
@@ -239,6 +239,15 @@ export default {
   color: #ffffff;
   letter-spacing: 1px;
 }
+
+.btn:hover {
+  width: 100%;
+  background-color: #027a48;
+  color: #ffffff;
+  letter-spacing: 1px;
+  transform: scale(1.05);
+}
+
 .register {
   font-size: 14px;
 }

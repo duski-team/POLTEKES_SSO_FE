@@ -3,20 +3,24 @@
     <div class="cara-box">
       <div class="bank">
         <div>Total Tagihan</div>
-      <div>Rp. {{ convert($store.state.payment.totalTagihan) }}</div>
+        <div>Rp. {{ convert($store.state.payment.totalTagihan) }}</div>
       </div>
-      
+
       <div class="bank">
         <div>BANK</div>
         <div><img src="@/assets/BTNLOGO.png" alt="" /></div>
       </div>
       <div class="bank">
         <div>Nomor VA</div>
-        <div>{{Va}}</div>
+        <div>{{ Va }}</div>
+      </div>
+      <div class="bank" v-if="cek.expired != ''">
+        <div>Kadaluarsa VA</div>
+        <div>{{ kadaluarsaVa }}</div>
       </div>
       <div class="mb-4 mt-4">
         <center>
-          <button class="btn btn-outline-success CreateVa">
+          <button class="btn btn-outline-success CreateVa" @click="createVA()" :disabled="cek.createdate != '000000'">
             Create Virtual Account
           </button>
         </center>
@@ -75,7 +79,8 @@
             <div class="text-cara-line">
               <p>8.</p>
               <p>
-                Masukkan nomor Virtual Account Anda <span style="color:green">{{Va}}</span>
+                Masukkan nomor Virtual Account Anda
+                <span style="color: green">{{ Va }}</span>
               </p>
             </div>
             <div class="text-cara-line">
@@ -125,7 +130,8 @@
             <div class="text-cara-line">
               <p>4.</p>
               <p>
-                Masukkan nomor Virtual Account Anda <span style="color:green">{{Va}}</span>
+                Masukkan nomor Virtual Account Anda
+                <span style="color: green">{{ Va }}</span>
               </p>
             </div>
             <div class="text-cara-line">
@@ -167,14 +173,32 @@ export default {
       cara: false,
       metode: 0,
       step: "",
+      cek: "",
     };
   },
-  computed:{
-   Va(){
-      let vm = this
-      let x = vm.$store.state.biodata.identity
-      return  vm.$store.state.btn_prefix + x.substring(x.length-8)
-    }
+  computed: {
+    Va() {
+      let vm = this;
+      let x = vm.$store.state.biodata.identity;
+      return vm.$store.state.btn_prefix + x.substring(x.length - 8);
+    },
+    kadaluarsaVa() {
+      let vm = this;
+      let x = vm.cek.expired
+      if (x != "") {
+        console.log(x)
+      // let x = vm.cek.expired.toString()
+      // let YY = '20'  + x.substring(0,2)
+      // console.log(YY,'x')
+        return vm.$moment(x).format("lll");
+      }
+      else{
+        return ""
+      }
+    },
+  },
+  mounted() {
+    this.cekCreated();
   },
   methods: {
     steps(x) {
@@ -184,12 +208,21 @@ export default {
         this.step = x;
       }
     },
-    async createVA(){
-      let vm = this
-      let create = await vm.$axiosbilling.post('btn/register',{
-        nim: vm.$store.state.biodata.identity 
-      })
-      console.log(create)
+    async cekCreated() {
+      let vm = this;
+      let cek = await vm.$axiosbilling.post("btn/detailsById", {
+        ref: vm.$store.state.payment.trx_id,
+        va: vm.Va,
+      });
+      console.log(cek, "cek");
+      vm.cek = await cek.data.data[0];
+    },
+    async createVA() {
+      let vm = this;
+      let create = await vm.$axiosbilling.post("btn/register", {
+        nim: vm.$store.state.biodata.identity,
+      });
+      console.log(create);
     },
     convert(x) {
       if (x) {
@@ -258,8 +291,9 @@ img {
   height: 20px;
 }
 
-.createVa {
+.CreateVa:hover {
   color: #ffffff;
   background-color: #027a48;
+  transform: scale(1.09);
 }
 </style>
