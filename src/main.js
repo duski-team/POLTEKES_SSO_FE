@@ -14,7 +14,7 @@ import ip from "@/ip";
 import "bootstrap/dist/js/bootstrap.js";
 import qs from "qs";
 import ipsso from "@/axios/sso.js";
-import ipbilling from "@/axios/billing.js"
+import ipbilling from "@/axios/billing.js";
 
 /* import the fontawesome core */
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
@@ -33,7 +33,7 @@ const app = createApp(App)
   .use(store)
   .use(router)
   .use(bootstrap)
-  .use(VueReCaptcha, { siteKey: "6LdGiIgfAAAAABQt0Cg0-iOrjyvsFGOd43NAqp1q" })
+  .use(VueReCaptcha, { siteKey: "6LdGiIgfAAAAABQt0Cg0-iOrjyvsFGOd43NAqp1q", loaderOptions:{autoHideBadge: true } })
   .component("font-awesome-icon", FontAwesomeIcon);
 
 app.config.globalProperties.$axios = ipsso;
@@ -41,5 +41,14 @@ app.config.globalProperties.$axiosbilling = ipbilling;
 app.config.globalProperties.$moment = moment;
 app.config.globalProperties.ip = ip;
 app.config.globalProperties.qs = qs;
+// treat all tags starting with 'ion-' as custom elements
+// app.config.compilerOptions.isCustomElement = (tag) => {
+//   return tag.startsWith("C");
+// }
+app.config.warnHandler = (msg)=>{
+  if(msg.includes('If this is a native custom element')){
+    return ""
+  }
+}
 
 app.mount("#app");

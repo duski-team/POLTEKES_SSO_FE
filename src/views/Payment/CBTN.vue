@@ -20,7 +20,11 @@
       </div>
       <div class="mb-4 mt-4">
         <center>
-          <button class="btn btn-outline-success CreateVa" @click="createVA()" :disabled="cek.createdate != '000000'">
+          <button
+            class="btn btn-outline-success CreateVa"
+            @click="createVA()"
+            :disabled="cek.createdate != '000000'"
+          >
             Create Virtual Account
           </button>
         </center>
@@ -184,16 +188,13 @@ export default {
     },
     kadaluarsaVa() {
       let vm = this;
-      let x = vm.cek.expired
+      let x = vm.cek.expired;
       if (x != "") {
-        console.log(x)
-      // let x = vm.cek.expired.toString()
-      // let YY = '20'  + x.substring(0,2)
-      // console.log(YY,'x')
-        return vm.$moment(x).format("lll");
-      }
-      else{
-        return ""
+        let y = "20" + x;
+        console.log(y);
+        return vm.$moment(y, "YYYYMMDDHHmm").format("lll");
+      } else {
+        return "";
       }
     },
   },

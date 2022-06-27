@@ -22,10 +22,10 @@ const state = {
   popup: true,
   app: null,
   bsi_client_id: "2576",
-  bni_client_id: '77771',
-  bni_prefix:'988',
-  btn_prefix:'94851000000',
-  payment:""
+  bni_client_id: "77771",
+  bni_prefix: "988",
+  btn_prefix: "94851000000",
+  payment: "",
 };
 
 const mutations = {
@@ -73,8 +73,8 @@ const mutations = {
   set_kode_otp_lupa(state, value) {
     state.kode_otp = value;
   },
-  set_payment(state,value){
-    state.payment = value
+  set_payment(state, value) {
+    state.payment = value;
   },
   set_data_biodata(state, value) {
     console.log(value, "biodata");
@@ -171,9 +171,17 @@ const actions = {
   set_foto({ commit }, value) {
     commit("biodata_foto", value);
   },
-  payment({commit}, value){
-    commit('set_payment', value)
-  }
+  payment({ commit }, value) {
+    console.log(value);
+    let x = value.tahun_kb.includes("-1");
+    let v = value.tahun_kb.substring(0, 4);
+    if (x) {
+      value.semester = v + " Ganjil";
+    } else {
+      value.semester = v + " Genap";
+    }
+    commit("set_payment", value);
+  },
 };
 const modules = {};
 const plugins = [createPersistedState()];

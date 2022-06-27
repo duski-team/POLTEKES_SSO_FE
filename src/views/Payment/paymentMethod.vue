@@ -27,25 +27,25 @@
           </div>
         </div>
         <div class="cara" v-if="show == 2 && bank == 'BNI'">
-          <BNI :tagihan="tagihan" />
+          <CBNI :tagihan="tagihan" />
         </div>
         <div class="cara" v-if="show == 2 && bank == 'BSI'">
-          <BSI :tagihan="tagihan" />
+          <CBSI :tagihan="tagihan" />
         </div>
         <div class="cara" v-if="show == 2 && bank == 'BTN'">
-          <BTN :tagihan="tagihan" />
+          <CBTN :tagihan="tagihan" />
         </div>
       </div>
 
       <div class="card-footer">
         <div>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              @click="$emit('close'),show = 1, bank=''"
-            >
-              Kembali
-            </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            @click="$emit('close'), (show = 1), (bank = '')"
+          >
+            Kembali
+          </button>
         </div>
       </div>
     </div>
@@ -53,12 +53,12 @@
 </template>
 
 <script>
-import BNI from "./BNI.vue";
-import BSI from "./BSI.vue";
-import BTN from "./BTN.vue";
+import CBNI from "./CBNI.vue";
+import CBSI from "./CBSI.vue";
+import CBTN from "./CBTN.vue";
 export default {
-  components: { BNI, BSI, BTN },
-  props: ["open",'tagihan'],
+  components: { CBNI, CBSI, CBTN },
+  props: ["open", "tagihan"],
   data() {
     return {
       popup: "",
@@ -76,7 +76,7 @@ export default {
 </script>
 
 <style scoped>
-.container-fluid{
+.container-fluid {
   display: flex;
   justify-content: center;
   align-items: center;

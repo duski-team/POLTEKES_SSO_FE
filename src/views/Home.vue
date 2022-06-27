@@ -129,6 +129,10 @@ export default {
   },
   created() {
     this.$store.dispatch("set_loading", false);
+    setTimeout(()=>{
+      const recaptcha = this.$recaptchaInstance
+      recaptcha.showBadge()
+    },1000)
   },
   methods: {
     async login() {
@@ -166,7 +170,7 @@ export default {
             "set_alert_show_fail",
             "Username salah atau tidak terdaftar"
           );
-          console.log(error.message)
+          console.log(error.message);
           setTimeout(() => {
             vm.$store.dispatch("set_alert_hide");
           }, 2000);

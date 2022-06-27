@@ -205,8 +205,8 @@ export default {
 .nama {
   text-align: start;
 }
-.row{
-  --bs-gutter-x:0
+.row {
+  --bs-gutter-x: 0;
 }
 
 .email {

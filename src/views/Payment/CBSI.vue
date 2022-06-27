@@ -1,27 +1,30 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <div class="cara-box">
       <div class="bank">
         <div>Total Tagihan</div>
-      <div>Rp. {{ convert($store.state.payment.totalTagihan) }}</div>
+        <div>Rp. {{ convert($store.state.payment.totalTagihan) }}</div>
       </div>
-      
+
       <div class="bank">
         <div>BANK</div>
-        <div><img src="@/assets/BNILOGO.png" alt="" /></div>
+        <div><img src="@/assets/BSILOGO.png" alt="" /></div>
       </div>
       <div class="bank">
         <div>Nomor VA</div>
-        <div>{{Va}}</div>
+        <div>{{ Va }}</div>
       </div>
       <div class="bank" v-if="cek.datetime_expired">
         <div>Kadaluarsa VA</div>
-        <div>{{kadaluarsaVa}}</div>
+        <div>{{ kadaluarsaVa }}</div>
       </div>
-      
       <div class="mb-4 mt-4">
         <center>
-          <button class="btn btn-outline-success CreateVa" @click="createVA()" :disabled="cek.datetime_created">
+          <button
+            class="btn btn-outline-success CreateVa"
+            @click="createVA()"
+            :disabled="cek.datetime_created"
+          >
             Create Virtual Account
           </button>
         </center>
@@ -76,7 +79,7 @@
               <p>6.</p>
               <p>
                 Pilih Virtual Account Billing. Masukkan nomor Virtual Account
-                Anda <span style="color:green">{{Va}}</span> .
+                Anda <span style="color: green">{{ Va }}</span> .
               </p>
             </div>
             <div class="text-cara-line">
@@ -129,7 +132,8 @@
             <div class="text-cara-line">
               <p>5.</p>
               <p>
-                Masukkan nomor Virtual Account Anda <span style="color:green">{{Va}}</span>
+                Masukkan nomor Virtual Account Anda
+                <span style="color: green">{{ Va }}</span>
                 pada menu Input Baru.
               </p>
             </div>
@@ -156,29 +160,27 @@
 
 <script>
 export default {
-  props:['tagihan'],
-  name:"BNI",
   data() {
     return {
       cara: false,
       metode: 0,
       step: "",
-      cek:""
+      cek: "",
     };
   },
-  computed:{
-    Va(){
-      let vm = this
-      let x = vm.$store.state.biodata.identity
-      return vm.$store.state.bni_prefix + vm.$store.state.bni_client_id + x.substring(x.length-8)
+  computed: {
+    Va() {
+      let vm = this;
+      let x = vm.$store.state.biodata.identity;
+      return vm.$store.state.bsi_client_id + x.substring(x.length - 8);
     },
-    kadaluarsaVa(){
-      let vm = this
-      return vm.$moment(vm.cek.datetime_expired).format('lll')
-    }
+    kadaluarsaVa() {
+      let vm = this;
+      return vm.$moment(vm.cek.datetime_expired).format("lll");
+    },
   },
-  mounted(){
-    this.cekCreated()
+  mounted() {
+    this.cekCreated();
   },
   methods: {
     steps(x) {
@@ -188,22 +190,20 @@ export default {
         this.step = x;
       }
     },
-    async cekCreated(){
-      let vm = this
-      let cek = await vm.$axiosbilling.post('bni/detailsById',{
-        trx_id: vm.$store.state.payment.trx_id
-      })
-       console.log(cek,'cek')
-      vm.cek = cek.data.data[0]
-     
+    async cekCreated() {
+      let vm = this;
+      let cek = await vm.$axiosbilling.post("bsi/detailsById", {
+        trx_id: vm.$store.state.payment.trx_id,
+      });
+      console.log(cek, "cek");
+      vm.cek = cek.data.data[0];
     },
-    async createVA(){
-      let vm = this
-      let create = await vm.$axiosbilling.post('bni/register',{
-        nim: vm.$store.state.biodata.identity 
-      })
-      console.log(create)
-      this.cekCreated()
+    async createVA() {
+      let vm = this;
+      let create = await vm.$axiosbilling.post("bsi/register", {
+        nim: vm.$store.state.biodata.identity,
+      });
+      console.log(create);
     },
     convert(x) {
       if (x) {
@@ -215,16 +215,15 @@ export default {
 </script>
 
 <style scoped>
-/* .container-fluid {
-  
-} */
+.container-fluid {
+  overflow-y: auto;
+}
 .cara-box {
-  height: auto;
+  min-height: 80%;
   width: 100%;
   text-align: start;
   border-radius: 1rem;
   border: 1px solid transparent;
-  overflow-y: auto;
   /* border-top-color: rgba(225, 225, 225, 0.5);
   border-left-color: rgba(225, 225, 225, 0.5);
   border-bottom-color: rgba(225, 225, 225, 0.1);

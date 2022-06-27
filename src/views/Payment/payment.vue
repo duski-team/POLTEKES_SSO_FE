@@ -23,7 +23,9 @@
                 </div>
                 <div class="row box-title">
                   <div class="col title">Tahun Ajaran</div>
-                  <div class="col title"><span>: </span></div>
+                  <div class="col title">
+                    <span>: {{ $store.state.payment.semester }} </span>
+                  </div>
                 </div>
                 <div class="row box-title">
                   <div class="col title">Jenis Tagihan</div>
@@ -40,22 +42,32 @@
                 <div class="row box-title">
                   <div class="col title">Jumlah Tagihan</div>
                   <div class="col title">
-                    <span>: Rp. {{ convert($store.state.payment.totalTagihan) }} </span>
+                    <span
+                      >: Rp. {{ convert($store.state.payment.totalTagihan) }}
+                    </span>
                   </div>
                 </div>
                 <div class="row box-title">
                   <div class="col title">Status Tagihan</div>
                   <div class="col title">
-                    <span v-if="$store.state.payment.status_tagihan == 1">: Lunas </span>
+                    <span v-if="$store.state.payment.status_tagihan == 1"
+                      >: Lunas
+                    </span>
                     <span v-if="$store.state.payment.status_tagihan == 0"
                       >: Belum Lunas
                     </span>
                   </div>
                 </div>
                 <div class="row box-title mt-4">
-                  <center><button class="btn btn-outline-success" @click="open = true" :disabled='$store.state.payment.status_tagihan == 1'>
-                    Checkout
-                  </button></center>
+                  <center>
+                    <button
+                      class="btn btn-outline-success"
+                      @click="open = true"
+                      v-if="$store.state.payment.status_tagihan == 0"
+                    >
+                      Checkout
+                    </button>
+                  </center>
                 </div>
               </div>
             </div>
@@ -107,10 +119,10 @@ export default {
           nim: vm.$store.state.biodata.identity,
         }
       );
-      console.log(tagihan)
-      vm.$store.dispatch('payment', tagihan.data.data[0])
+      // console.log(tagihan)
+      vm.$store.dispatch("payment", tagihan.data.data[0]);
     },
-    
+
     convert(x) {
       if (x) {
         return x.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
