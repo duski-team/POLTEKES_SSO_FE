@@ -129,10 +129,10 @@ export default {
   },
   created() {
     this.$store.dispatch("set_loading", false);
-    setTimeout(()=>{
-      const recaptcha = this.$recaptchaInstance
-      recaptcha.showBadge()
-    },1000)
+    setTimeout(() => {
+      const recaptcha = this.$recaptchaInstance;
+      recaptcha.showBadge();
+    }, 1000);
   },
   methods: {
     async login() {

@@ -77,14 +77,14 @@ const mutations = {
     state.payment = value;
   },
   set_data_biodata(state, value) {
-    console.log(value, "biodata");
+    // console.log(value, "biodata");
     if (value.role == "mahasiswa") {
       value.foto = `https://simadu.poltekkes-smg.ac.id/foto/${value.identity}`;
     }
     state.biodata = value;
   },
   set_data_profil(state, value) {
-    console.log(value, "profil");
+    // console.log(value, "profil");
     if (state.sso_user_role == "dosen" || state.sso_user_role == "pegawai") {
       state.biodata.foto = `http://simpeg.poltekkes-smg.ac.id/packages/upload/photo/pegawai/${value.photo}`;
       state.biodata.nama_lengkap_users = value.nama;
@@ -96,7 +96,7 @@ const mutations = {
       state.biodata.foto = "http://placekitten.com/700/500";
     }
     state.profil = value;
-    console.log(state.profil, "iki");
+    // console.log(state.profil, "iki");
   },
   show_alert_success(state, value) {
     state.alert = value.toUpperCase();
@@ -116,7 +116,7 @@ const mutations = {
     state.popup = value;
   },
   data_app(state, value) {
-    console.log(value, "app");
+    // console.log(value, "app");
     value.map((item) => {
       item.src1 = ip + "/" + item.logo_client;
     });

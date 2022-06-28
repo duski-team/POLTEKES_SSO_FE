@@ -33,7 +33,10 @@ const app = createApp(App)
   .use(store)
   .use(router)
   .use(bootstrap)
-  .use(VueReCaptcha, { siteKey: "6LdGiIgfAAAAABQt0Cg0-iOrjyvsFGOd43NAqp1q", loaderOptions:{autoHideBadge: true } })
+  .use(VueReCaptcha, {
+    siteKey: "6LdGiIgfAAAAABQt0Cg0-iOrjyvsFGOd43NAqp1q",
+    loaderOptions: { autoHideBadge: true },
+  })
   .component("font-awesome-icon", FontAwesomeIcon);
 
 app.config.globalProperties.$axios = ipsso;
@@ -45,10 +48,10 @@ app.config.globalProperties.qs = qs;
 // app.config.compilerOptions.isCustomElement = (tag) => {
 //   return tag.startsWith("C");
 // }
-app.config.warnHandler = (msg)=>{
-  if(msg.includes('If this is a native custom element')){
-    return ""
+app.config.warnHandler = (msg) => {
+  if (msg.includes("If this is a native custom element")) {
+    return "";
   }
-}
+};
 
 app.mount("#app");
