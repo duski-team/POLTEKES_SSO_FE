@@ -11,6 +11,10 @@
         <div><img src="@/assets/BTNLOGO.png" alt="" /></div>
       </div>
       <div class="bank">
+        <div>Nama</div>
+        <div>{{ $store.state.biodata.nama_lengkap_users }}</div>
+      </div>
+      <div class="bank" v-if="cek.createdate != '000000'">
         <div>Nomor VA</div>
         <div>{{ Va }}</div>
       </div>
@@ -30,7 +34,11 @@
         </center>
       </div>
 
-      <div @click="cara = !cara" style="margin-bottom: 20px">
+      <div
+        @click="cara = !cara"
+        style="margin-bottom: 20px"
+        v-if="cek.createdate != '000000'"
+      >
         <font-awesome-icon icon="fa-regular fa-circle-question" />
         <span> Cara Bayar </span>
         <font-awesome-icon
@@ -39,7 +47,7 @@
         /><font-awesome-icon v-else icon="fa-regular fa-square-caret-down" />
       </div>
 
-      <div>
+      <div v-if="cek.createdate != '000000'">
         <div @click="steps('ATM')" class="card-cara">
           <div class="card-cara-button">
             <span>ATM</span>
@@ -220,10 +228,36 @@ export default {
     },
     async createVA() {
       let vm = this;
+      vm.$store.dispatch("set_loading", true);
       let create = await vm.$axiosbilling.post("btn/register", {
         nim: vm.$store.state.biodata.identity,
       });
       console.log(create);
+      if (create.data.status == 200) {
+        if (create.data.message == "sukses") {
+          vm.$store.dispatch("set_loading", false);
+          vm.$store.dispatch("set_alert_show_success", create.data.message);
+          setTimeout(() => {
+            vm.$store.dispatch("set_alert_hide");
+          }, 2000);
+        } else {
+          // alert(create.data.message);
+          vm.$store.dispatch("set_alert_show_fail", create.data.message);
+          setTimeout(() => {
+            vm.$store.dispatch("set_alert_hide");
+          }, 2000);
+          vm.$store.dispatch("set_loading", false);
+        }
+      } else {
+        vm.$store.dispatch("set_loading", false);
+        vm.$store.dispatch("set_alert_show_fail", create.data.message);
+        setTimeout(() => {
+          vm.$store.dispatch("set_alert_hide");
+        }, 2000);
+        console.log("error");
+      }
+
+      this.cekCreated();
     },
     convert(x) {
       if (x) {
