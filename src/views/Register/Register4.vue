@@ -5,14 +5,13 @@
         <div class="cb1 m-2 text-center">
           <img src="@/assets/email.jpg" alt="" />
           <h5 class="SSO mb-4">Periksa Email Anda</h5>
-          <h5 class="card-title mb-4 mt-4">
+          <!-- <h5 class="card-title mb-4 mt-4">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
-          </h5>
+          </h5> -->
           <h5 class="card-title mb-4 mt-4">
-            <p class="kirim" @click="kirim()">Click here</p>
-            if you did not receive an email or would like to change the email
-            address you signed up with.
+            <p class="kirim" @click="kirim()">Klik Disini</p>
+            Jika anda tidak menerima email konfirmasi pendaftaran SSO di email yang sudah terdaftar di SSO
           </h5>
         </div>
       </div>
