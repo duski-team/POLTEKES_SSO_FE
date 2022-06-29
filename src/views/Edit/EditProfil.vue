@@ -344,6 +344,7 @@ export default {
   color: #667085;
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 
 .tools {

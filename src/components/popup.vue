@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <div class="card" v-if="show && popup">
+    <div class="card" v-if="show && popup.length">
       <div class="card-header">
         <h5 class="card-title">INFORMASI</h5>
       </div>

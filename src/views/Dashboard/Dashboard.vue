@@ -216,7 +216,7 @@
                 </div>
                 <div class="line"></div>
                 <div
-                  class="jurusan-wrapper mt-3"
+                  class="jurusan-wrapper mt-3 text-center"
                   v-if="$store.state.biodata.role == 'mahasiswa'"
                 >
                   <h5 style="line-height: 14px">
@@ -227,7 +227,7 @@
                   </p>
                 </div>
                 <div
-                  class="jurusan-wrapper mt-3"
+                  class="jurusan-wrapper mt-3 text-center"
                   v-if="
                     $store.state.biodata.role == 'dosen' ||
                     $store.state.biodata.role == 'pegawai'
@@ -239,7 +239,7 @@
                   </p>
                 </div>
                 <div
-                  class="jurusan-wrapper mt-3"
+                  class="jurusan-wrapper mt-3 text-center"
                   v-if="$store.state.biodata.role == 'admin'"
                 >
                   <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
@@ -646,6 +646,7 @@ export default {
   color: #667085;
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 
 .tools {
