@@ -7,7 +7,10 @@
         class="alert alert-success alert-dismissible fade show"
         role="alert"
       >
-        <strong>Welcome!</strong> {{ $store.state.biodata.nama_lengkap_users }}
+        <p>
+          <strong>Welcome!</strong>
+          {{ $store.state.biodata.nama_lengkap_users }}
+        </p>
         <button
           type="button"
           class="btn-close"
@@ -498,6 +501,10 @@ export default {
   background-position: center center;
   background-attachment: fixed;
   /* color: aqua; */
+}
+
+.alert-success {
+  text-align: center;
 }
 
 .title {

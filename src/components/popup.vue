@@ -7,7 +7,16 @@
       <div class="card-body">
         <div v-for="(item, idx) in popup" :key="idx">
           <div v-if="item.file_pop_up">
-            <img :src="item.src1" alt="" style="height: auto; width: 100%" />
+            <img
+              :src="item.src1"
+              alt=""
+              style="
+                height: auto;
+                width: 100%;
+                margin: 25px 0px 25px 0px;
+                border: solid black 2px;
+              "
+            />
           </div>
           <div>{{ item.judul_pop_up }}</div>
           <div class="card-body">
@@ -114,5 +123,6 @@ export default {
 
 .card-body {
   overflow-y: auto;
+  padding: 7mm;
 }
 </style>
