@@ -78,8 +78,8 @@
     <div class="row">
       <div class="col">
         <div class="mb-3 mt-3">
-          <div class="d-flex justify-content-center">
-            <div class="col-12">
+          <div class="">
+            <div class="col-12 d-flex justify-content-center">
               <button
                 :disabled="data.role == ''"
                 class="btn btn-outline-success"

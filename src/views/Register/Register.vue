@@ -156,7 +156,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-8 d-flex justify-content-center">
+      <div class="col-md-8">
         <Step1 v-if="aktiv == 'step1'" @role="setRole($event)" />
         <Step2
           v-if="aktiv == 'step2'"
@@ -267,7 +267,7 @@ export default {
     },
     setForm(x) {
       let vm = this;
-      vm.state.username = x.username + '@poltekkes-smg.ac.id'
+      vm.state.username = x.username + "@poltekkes-smg.ac.id";
       vm.state.NIK = x.NIK;
       vm.state.identity = x.identity;
       vm.state.no_hp_users = x.no_hp_users;
@@ -302,7 +302,8 @@ export default {
       vm.busy = true;
       console.log(vm.state);
       this.$store.dispatch("set_loading", true);
-      let register = await vm.$axios.post("users/register", vm.state);
+      try {
+        let register = await vm.$axios.post("users/register", vm.state);
       console.log(register);
       if (register.data.status == 200) {
         if (register.data.message == "sukses") {
@@ -329,6 +330,22 @@ export default {
         }, 2000);
         console.log("error");
       }
+        
+      } catch (error) {
+        if (error) {
+          vm.$store.dispatch(
+            "set_alert_show_fail",
+            'Terjadi Kesalahan Pada Server'
+          );
+          console.log(error.message,'catch');
+          setTimeout(() => {
+            vm.$store.dispatch("set_alert_hide");
+          }, 2000);
+          this.show = true;
+          this.$store.dispatch("set_loading", false);
+        }
+      }
+      
     },
     reset() {
       this.data = {

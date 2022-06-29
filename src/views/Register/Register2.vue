@@ -139,7 +139,6 @@ export default {
       return {
         username: {
           required,
-          email,
         },
         identity: {
           required,
@@ -234,6 +233,7 @@ export default {
   background-position: center center;
   background-attachment: fixed;
   background-color: #e5e5e5;
+  min-height: 100vh;
 }
 
 .SSO {

@@ -6,7 +6,10 @@
       :style="$store.state.backColor"
     >
       <div class="card-body">
-        <span v-html="$store.state.alert"></span>
+        <center>
+            <span v-html="$store.state.alert"></span>
+        </center>
+        
       </div>
     </div>
   </div>

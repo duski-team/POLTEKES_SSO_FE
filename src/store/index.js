@@ -63,7 +63,7 @@ const mutations = {
     state.profil = null;
     state.popup = true;
     state.sso_user_role = null;
-    state.payment = null
+    state.payment = null;
   },
   set_loading_state(state, value) {
     state.loading = value;

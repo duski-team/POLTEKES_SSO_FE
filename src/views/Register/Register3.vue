@@ -1,25 +1,18 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col d-flex justify-content-center">
-        <div class="cb1 m-2 text-center">
+      <div class="col">
+        <div class="cb1 m-2">
           <img src="@/assets/kebijakan.jpg" alt="" />
-          <h5 class="SSO mb-4">User Agreement</h5>
-          <h5 class="card-title mb-4 mt-4">
-            Your privacy is important to us at Untitled. We respect your privacy
-            regarding any information we may collect from you across our
-            website. Lorem Ipsum is simply dummy text of the printing and
-            typesetting industry. Lorem Ipsum has been the industry's standard
-            dummy text ever since the 1500s, when an unknown printer took a
-            galley of type and scrambled it to make a type specimen book. It has
-            survived not only five centuries, but also the leap into electronic
-            typesetting, remaining essentially unchanged.
-          </h5>
+           <h5 class="SSO mb-4">User Agreement SSO</h5>
         </div>
       </div>
     </div>
+    <div class="row">
+        <span v-html="agrement"></span>
+    </div>
     <div class="row d-flex justify-content-center mt-4">
-      <div class="col-md-2 btn-red"><p>Lihat</p></div>
+      <!-- <div class="col-md-2 btn-red"><p>Lihat</p></div> -->
       <div class="col-md-2 btn-green" @click="setuju()"><p>Setuju</p></div>
     </div>
   </div>
@@ -33,13 +26,24 @@ export default {
         syarat_kebijakan: 0,
         step: "step4",
       },
+      agrement: "",
     };
+  },
+  mounted() {
+    this.getAgrement();
   },
   methods: {
     setuju() {
       let vm = this;
       vm.data.syarat_kebijakan = 1;
       vm.$emit("kebijakan", vm.data);
+    },
+    async getAgrement() {
+      let vm = this;
+      let agre = await vm.$axios.get("pop_up/listByRole/" + "userAgrement");
+
+      vm.agrement = agre.data.data[0].text_pop_up;
+      // console.log(agre.data.data[0],'agres')
     },
   },
 };
@@ -81,6 +85,9 @@ export default {
   text-align: center;
   font-weight: 400;
   color: #667085;
+}
+.cb1{
+  text-align: center;
 }
 
 .card {
