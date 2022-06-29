@@ -38,7 +38,7 @@
       </div>
 
       <div class="card-footer">
-        <div>
+        <div align="right">
           <button
             type="button"
             class="btn btn-secondary"

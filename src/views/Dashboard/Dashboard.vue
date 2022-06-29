@@ -98,7 +98,7 @@
               <p style="line-height: 14px; font-size: 14px">Admin</p>
             </div>
           </div>
-          <div class="tools text-start">
+          <!-- <div class="tools text-start">
             <div class="box-info">
               <div class="box-title mb-3" style="color: #027a48">Resource</div>
               <div class="box-content" @click="$router.push('/payment')">
@@ -162,6 +162,68 @@
               </div>
               <div class="box-title mb-3" style="color: #027a48">
                 Baca Informasi ->
+              </div>
+            </div>
+          </div> -->
+          <div
+            class="toolsdemo text-start"
+            v-if="$store.state.payment.status_tagihan == 1"
+          >
+            <div class="box-info">
+              <div class="row">
+                <div class="col">
+                  <!-- <div class="d-flex justify-content-between" style="width: 80%">
+                    <button class="button-payment">Lihat Panduan SSO</button>
+
+                    <button class="button-payment">
+                      Lihat Pedoman Akademik
+                    </button>
+                  </div> -->
+                  <div class="text-tagihan">
+                    Status anda adalah Mahasiswa Aktif Poltekkes Kemenkes Jawa
+                    Tengah.
+                  </div>
+                  <div class="text-tagihan">
+                    Pada Semester Ganjil Tahun Akademik 2022
+                  </div>
+
+                  <div class="text-tagihan">
+                    <span style="color:grey">Email Official</span> anda akan aktif dalam 2 x 24 jam setelah status anda aktif
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="toolsdemo text-start"
+            v-if="$store.state.payment.status_tagihan == 0"
+          >
+            <div class="box-info">
+              <div class="row">
+                <div class="col">
+                  <div class="text-tagihan">
+                    Halo, {{ $store.state.biodata.nama_lengkap_users }} (
+                    {{ $store.state.biodata.identity }} )
+                  </div>
+                  <div class="text-tagihan">
+                    Anda memiliki tagihan biaya pendidikan sebesar :
+                  </div>
+                  <div class="text-tagihan">
+                    Rp. {{ convert($store.state.payment.totalTagihan) }}
+                    <span style="color: grey">pada semester Ganjil 2022</span>
+                  </div>
+                  <div>
+                    <button
+                      class="button-payment"
+                      @click="$router.push('/payment')"
+                    >
+                      Bayar Sekarang
+                    </button>
+                  </div>
+                  <div class="text-invoice">
+                    NO. INVOICE : {{ $store.state.payment.trx_id }}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -451,6 +513,7 @@ export default {
     if (!this.$store.state.biodata || !this.$store.state.app) {
       this.getData();
     }
+    this.getTagihan();
   },
   methods: {
     async getData() {
@@ -471,6 +534,15 @@ export default {
         let app = await vm.$axios.get("client/list");
 
         vm.$store.dispatch("set_app", app.data.data);
+
+        let tagihan = await vm.$axiosbilling.post(
+        "detailsTagihanStudi/listDetailsTagihanStudiByNIM",
+        {
+          nim: vm.$store.state.biodata.identity,
+        }
+      );
+      console.log(tagihan, "tagihan");
+      vm.$store.dispatch("payment", tagihan.data.data[0]);
         // vm.app = app.data.data;
         // console.log(this.$store.state.profil);
         vm.$store.dispatch("set_loading", false);
@@ -479,10 +551,26 @@ export default {
         console.log(error.response);
       }
     },
+    async getTagihan() {
+      let vm = this;
+      let tagihan = await vm.$axiosbilling.post(
+        "detailsTagihanStudi/listDetailsTagihanStudiByNIM",
+        {
+          nim: vm.$store.state.biodata.identity,
+        }
+      );
+      console.log(tagihan, "tagihan");
+      vm.$store.dispatch("payment", tagihan.data.data[0]);
+    },
     goApp(x) {
       window.open(
         x.redirect_uri + "?token=" + this.$store.state.sso_access_token
       );
+    },
+    convert(x) {
+      if (x) {
+        return x.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+      }
     },
   },
 };
@@ -505,6 +593,7 @@ export default {
 
 .alert-success {
   text-align: center;
+  padding-bottom: 0px;
 }
 
 .title {
@@ -677,6 +766,27 @@ export default {
   border-radius: 8px;
 }
 
+.toolsdemo {
+  display: flex;
+  width: 906px;
+  height: 349px;
+  display: flex;
+  gap: 24px;
+  width: 956px;
+  height: 349px;
+  left: 422px;
+  top: 163px;
+  /* White */
+  background: #ffffff;
+  /* Gray/200 */
+  border: 5px solid #027a48;
+  box-sizing: border-box;
+  /* Shadow/sm */
+  box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
+    0px 1px 2px rgba(16, 24, 40, 0.06);
+  border-radius: 8px;
+}
+
 .tools-hp {
   display: flex;
   width: 100%;
@@ -696,7 +806,7 @@ export default {
 }
 
 .box-info {
-  width: 80%;
+  width: 100%;
   /* background-color: #027a48; */
   padding: 2rem;
   height: 100%;
@@ -833,5 +943,31 @@ img {
 
 .box-app {
   cursor: pointer;
+}
+
+.text-tagihan {
+  color: #027a48;
+  font-size: 18px;
+  font-weight: 900;
+  margin: 3mm 3mm 3mm 3mm;
+  letter-spacing: 1px;
+}
+
+.text-invoice {
+  color: black;
+  font-size: 18px;
+  font-weight: 900;
+  margin: 3mm 3mm 3mm 3mm;
+  letter-spacing: 1px;
+}
+
+.button-payment {
+  margin: 3mm 3mm 3mm 3mm;
+  background-color: orange;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  padding: 10px;
+  color: #eaecf0;
+  font-size: 24px;
 }
 </style>

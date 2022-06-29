@@ -122,7 +122,7 @@ const mutations = {
       item.src1 = ip + "/" + item.logo_client;
     });
     state.app = value;
-    console.log(state.app, "appp");
+    // console.log(state.app, "appp");
   },
   biodata_foto(state, value) {
     state.biodata.foto = value;

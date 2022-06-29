@@ -28,6 +28,7 @@
             class="btn btn-outline-success CreateVa"
             @click="createVA()"
             :disabled="cek.createdate != '000000'"
+            v-if="cek.createdate == '000000'"
           >
             Create Virtual Account
           </button>
@@ -186,6 +187,7 @@ export default {
       metode: 0,
       step: "",
       cek: "",
+      date:""
     };
   },
   computed: {
@@ -196,14 +198,7 @@ export default {
     },
     kadaluarsaVa() {
       let vm = this;
-      let x = vm.cek.expired;
-      if (x != "") {
-        let y = "20" + x;
-        console.log(y);
-        return vm.$moment(y, "YYYYMMDDHHmm").format("lll");
-      } else {
-        return "";
-      }
+      return vm.$moment(vm.date).format("HH:mm:ss");
     },
   },
   mounted() {
@@ -219,12 +214,30 @@ export default {
     },
     async cekCreated() {
       let vm = this;
+      vm.$store.dispatch("set_loading", true);
       let cek = await vm.$axiosbilling.post("btn/detailsById", {
         ref: vm.$store.state.payment.trx_id,
         va: vm.Va,
       });
-      console.log(cek, "cek");
+      // console.log(cek, "cek");
       vm.cek = await cek.data.data[0];
+      let x = vm.$moment()
+      let y = ""
+      if (vm.cek.expired != "") {
+        let z = "20" + vm.cek.expired;
+        console.log(z,'z');
+        y =  vm.$moment(z,'YYYYMMDDHHmmss')
+      }
+      vm.date = vm.$moment.duration(x.diff(y)).asHours()
+      vm.setTimer()
+      vm.$store.dispatch("set_loading", false);
+    },
+    setTimer(){
+      let vm = this
+      clearInterval()
+      setInterval(() => {
+        this.date = vm.$moment(this.date).subtract(1, "seconds");
+      }, 1000);
     },
     async createVA() {
       let vm = this;

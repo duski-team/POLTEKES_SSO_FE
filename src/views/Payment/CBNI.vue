@@ -30,6 +30,7 @@
             class="btn btn-outline-success CreateVa"
             @click="createVA()"
             :disabled="cek.datetime_created"
+            v-if="!cek.datetime_created"
           >
             Create Virtual Account
           </button>
@@ -178,6 +179,8 @@ export default {
       metode: 0,
       step: "",
       cek: "",
+      date:"",
+      trx_id:""
     };
   },
   computed: {
@@ -192,7 +195,7 @@ export default {
     },
     kadaluarsaVa() {
       let vm = this;
-      return vm.$moment(vm.cek.datetime_expired).format("lll");
+      return vm.$moment(vm.date).format("HH:mm:ss");
     },
     today() {
       let x = this.cek.datetime_expired < this.$moment();
@@ -213,11 +216,40 @@ export default {
     },
     async cekCreated() {
       let vm = this;
+      vm.$store.dispatch("set_loading", true);
+      console.log(vm.$store.state.payment.trx_id + vm.$store.state.payment.sufix)
       let cek = await vm.$axiosbilling.post("bni/detailsById", {
-        trx_id: vm.$store.state.payment.trx_id,
+        trx_id: vm.$store.state.payment.trx_id + vm.$store.state.payment.sufix
       });
       console.log(cek, "cek");
       vm.cek = cek.data.data[0];
+      let x = vm.$moment()
+      let y = vm.cek.datetime_expired
+      vm.date = vm.$moment.duration(x.diff(y)).asHours()
+      vm.setTimer()
+      vm.$store.dispatch("set_loading", false);
+    },
+    setTimer(){
+      let vm = this
+      clearInterval()
+      setInterval(() => {
+        this.date = vm.$moment(this.date).subtract(1, "seconds");
+      }, 1000);
+    },
+    async cekCreated2() {
+      let vm = this;
+      vm.$store.dispatch("set_loading", true);
+      console.log(vm.$store.state.payment.trx_id + vm.$store.state.payment.sufix)
+      let cek = await vm.$axiosbilling.post("bni/detailsById", {
+        trx_id: vm.trx_id
+      });
+      console.log(cek, "cek2");
+      vm.cek = cek.data.data[0];
+      let x = vm.$moment()
+      let y = vm.cek.datetime_expired
+      vm.date = vm.$moment.duration(x.diff(y)).asHours()
+      vm.setTimer()
+      vm.$store.dispatch("set_loading", false);
     },
     async createVA() {
       let vm = this;
@@ -230,6 +262,8 @@ export default {
         if (create.data.message == "sukses") {
           vm.$store.dispatch("set_loading", false);
           vm.$store.dispatch("set_alert_show_success", create.data.message);
+          vm.trx_id = create.data.data[0].trx_id
+          
           setTimeout(() => {
             vm.$store.dispatch("set_alert_hide");
           }, 2000);
@@ -249,8 +283,7 @@ export default {
         }, 2000);
         console.log("error");
       }
-
-      this.cekCreated();
+      vm.cekCreated2()
     },
     convert(x) {
       if (x) {

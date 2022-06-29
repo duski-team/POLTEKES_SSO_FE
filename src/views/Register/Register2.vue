@@ -46,7 +46,10 @@
                   required
                   v-model="data.username"
                 />
-                <span class="input-group-text" id="basic-addon2"
+                <span class="input-group-text" id="basic-addon2" v-if="state.role == 'mahasiswa'"
+                  >.mhs@poltekkes-smg.ac.id</span
+                >
+                <span class="input-group-text" id="basic-addon2" v-if="state.role != 'mahasiswa'"
                   >@poltekkes-smg.ac.id</span
                 >
               </div>

@@ -5,7 +5,7 @@
       <div class="col">
         <div class="box-bill" v-if="!open">
           <div class="card text-center">
-            <div class="card-body">
+            <div class="card-body" style="letter-spacing: 1px">
               <img
                 src="@/assets/logo-poltekes.jpg"
                 alt=""
@@ -14,54 +14,63 @@
 
               <h5 class="SSO mb-4">TAGIHAN BIAYA</h5>
               <!-- <h5 class="card-title mb-4">Poltekes Semarang</h5> -->
-              <div class="card-body">
+              <div class="">
                 <div class="row box-title">
                   <div class="col title">Nama Mahasiswa</div>
-                  <div class="col title">
-                    <span>: </span>{{ $store.state.biodata.nama_lengkap_users }}
+                  <div class="col value">
+                    <span></span>{{ $store.state.biodata.nama_lengkap_users }}
                   </div>
                 </div>
                 <div class="row box-title">
                   <div class="col title">Tahun Ajaran</div>
-                  <div class="col title">
-                    <span>: {{ $store.state.payment.semester }} </span>
+                  <div class="col value">
+                    <span>{{ $store.state.payment.semester }} </span>
                   </div>
                 </div>
                 <div class="row box-title">
                   <div class="col title">Jenis Tagihan</div>
-                  <div class="col title">
-                    <span>: {{ $store.state.payment.nama_kategori }} </span>
+                  <div class="col value">
+                    <span>{{ $store.state.payment.nama_kategori }} </span>
                   </div>
                 </div>
                 <div class="row box-title">
                   <div class="col title">Prodi</div>
-                  <div class="col title">
-                    <span>: {{ $store.state.payment.nama_prodi }} </span>
+                  <div class="col value">
+                    <span>{{ $store.state.payment.nama_prodi }} </span>
                   </div>
                 </div>
                 <div class="row box-title">
                   <div class="col title">Jumlah Tagihan</div>
-                  <div class="col title">
+                  <div class="col value">
                     <span
-                      >: Rp. {{ convert($store.state.payment.totalTagihan) }}
+                      v-if="$store.state.payment.status_tagihan == 0"
+                      style="color: red"
+                      >Rp. {{ convert($store.state.payment.totalTagihan) }}
+                    </span>
+                    <span v-if="$store.state.payment.status_tagihan == 1"
+                      >: Rp. 0
                     </span>
                   </div>
                 </div>
                 <div class="row box-title">
                   <div class="col title">Status Tagihan</div>
-                  <div class="col title">
-                    <span v-if="$store.state.payment.status_tagihan == 1"
-                      >: Lunas
+                  <div class="col value">
+                    <span
+                      v-if="$store.state.payment.status_tagihan == 1"
+                      style="color: green"
+                      >LUNAS
                     </span>
-                    <span v-if="$store.state.payment.status_tagihan == 0"
-                      >: Belum Lunas
+                    <span
+                      v-if="$store.state.payment.status_tagihan == 0"
+                      style="color: red"
+                      >BELUM LUNAS
                     </span>
                   </div>
                 </div>
-                <div class="row box-title mt-4">
+                <div class="row box-checkout" style="margin-top: 15mm">
                   <center>
                     <button
-                      class="btn btn-outline-success"
+                      class="btn btn-checkout"
                       @click="open = true"
                       v-if="$store.state.payment.status_tagihan == 0"
                     >
@@ -108,7 +117,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("set_loading", false);
-    this.getTagihan();
+    // this.getTagihan();
   },
   methods: {
     async getTagihan() {
@@ -139,6 +148,9 @@ export default {
     padding: 0; */
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
+  
+ 
+  
 }
 .container-fluid {
   /* background-image: url('@/assets/gedung.jpeg') */
@@ -146,18 +158,19 @@ export default {
   background-position: center center;
   background-attachment: fixed;
   min-height: 100vh;
+   /* font-family: 'Titillium Web', sans-serif; */
   /* background-color:  rgba(225, 225, 225, 0.1); */
   /* padding: 7%; */
 }
 
 .SSO {
-  font-size: 30px;
-  line-height: 38px;
-  font-weight: 600;
+  font-size: 25px;
+  line-height: 34px;
+  font-weight: 200;
   color: #101828;
   margin-bottom: 0px;
 }
-.box-title {
+/* .box-title {
   margin-bottom: 5mm;
 
   font-size: 30px;
@@ -173,18 +186,29 @@ export default {
   font-weight: 600;
   color: #101828;
   margin-bottom: 20px;
-}
+} */
 .box-title {
   margin-bottom: 5mm;
+  display: flex;
+  justify-content: space-between;
 }
 
 .title {
   width: 100%;
   /* max-width: 40rem; */
   font-size: 16px;
-  line-height: 24px;
-  text-align: start;
-  font-weight: 800;
+  text-align: left;
+  line-height: 20px;
+  font-weight: 100;
+  color: #667085;
+}
+.value {
+  width: 100%;
+  /* max-width: 40rem; */
+  font-size: 16px;
+  text-align: right;
+  line-height: 20px;
+  font-weight: 100;
   color: #667085;
 }
 
@@ -195,9 +219,9 @@ export default {
 
 .card {
   width: 100%;
-  max-width: 540px;
-  padding: 3rem 1.5rem;
-  height: 696px;
+  max-width: 440px;
+  padding: 2rem 1.5rem ;
+  height: 606px;
 
   border-radius: 1rem;
   border: 1px solid transparent;
@@ -296,5 +320,10 @@ export default {
   color: #d92d20;
   line-height: 16px;
   cursor: pointer;
+}
+
+.btn-checkout {
+  font-size: 20px;
+  padding: 10px;
 }
 </style>
