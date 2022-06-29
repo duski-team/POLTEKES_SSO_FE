@@ -37,6 +37,19 @@
         </center>
       </div>
 
+      <div class="mb-4 mt-4">
+        <center>
+          <button
+            class="btn btn-outline-success CreateVa"
+            @click="printBNI()"
+            :disabled="!cek.datetime_created"
+            v-if="cek.datetime_created"
+          >
+            Simpan Tagihan
+          </button>
+        </center>
+      </div>
+
       <div
         @click="cara = !cara"
         style="margin-bottom: 20px"
@@ -179,8 +192,9 @@ export default {
       metode: 0,
       step: "",
       cek: "",
-      date:"",
-      trx_id:""
+      date: "",
+      trx_id: "",
+      baru: false,
     };
   },
   computed: {
@@ -217,21 +231,23 @@ export default {
     async cekCreated() {
       let vm = this;
       vm.$store.dispatch("set_loading", true);
-      console.log(vm.$store.state.payment.trx_id + vm.$store.state.payment.sufix)
+      console.log(
+        vm.$store.state.payment.trx_id + vm.$store.state.payment.sufix
+      );
       let cek = await vm.$axiosbilling.post("bni/detailsById", {
-        trx_id: vm.$store.state.payment.trx_id + vm.$store.state.payment.sufix
+        trx_id: vm.$store.state.payment.trx_id + vm.$store.state.payment.sufix,
       });
       console.log(cek, "cek");
       vm.cek = cek.data.data[0];
-      let x = vm.$moment()
-      let y = vm.cek.datetime_expired
-      vm.date = vm.$moment.duration(x.diff(y)).asHours()
-      vm.setTimer()
+      let x = vm.$moment();
+      let y = vm.cek.datetime_expired;
+      vm.date = vm.$moment.duration(x.diff(y)).asHours();
+      vm.setTimer();
       vm.$store.dispatch("set_loading", false);
     },
-    setTimer(){
-      let vm = this
-      clearInterval()
+    setTimer() {
+      let vm = this;
+      clearInterval();
       setInterval(() => {
         this.date = vm.$moment(this.date).subtract(1, "seconds");
       }, 1000);
@@ -239,16 +255,16 @@ export default {
     async cekCreated2() {
       let vm = this;
       vm.$store.dispatch("set_loading", true);
-      console.log(vm.$store.state.payment.trx_id + vm.$store.state.payment.sufix)
+      // console.log(vm.$store.state.payment.trx_id + vm.$store.state.payment.sufix)
       let cek = await vm.$axiosbilling.post("bni/detailsById", {
-        trx_id: vm.trx_id
+        trx_id: vm.trx_id,
       });
       console.log(cek, "cek2");
       vm.cek = cek.data.data[0];
-      let x = vm.$moment()
-      let y = vm.cek.datetime_expired
-      vm.date = vm.$moment.duration(x.diff(y)).asHours()
-      vm.setTimer()
+      vm.baru = true;
+      let x = vm.$moment();
+      let y = vm.cek.datetime_expired;
+      vm.date = vm.$moment.duration(x.diff(y)).asHours();
       vm.$store.dispatch("set_loading", false);
     },
     async createVA() {
@@ -262,8 +278,8 @@ export default {
         if (create.data.message == "sukses") {
           vm.$store.dispatch("set_loading", false);
           vm.$store.dispatch("set_alert_show_success", create.data.message);
-          vm.trx_id = create.data.data[0].trx_id
-          
+          vm.trx_id = create.data.data[0].trx_id;
+
           setTimeout(() => {
             vm.$store.dispatch("set_alert_hide");
           }, 2000);
@@ -283,11 +299,25 @@ export default {
         }, 2000);
         console.log("error");
       }
-      vm.cekCreated2()
+      vm.cekCreated2();
     },
     convert(x) {
       if (x) {
         return x.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+      }
+    },
+    printBNI() {
+      let vm = this;
+      if (vm.baru) {
+        window.open(vm.$axiosbilling + "bni/notaBNI/" + vm.trx_id, "_blank");
+      } else {
+        window.open(
+          vm.$axiosbilling +
+            "bni/notaBNI/" +
+            vm.$store.state.payment.trx_id +
+            vm.$store.state.payment.sufix,
+          "_blank"
+        );
       }
     },
   },

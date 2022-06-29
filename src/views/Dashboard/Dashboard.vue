@@ -188,7 +188,8 @@
                   </div>
 
                   <div class="text-tagihan">
-                    <span style="color:grey">Email Official</span> anda akan aktif dalam 2 x 24 jam setelah status anda aktif
+                    <span style="color: grey">Email Official</span> anda akan
+                    aktif dalam 2 x 24 jam setelah status anda aktif
                   </div>
                 </div>
               </div>
@@ -536,13 +537,13 @@ export default {
         vm.$store.dispatch("set_app", app.data.data);
 
         let tagihan = await vm.$axiosbilling.post(
-        "detailsTagihanStudi/listDetailsTagihanStudiByNIM",
-        {
-          nim: vm.$store.state.biodata.identity,
-        }
-      );
-      console.log(tagihan, "tagihan");
-      vm.$store.dispatch("payment", tagihan.data.data[0]);
+          "detailsTagihanStudi/listDetailsTagihanStudiByNIM",
+          {
+            nim: vm.$store.state.biodata.identity,
+          }
+        );
+        console.log(tagihan, "tagihan");
+        vm.$store.dispatch("payment", tagihan.data.data[0]);
         // vm.app = app.data.data;
         // console.log(this.$store.state.profil);
         vm.$store.dispatch("set_loading", false);

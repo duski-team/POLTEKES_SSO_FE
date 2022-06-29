@@ -267,12 +267,12 @@ export default {
     },
     setForm(x) {
       let vm = this;
-      if(vm.state.role != 'mahasiswa'){
+      if (vm.state.role != "mahasiswa") {
         vm.state.username = x.username + "@poltekkes-smg.ac.id";
-      }else{
+      } else {
         vm.state.username = x.username + ".mhs@poltekkes-smg.ac.id";
       }
-      
+
       vm.state.NIK = x.NIK;
       vm.state.identity = x.identity;
       vm.state.no_hp_users = x.no_hp_users;

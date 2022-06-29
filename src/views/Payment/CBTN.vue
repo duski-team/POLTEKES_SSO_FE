@@ -187,7 +187,7 @@ export default {
       metode: 0,
       step: "",
       cek: "",
-      date:""
+      date: "",
     };
   },
   computed: {
@@ -221,20 +221,20 @@ export default {
       });
       // console.log(cek, "cek");
       vm.cek = await cek.data.data[0];
-      let x = vm.$moment()
-      let y = ""
+      let x = vm.$moment();
+      let y = "";
       if (vm.cek.expired != "") {
         let z = "20" + vm.cek.expired;
-        console.log(z,'z');
-        y =  vm.$moment(z,'YYYYMMDDHHmmss')
+        console.log(z, "z");
+        y = vm.$moment(z, "YYYYMMDDHHmmss");
       }
-      vm.date = vm.$moment.duration(x.diff(y)).asHours()
-      vm.setTimer()
+      vm.date = vm.$moment.duration(x.diff(y)).asHours();
+      vm.setTimer();
       vm.$store.dispatch("set_loading", false);
     },
-    setTimer(){
-      let vm = this
-      clearInterval()
+    setTimer() {
+      let vm = this;
+      clearInterval();
       setInterval(() => {
         this.date = vm.$moment(this.date).subtract(1, "seconds");
       }, 1000);

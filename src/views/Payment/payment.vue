@@ -148,9 +148,6 @@ export default {
     padding: 0; */
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
-  
- 
-  
 }
 .container-fluid {
   /* background-image: url('@/assets/gedung.jpeg') */
@@ -158,7 +155,7 @@ export default {
   background-position: center center;
   background-attachment: fixed;
   min-height: 100vh;
-   /* font-family: 'Titillium Web', sans-serif; */
+  /* font-family: 'Titillium Web', sans-serif; */
   /* background-color:  rgba(225, 225, 225, 0.1); */
   /* padding: 7%; */
 }
@@ -220,7 +217,7 @@ export default {
 .card {
   width: 100%;
   max-width: 440px;
-  padding: 2rem 1.5rem ;
+  padding: 2rem 1.5rem;
   height: 606px;
 
   border-radius: 1rem;
