@@ -7,9 +7,8 @@
     >
       <div class="card-body">
         <center>
-            <span v-html="$store.state.alert"></span>
+          <span v-html="$store.state.alert"></span>
         </center>
-        
       </div>
     </div>
   </div>

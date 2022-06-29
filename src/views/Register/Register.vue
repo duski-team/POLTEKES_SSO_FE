@@ -304,40 +304,39 @@ export default {
       this.$store.dispatch("set_loading", true);
       try {
         let register = await vm.$axios.post("users/register", vm.state);
-      console.log(register);
-      if (register.data.status == 200) {
-        if (register.data.message == "sukses") {
-          vm.aktiv = "step4";
-          vm.emails = true;
-          vm.$store.dispatch("set_loading", false);
-          vm.$store.dispatch("set_alert_show_success", register.data.message);
-          setTimeout(() => {
-            vm.$store.dispatch("set_alert_hide");
-          }, 2000);
+        console.log(register);
+        if (register.data.status == 200) {
+          if (register.data.message == "sukses") {
+            vm.aktiv = "step4";
+            vm.emails = true;
+            vm.$store.dispatch("set_loading", false);
+            vm.$store.dispatch("set_alert_show_success", register.data.message);
+            setTimeout(() => {
+              vm.$store.dispatch("set_alert_hide");
+            }, 2000);
+          } else {
+            // alert(register.data.message);
+            vm.$store.dispatch("set_alert_show_fail", register.data.message);
+            setTimeout(() => {
+              vm.$store.dispatch("set_alert_hide");
+            }, 2000);
+            vm.$store.dispatch("set_loading", false);
+          }
         } else {
-          // alert(register.data.message);
+          vm.$store.dispatch("set_loading", false);
           vm.$store.dispatch("set_alert_show_fail", register.data.message);
           setTimeout(() => {
             vm.$store.dispatch("set_alert_hide");
           }, 2000);
-          vm.$store.dispatch("set_loading", false);
+          console.log("error");
         }
-      } else {
-        vm.$store.dispatch("set_loading", false);
-        vm.$store.dispatch("set_alert_show_fail", register.data.message);
-        setTimeout(() => {
-          vm.$store.dispatch("set_alert_hide");
-        }, 2000);
-        console.log("error");
-      }
-        
       } catch (error) {
         if (error) {
           vm.$store.dispatch(
             "set_alert_show_fail",
-            'Terjadi Kesalahan Pada Server'
+            "Terjadi Kesalahan Pada Server"
           );
-          console.log(error.message,'catch');
+          console.log(error.message, "catch");
           setTimeout(() => {
             vm.$store.dispatch("set_alert_hide");
           }, 2000);
@@ -345,7 +344,6 @@ export default {
           this.$store.dispatch("set_loading", false);
         }
       }
-      
     },
     reset() {
       this.data = {

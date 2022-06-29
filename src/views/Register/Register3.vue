@@ -4,12 +4,12 @@
       <div class="col">
         <div class="cb1 m-2">
           <img src="@/assets/kebijakan.jpg" alt="" />
-           <h5 class="SSO mb-4">User Agreement SSO</h5>
+          <h5 class="SSO mb-4">User Agreement SSO</h5>
         </div>
       </div>
     </div>
     <div class="row">
-        <span v-html="agrement"></span>
+      <span v-html="agrement"></span>
     </div>
     <div class="row d-flex justify-content-center mt-4">
       <!-- <div class="col-md-2 btn-red"><p>Lihat</p></div> -->
@@ -86,7 +86,7 @@ export default {
   font-weight: 400;
   color: #667085;
 }
-.cb1{
+.cb1 {
   text-align: center;
 }
 
