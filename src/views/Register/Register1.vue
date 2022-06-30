@@ -51,7 +51,6 @@
           <!-- <i class="fa-regular fa-face-meh fa-10x"></i> -->
           <div>
             <center><p class="SSO">Dosen</p></center>
-            
           </div>
         </div>
       </div>
@@ -72,7 +71,6 @@
           <!-- <i class="fa-regular fa-face-flushed fa-10x"></i> -->
           <div>
             <center><p class="SSO">Tenaga Pendidik</p></center>
-            
           </div>
         </div>
       </div>

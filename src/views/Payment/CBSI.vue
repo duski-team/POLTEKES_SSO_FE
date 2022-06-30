@@ -93,20 +93,20 @@
             </div>
             <div class="text-cara-line">
               <p>5.</p>
-              <p>
-                Pilih Akademik.
-              </p>
+              <p>Pilih Akademik.</p>
             </div>
             <div class="text-cara-line">
               <p>6.</p>
               <p>
-                Masukkan nomor Virtual Account Anda <span style="color: green">{{ Va }}</span> .
+                Masukkan nomor Virtual Account Anda
+                <span style="color: green">{{ Va }}</span> .
               </p>
             </div>
             <div class="text-cara-line">
               <p>7.</p>
               <p>
-                Kemudian tampil Informasi data transaksi anda, pastikan data sudah benar (Tagihan sudah termasuk biaya admin 2500).
+                Kemudian tampil Informasi data transaksi anda, pastikan data
+                sudah benar (Tagihan sudah termasuk biaya admin 2500).
               </p>
             </div>
             <div class="text-cara-line">
@@ -147,19 +147,19 @@
             <div class="text-cara-line">
               <p>4.</p>
               <p>
-                Masukkan Kode Akademik (2576) / Nama Akademik (POLTEKKES SEMARANG).
+                Masukkan Kode Akademik (2576) / Nama Akademik (POLTEKKES
+                SEMARANG).
               </p>
             </div>
             <div class="text-cara-line">
               <p>5.</p>
-              <p>
-                Masukkan nomor Pembayaran (NIM).
-              </p>
+              <p>Masukkan nomor Pembayaran (NIM).</p>
             </div>
             <div class="text-cara-line">
               <p>6.</p>
               <p>
-                Kemudia tampilan informasi data transaksi anda, pastikan data sudah benar (Tagihan sudah termasuk biaya adm 2500).
+                Kemudia tampilan informasi data transaksi anda, pastikan data
+                sudah benar (Tagihan sudah termasuk biaya adm 2500).
               </p>
             </div>
             <div class="text-cara-line">
@@ -289,7 +289,12 @@ export default {
     },
     printBSI() {
       let vm = this;
-      window.open(vm.ip + "/detailsTagihanStudi/downloadTagihanBSI/" + vm.$store.state.biodata.identity, "_blank");
+      window.open(
+        vm.ip +
+          "/detailsTagihanStudi/downloadTagihanBSI/" +
+          vm.$store.state.biodata.identity,
+        "_blank"
+      );
     },
   },
 };

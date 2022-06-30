@@ -201,7 +201,7 @@ export default {
       step: "",
       cek: "",
       date: "",
-      interval:""
+      interval: "",
     };
   },
   computed: {
@@ -296,7 +296,12 @@ export default {
     },
     printBTN() {
       let vm = this;
-      window.open(vm.ip + "/detailsTagihanStudi/downloadTagihanBTN/" + vm.$store.state.biodata.identity, "_blank");
+      window.open(
+        vm.ip +
+          "/detailsTagihanStudi/downloadTagihanBTN/" +
+          vm.$store.state.biodata.identity,
+        "_blank"
+      );
     },
   },
 };

@@ -233,7 +233,7 @@ export default {
   },
   mounted() {
     this.cekCreated();
-    console.log(this.$axiosbilling)
+    console.log(this.$axiosbilling);
   },
   methods: {
     steps(x) {
@@ -323,8 +323,13 @@ export default {
     },
     printBNI() {
       let vm = this;
-      console.log(vm.ip,'ip')
-        window.open(vm.ip + "/detailsTagihanStudi/downloadTagihanBNI/" + vm.$store.state.biodata.identity, "_blank");
+      console.log(vm.ip, "ip");
+      window.open(
+        vm.ip +
+          "/detailsTagihanStudi/downloadTagihanBNI/" +
+          vm.$store.state.biodata.identity,
+        "_blank"
+      );
     },
   },
 };
