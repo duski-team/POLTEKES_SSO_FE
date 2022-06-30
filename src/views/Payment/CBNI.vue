@@ -24,7 +24,7 @@
         <div v-if="today">Expired</div>
       </div>
 
-      <div class="mb-4 mt-4">
+      <div class="mb-4 mt-4" v-if="cek">
         <center>
           <button
             class="btn btn-outline-success CreateVa"
@@ -196,7 +196,7 @@ export default {
       trx_id: "",
       baru: false,
       durations: null,
-      interval:""
+      interval: "",
     };
   },
   computed: {
@@ -233,6 +233,7 @@ export default {
   },
   mounted() {
     this.cekCreated();
+    console.log(this.$axiosbilling)
   },
   methods: {
     steps(x) {
@@ -259,12 +260,12 @@ export default {
     setTimer() {
       let vm = this;
       let interval = setInterval(() => {
-      let now = vm.$moment()
-      let expired = vm.$moment(vm.cek.datetime_expired)
-      vm.date = vm.$moment.duration(expired.diff(now))
+        let now = vm.$moment();
+        let expired = vm.$moment(vm.cek.datetime_expired);
+        vm.date = vm.$moment.duration(expired.diff(now));
       }, 1000);
-      vm.interval = interval
-      clearInterval(interval - 1)
+      vm.interval = interval;
+      clearInterval(interval - 1);
     },
     async cekCreated2() {
       let vm = this;
@@ -322,17 +323,8 @@ export default {
     },
     printBNI() {
       let vm = this;
-      if (vm.baru) {
-        window.open(vm.$axiosbilling + "bni/notaBNI/" + vm.trx_id, "_blank");
-      } else {
-        window.open(
-          vm.$axiosbilling +
-            "bni/notaBNI/" +
-            vm.$store.state.payment.trx_id +
-            vm.$store.state.payment.sufix,
-          "_blank"
-        );
-      }
+      console.log(vm.ip,'ip')
+        window.open(vm.ip + "/detailsTagihanStudi/downloadTagihanBNI/" + vm.$store.state.biodata.identity, "_blank");
     },
   },
 };

@@ -54,7 +54,7 @@ export default {
       } else {
         vm.busy = false;
         localStorage.setItem("username", this.state.username);
-        this.$router.push({ path: "/" });
+        // this.$router.push({ path: "/" });
       }
     },
   },

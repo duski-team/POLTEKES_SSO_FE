@@ -23,7 +23,7 @@
         <div>{{ kadaluarsaVa }}</div>
         <div v-if="today">Expired</div>
       </div>
-      <div class="mb-4 mt-4">
+      <div class="mb-4 mt-4" v-if="cek">
         <center>
           <button
             class="btn btn-outline-success CreateVa"
@@ -32,6 +32,19 @@
             v-if="!cek.datetime_created"
           >
             Create Virtual Account
+          </button>
+        </center>
+      </div>
+
+      <div class="mb-4 mt-4">
+        <center>
+          <button
+            class="btn btn-outline-success CreateVa"
+            @click="printBSI()"
+            :disabled="!cek.datetime_created"
+            v-if="cek.datetime_created"
+          >
+            Simpan Tagihan
           </button>
         </center>
       </div>
@@ -76,31 +89,29 @@
             </div>
             <div class="text-cara-line">
               <p>4.</p>
-              <p>Kemudian, pilih Menu Lainnya.</p>
+              <p>Kemudian, pilih Menu Payment / Pembayaran.</p>
             </div>
             <div class="text-cara-line">
               <p>5.</p>
               <p>
-                Pilih Transfer dan pilih Jenis rekening yang akan Anda gunakan
-                (Contoh: “Dari Rekening Tabungan”).
+                Pilih Akademik.
               </p>
             </div>
             <div class="text-cara-line">
               <p>6.</p>
               <p>
-                Pilih Virtual Account Billing. Masukkan nomor Virtual Account
-                Anda <span style="color: green">{{ Va }}</span> .
+                Masukkan nomor Virtual Account Anda <span style="color: green">{{ Va }}</span> .
               </p>
             </div>
             <div class="text-cara-line">
               <p>7.</p>
               <p>
-                Tagihan yang harus dibayarkan akan muncul pada layar konfirmasi.
+                Kemudian tampil Informasi data transaksi anda, pastikan data sudah benar (Tagihan sudah termasuk biaya admin 2500).
               </p>
             </div>
             <div class="text-cara-line">
               <p>8.</p>
-              <p>Konfirmasi, apabila telah sesuai, lanjutkan transaksi.</p>
+              <p>Pilih Benar / Iya.</p>
             </div>
             <div class="text-cara-line">
               <p>9.</p>
@@ -111,7 +122,7 @@
 
         <div @click="steps('IB')" class="card-cara">
           <div class="card-cara-button">
-            <span>Mobile Banking BNI</span>
+            <span>Mobile Banking BSI</span>
             <font-awesome-icon
               v-if="step == 'IB'"
               icon="fa-regular fa-square-caret-up"
@@ -123,39 +134,37 @@
           <div v-if="step == 'IB'" class="mt-4">
             <div class="text-cara-line">
               <p>1.</p>
-              <p>Akses BNI Mobile Banking melalui handphone.</p>
+              <p>Akses BSI Mobile Banking melalui handphone.</p>
             </div>
             <div class="text-cara-line">
               <p>2.</p>
-              <p>Masukkan User ID dan password.</p>
+              <p>Pilih menu Pembayaran / Payment.</p>
             </div>
             <div class="text-cara-line">
               <p>3.</p>
-              <p>Pilih menu Transfer.</p>
+              <p>Pilih Akademik.</p>
             </div>
             <div class="text-cara-line">
               <p>4.</p>
               <p>
-                Pilih menu Virtual Account Billing, lalu pilih rekening debet.
+                Masukkan Kode Akademik (2576) / Nama Akademik (POLTEKKES SEMARANG).
               </p>
             </div>
             <div class="text-cara-line">
               <p>5.</p>
               <p>
-                Masukkan nomor Virtual Account Anda
-                <span style="color: green">{{ Va }}</span>
-                pada menu Input Baru.
+                Masukkan nomor Pembayaran (NIM).
               </p>
             </div>
             <div class="text-cara-line">
               <p>6.</p>
               <p>
-                Tagihan yang harus dibayarkan akan muncul pada layar konfirmasi.
+                Kemudia tampilan informasi data transaksi anda, pastikan data sudah benar (Tagihan sudah termasuk biaya adm 2500).
               </p>
             </div>
             <div class="text-cara-line">
               <p>7.</p>
-              <p>Konfirmasi transaksi dan masukkan Password Transaksi.</p>
+              <p>Masukkan PIN anda dan pilih "Selanjutnya" untuk submit.</p>
             </div>
             <div class="text-cara-line">
               <p>8.</p>
@@ -222,7 +231,7 @@ export default {
     },
     async cekCreated() {
       let vm = this;
-      vm.$store.dispatch("set_loading", false);
+      vm.$store.dispatch("set_loading", true);
       let cek = await vm.$axiosbilling.post("bsi/detailsById", {
         trx_id: vm.$store.state.payment.trx_id,
       });
@@ -277,6 +286,10 @@ export default {
       if (x) {
         return x.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
       }
+    },
+    printBSI() {
+      let vm = this;
+      window.open(vm.ip + "/detailsTagihanStudi/downloadTagihanBSI/" + vm.$store.state.biodata.identity, "_blank");
     },
   },
 };

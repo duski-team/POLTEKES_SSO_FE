@@ -22,7 +22,7 @@
         <div>Kadaluarsa VA</div>
         <div>{{ kadaluarsaVa }}</div>
       </div>
-      <div class="mb-4 mt-4">
+      <div class="mb-4 mt-4" v-if="cek">
         <center>
           <button
             class="btn btn-outline-success CreateVa"
@@ -31,6 +31,19 @@
             v-if="cek.createdate == '000000'"
           >
             Create Virtual Account
+          </button>
+        </center>
+      </div>
+
+      <div class="mb-4 mt-4">
+        <center>
+          <button
+            class="btn btn-outline-success CreateVa"
+            @click="printBTN()"
+            :disabled="!cek.datetime_created"
+            v-if="cek.datetime_created"
+          >
+            Simpan Tagihan
           </button>
         </center>
       </div>
@@ -280,6 +293,10 @@ export default {
       if (x) {
         return x.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
       }
+    },
+    printBTN() {
+      let vm = this;
+      window.open(vm.ip + "/detailsTagihanStudi/downloadTagihanBTN/" + vm.$store.state.biodata.identity, "_blank");
     },
   },
 };

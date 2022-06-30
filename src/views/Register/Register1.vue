@@ -19,7 +19,7 @@
           <img src="@/assets/mahasiswa.jpg" alt="" />
           <!-- <i class="fa-regular fa-face-grin-wide fa-10x"></i> -->
           <div>
-            <p class="SSO">Mahasiswa</p>
+            <center><p class="SSO">Mahasiswa</p></center>
           </div>
         </div>
         <div
@@ -30,7 +30,7 @@
           <img src="@/assets/mahasiswa.jpg" alt="" />
           <!-- <i class="fa-regular fa-face-grin-wide fa-10x"></i> -->
           <div>
-            <p class="SSO">Mahasiswa</p>
+            <center><p class="SSO">Mahasiswa</p></center>
           </div>
         </div>
       </div>
@@ -43,14 +43,15 @@
           <!-- <i class="fa-regular fa-face-meh fa-10x"></i> -->
           <img src="@/assets/dosen.jpg" alt="" />
           <div>
-            <p class="SSO">Dosen</p>
+            <center><p class="SSO">Dosen</p></center>
           </div>
         </div>
         <div class="card" v-if="data.role == 'dosen'" @click="data.role = ''">
           <img src="@/assets/dosen.jpg" alt="" />
           <!-- <i class="fa-regular fa-face-meh fa-10x"></i> -->
           <div>
-            <p class="SSO">Dosen</p>
+            <center><p class="SSO">Dosen</p></center>
+            
           </div>
         </div>
       </div>
@@ -63,14 +64,15 @@
           <img src="@/assets/tenagaPendidik.jpg" alt="" />
           <!-- <i class="fa-regular fa-face-flushed fa-10x"></i> -->
           <div>
-            <p class="SSO">Tenaga Pendidik</p>
+            <center><p class="SSO">Tenaga Pendidik</p></center>
           </div>
         </div>
         <div class="card" v-if="data.role == 'pegawai'" @click="data.role = ''">
           <img src="@/assets/tenagaPendidik.jpg" alt="" />
           <!-- <i class="fa-regular fa-face-flushed fa-10x"></i> -->
           <div>
-            <p class="SSO">Tenaga Pendidik</p>
+            <center><p class="SSO">Tenaga Pendidik</p></center>
+            
           </div>
         </div>
       </div>
