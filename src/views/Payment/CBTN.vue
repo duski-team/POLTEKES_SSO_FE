@@ -188,6 +188,7 @@ export default {
       step: "",
       cek: "",
       date: "",
+      interval:""
     };
   },
   computed: {
@@ -234,10 +235,13 @@ export default {
     },
     setTimer() {
       let vm = this;
-      clearInterval();
-      setInterval(() => {
-        this.date = vm.$moment(this.date).subtract(1, "seconds");
+      let interval = setInterval(() => {
+        let now = vm.$moment();
+        let expired = vm.$moment(vm.cek.expired);
+        vm.date = vm.$moment.duration(expired.diff(now));
       }, 1000);
+      vm.interval = interval;
+      clearInterval(interval - 1);
     },
     async createVA() {
       let vm = this;

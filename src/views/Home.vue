@@ -144,7 +144,7 @@ export default {
             "content-type": "application/x-www-form-urlencoded;charset=utf-8",
           },
         });
-        console.log(login, "login");
+        // console.log(login, "login");
         if (login.status == 200) {
           vm.$store.dispatch("save_token_login", login.data);
           vm.$store.dispatch("set_alert_show_success", "Sukses");
@@ -186,7 +186,7 @@ export default {
       // Execute reCAPTCHA with action "login".
       const token = await this.$recaptcha("login");
       if (token) {
-        console.log("ok");
+        // console.log("ok");
         this.login();
       }
     },

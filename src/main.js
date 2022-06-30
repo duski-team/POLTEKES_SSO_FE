@@ -15,6 +15,7 @@ import "bootstrap/dist/js/bootstrap.js";
 import qs from "qs";
 import ipsso from "@/axios/sso.js";
 import ipbilling from "@/axios/billing.js";
+import VueCookies from "vue-cookies";
 
 /* import the fontawesome core */
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
@@ -33,6 +34,7 @@ const app = createApp(App)
   .use(store)
   .use(router)
   .use(bootstrap)
+  .use(VueCookies, { expire: "7d" })
   .use(VueReCaptcha, {
     siteKey: "6LdGiIgfAAAAABQt0Cg0-iOrjyvsFGOd43NAqp1q",
     loaderOptions: { autoHideBadge: true },

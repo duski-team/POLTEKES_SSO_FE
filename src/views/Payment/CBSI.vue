@@ -178,6 +178,7 @@ export default {
       step: "",
       cek: "",
       date: "",
+      interval: "",
     };
   },
   computed: {
@@ -188,7 +189,19 @@ export default {
     },
     kadaluarsaVa() {
       let vm = this;
-      return vm.$moment(vm.date).format("HH:mm:ss");
+      let h = vm.date.hours();
+      let m = vm.date.minutes();
+      let s = vm.date.seconds();
+      if (Number(h) < 10) {
+        h = "0" + h;
+      }
+      if (Number(m) < 10) {
+        m = "0" + m;
+      }
+      if (Number(s) < 10) {
+        s = "0" + s;
+      }
+      return `${h} : ${m} : ${s}`;
     },
     today() {
       let x = this.cek.datetime_expired < this.$moment();
@@ -215,18 +228,18 @@ export default {
       });
       console.log(cek.data.data, "cek");
       vm.cek = cek.data.data[0];
-      let x = vm.$moment();
-      let y = vm.cek.datetime_expired;
-      vm.date = vm.$moment.duration(x.diff(y)).asHours();
       vm.setTimer();
       vm.$store.dispatch("set_loading", false);
     },
     setTimer() {
       let vm = this;
-      clearInterval();
-      setInterval(() => {
-        this.date = vm.$moment(this.date).subtract(1, "seconds");
+      let interval = setInterval(() => {
+        let now = vm.$moment();
+        let expired = vm.$moment(vm.cek.datetime_expired);
+        vm.date = vm.$moment.duration(expired.diff(now));
       }, 1000);
+      vm.interval = interval;
+      clearInterval(interval - 1);
     },
     async createVA() {
       let vm = this;

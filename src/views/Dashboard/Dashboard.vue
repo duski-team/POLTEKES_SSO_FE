@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div><Header /></div>
+    <div v-if="$store.state.biodata"><Header /></div>
     <div class="container">
       <div
         v-if="$store.state.biodata"
@@ -479,7 +479,7 @@
               </div>
               <div>
                 <h6>{{ item.nama_client }}</h6>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+                <p>{{ item.deskripsi_client }}</p>
               </div>
             </div>
           </div>
@@ -524,7 +524,6 @@ export default {
         let biodata = await vm.$axios.get(
           "users/detailsById/" + vm.$store.state.sso_user_id
         );
-        // vm.biodata = biodata.data.data[0];
         vm.$store.dispatch("set_biodata", biodata.data.data[0]);
         if (biodata.data.profil[0]) {
           vm.$store.dispatch("set_profil", biodata.data.profil[0]);
@@ -542,10 +541,7 @@ export default {
             nim: vm.$store.state.biodata.identity,
           }
         );
-        console.log(tagihan, "tagihan");
         vm.$store.dispatch("payment", tagihan.data.data[0]);
-        // vm.app = app.data.data;
-        // console.log(this.$store.state.profil);
         vm.$store.dispatch("set_loading", false);
       } catch (error) {
         vm.$store.dispatch("set_loading", false);

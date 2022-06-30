@@ -11,7 +11,8 @@
           </h5> -->
           <h5 class="card-title mb-4 mt-4">
             <p class="kirim" @click="kirim()">Klik Disini</p>
-            Jika anda tidak menerima email konfirmasi pendaftaran SSO di email yang sudah terdaftar di SSO
+            Jika anda tidak menerima email konfirmasi pendaftaran SSO di email
+            yang sudah terdaftar di SSO
           </h5>
         </div>
       </div>

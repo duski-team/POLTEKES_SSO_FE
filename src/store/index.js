@@ -1,11 +1,13 @@
 import { createStore } from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import ip from "@/ip.js";
+// import Cookies from "vue-cookies"
 
 const state = {
   sso_access_token: null,
   sso_refresh_token: null,
   expired: null,
+  refresh_expired: null,
   sso_user_id: null,
   sso_client_id: null,
   sso_username: null,
@@ -36,6 +38,7 @@ const mutations = {
     state.sso_client_id = tokens.client.id;
     state.sso_user_id = tokens.user.id;
     state.expired = tokens.accessTokenExpiresAt;
+    state.refresh_expired = tokens.refreshTokenExpiresAt;
     state.sso_username = tokens.user.username;
     state.sso_user_status = tokens.user.user_status;
     state.sso_user_role = tokens.user.role;
@@ -50,6 +53,7 @@ const mutations = {
     state.sso_username = tokens.user.username;
   },
   set_clear_token(state) {
+    console.log("set_clear");
     state.sso_access_token = null;
     state.sso_refresh_token = null;
     state.sso_client_id = null;
@@ -64,6 +68,7 @@ const mutations = {
     state.popup = true;
     state.sso_user_role = null;
     state.payment = null;
+    state.app = null;
   },
   set_loading_state(state, value) {
     state.loading = value;
@@ -137,6 +142,7 @@ const actions = {
     commit("set_intercept_token", int_respon);
   },
   clear_token({ commit }) {
+    console.log("clear");
     commit("set_clear_token");
   },
   set_loading({ commit }, value) {
@@ -173,7 +179,7 @@ const actions = {
     commit("biodata_foto", value);
   },
   payment({ commit }, value) {
-    console.log(value);
+    // console.log(value);
     let x = value.tahun_kb.includes("-1");
     let v = value.tahun_kb.substring(0, 4);
     if (x) {
@@ -185,6 +191,13 @@ const actions = {
   },
 };
 const modules = {};
+// const plugins = [createPersistedState({
+//   storage: {
+//     getItem: key => Cookies.get(key),
+//     setItem: (key, value) => Cookies.set(key, value, { expires: 3, secure: true }),
+//     removeItem: key => Cookies.remove(key)
+//   }
+// })];
 const plugins = [createPersistedState()];
 export default new createStore({
   state,

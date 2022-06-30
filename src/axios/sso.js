@@ -21,6 +21,7 @@ const instance = axios.create({
 instance.interceptors.request.use(async (req) => {
   let token = store.state.sso_access_token;
   let expired = store.state.expired;
+  let refresh_expired = store.state.refresh_expired;
   let now = moment();
   // console.log('start', token,req.url)
   if (!token) {
@@ -37,6 +38,7 @@ instance.interceptors.request.use(async (req) => {
     } else {
       // console.log('yes token', token)
       const isExpired = now.diff(expired, "seconds") > 0;
+      const relog = now.diff(refresh_expired, "seconds") > 0;
       if (isExpired && token && expired) {
         console.log("isExpired", isExpired, token, req.url);
         let datas = {
@@ -46,22 +48,20 @@ instance.interceptors.request.use(async (req) => {
           refresh_token: store.state.sso_refresh_token,
         };
         try {
-          console.log(
-            isExpired,
-            "exp",
-            moment(expired).format("llll"),
-            moment(now).format("llll"),
-            now.diff(expired, "seconds")
-          );
-          let response = await axios.post(
-            ip + "oauth/token",
-            qs.stringify(datas)
-          );
-          // console.log(response.data);
-          store.dispatch("save_token_intercept", response.data);
-          req.headers.Authorization = `Bearer ${store.state.sso_access_token}`;
-          console.log("tokenbaru", store.state.sso_access_token);
-          return req;
+          if (!relog) {
+            let response = await axios.post(
+              ip + "oauth/token",
+              qs.stringify(datas)
+            );
+            // console.log(response.data);
+            store.dispatch("save_token_intercept", response.data);
+            req.headers.Authorization = `Bearer ${store.state.sso_access_token}`;
+            console.log("tokenbaru", store.state.sso_access_token);
+            return req;
+          } else {
+            this.$store.dispatch("clear_token");
+            this.$router.push({ path: "/" });
+          }
         } catch (error) {
           console.log(error);
         }

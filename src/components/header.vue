@@ -17,7 +17,7 @@
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <div v-if="$store.state.biodata">
+              <div v-if="$store.state.biodata != null">
                 <img
                   v-if="!backup"
                   class="avatar"
@@ -66,7 +66,7 @@
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <div v-if="$store.state.biodata">
+              <div v-if="$store.state.biodata != null">
                 <img
                   v-if="!backup"
                   class="avatar-hp"
@@ -115,7 +115,7 @@ export default {
       backup: false,
     };
   },
-  created() {
+  mounted() {
     // this.getData();
   },
   methods: {
@@ -139,8 +139,9 @@ export default {
     },
     logout() {
       this.$store.dispatch("clear_token");
+      // this.$cookies.keys().forEach(cookie => this.$cookies.remove(cookie))
       this.$router.push({ path: "/" });
-      console.log("logout");
+      // console.log("logout");
     },
   },
 };
