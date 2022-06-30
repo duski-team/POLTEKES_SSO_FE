@@ -167,7 +167,7 @@
           </div> -->
           <div
             class="toolsdemo text-start"
-            v-if="$store.state.payment.status_tagihan == 1"
+            v-if="$store.state.payment.status_tagihan == 1 && $store.state.payment.length"
           >
             <div class="box-info">
               <div class="row">
@@ -197,7 +197,7 @@
           </div>
           <div
             class="toolsdemo text-start"
-            v-if="$store.state.payment.status_tagihan == 0"
+            v-if="$store.state.payment.status_tagihan == 0 && $store.state.payment.length"
           >
             <div class="box-info">
               <div class="row">
@@ -403,7 +403,7 @@
           </div> -->
           <div
             class="toolsdemo-hp text-start"
-            v-if="$store.state.payment.status_tagihan == 1"
+            v-if="$store.state.payment.status_tagihan == 1 && $store.state.payment.length"
           >
             <div class="box-info">
               <div class="row">
@@ -433,7 +433,7 @@
           </div>
           <div
             class="toolsdemo-hp text-start"
-            v-if="$store.state.payment.status_tagihan == 0"
+            v-if="$store.state.payment.status_tagihan == 0 && $store.state.payment.length"
           >
             <div class="box-info">
               <div class="row">
