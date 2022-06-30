@@ -24,7 +24,7 @@ const state = {
   popup: true,
   app: null,
   bsi_client_id: "2576",
-  bni_client_id: "77771",
+  bni_client_id: "29873",
   bni_prefix: "988",
   btn_prefix: "94851000000",
   payment: "",

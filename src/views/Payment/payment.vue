@@ -117,7 +117,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("set_loading", false);
-    // this.getTagihan();
+    this.getTagihan();
   },
   methods: {
     async getTagihan() {

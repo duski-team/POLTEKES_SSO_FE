@@ -20,16 +20,15 @@
       </div>
       <div class="bank" v-if="cek.datetime_expired">
         <div>Kadaluarsa VA</div>
-        <div>{{ kadaluarsaVa }}</div>
-        <div v-if="today">Expired</div>
+        <div v-if="!today">{{ kadaluarsaVa }}</div>
+        <div v-else>Expired</div>
       </div>
       <div class="mb-4 mt-4" v-if="cek">
         <center>
           <button
             class="btn btn-outline-success CreateVa"
             @click="createVA()"
-            :disabled="cek.datetime_created"
-            v-if="!cek.datetime_created"
+            v-if="!cek.datetime_created || today"
           >
             Create Virtual Account
           </button>
@@ -147,7 +146,7 @@
             <div class="text-cara-line">
               <p>4.</p>
               <p>
-                Masukkan Kode Akademik (2576) / Nama Akademik (POLTEKKES
+                Masukkan Kode Akademik (2576) / Nama Akademik (POLTEKKES KEMENKES
                 SEMARANG).
               </p>
             </div>

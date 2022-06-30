@@ -20,8 +20,8 @@
       </div>
       <div class="bank" v-if="cek.datetime_expired">
         <div>Kadaluarsa VA</div>
-        <div>{{ kadaluarsaVa }}</div>
-        <div v-if="today">Expired</div>
+        <div v-if="!today">{{ kadaluarsaVa }}</div>
+        <div v-else >Expired</div>
       </div>
 
       <div class="mb-4 mt-4" v-if="cek">
@@ -29,8 +29,7 @@
           <button
             class="btn btn-outline-success CreateVa"
             @click="createVA()"
-            :disabled="cek.datetime_created"
-            v-if="!cek.datetime_created"
+            v-if="!cek.datetime_created || today"
           >
             Create Virtual Account
           </button>
@@ -227,13 +226,12 @@ export default {
     },
     today() {
       let x = this.cek.datetime_expired < this.$moment();
-      console.log(x);
+      // console.log(x);
       return x;
     },
   },
   mounted() {
     this.cekCreated();
-    console.log(this.$axiosbilling);
   },
   methods: {
     steps(x) {

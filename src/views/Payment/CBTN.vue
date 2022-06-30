@@ -20,15 +20,15 @@
       </div>
       <div class="bank" v-if="cek.expired != ''">
         <div>Kadaluarsa VA</div>
-        <div>{{ kadaluarsaVa }}</div>
+        <div v-if="!today">{{ kadaluarsaVa }}</div>
+        <div v-else>Expired</div>
       </div>
       <div class="mb-4 mt-4" v-if="cek">
         <center>
           <button
             class="btn btn-outline-success CreateVa"
             @click="createVA()"
-            :disabled="cek.createdate != '000000'"
-            v-if="cek.createdate == '000000'"
+            v-if="cek.createdate == '000000' || today "
           >
             Create Virtual Account
           </button>
@@ -214,6 +214,11 @@ export default {
       let vm = this;
       return vm.$moment(vm.date).format("HH:mm:ss");
     },
+    today() {
+      let x = this.cek.expired < this.$moment();
+      // console.log(this.$moment, "moment", this.cek.expired, "exp");
+      return x;
+    },
   },
   mounted() {
     this.cekCreated();
@@ -233,7 +238,7 @@ export default {
         ref: vm.$store.state.payment.trx_id,
         va: vm.Va,
       });
-      // console.log(cek, "cek");
+      console.log(cek, "cek");
       vm.cek = await cek.data.data[0];
       let x = vm.$moment();
       let y = "";
