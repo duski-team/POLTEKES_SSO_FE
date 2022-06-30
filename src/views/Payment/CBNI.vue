@@ -325,7 +325,7 @@ export default {
       let vm = this;
       console.log(vm.ip, "ip");
       window.open(
-        vm.ip +
+        vm.ip2 +
           "/detailsTagihanStudi/downloadTagihanBNI/" +
           vm.$store.state.biodata.identity,
         "_blank"

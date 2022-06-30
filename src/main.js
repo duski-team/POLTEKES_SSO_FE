@@ -11,6 +11,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import moment from "moment";
 import "moment/locale/id";
 import ip from "@/ip";
+import ip2 from "@/ip2";
 import "bootstrap/dist/js/bootstrap.js";
 import qs from "qs";
 import ipsso from "@/axios/sso.js";
@@ -45,6 +46,7 @@ app.config.globalProperties.$axios = ipsso;
 app.config.globalProperties.$axiosbilling = ipbilling;
 app.config.globalProperties.$moment = moment;
 app.config.globalProperties.ip = ip;
+app.config.globalProperties.ip2 = ip2;
 app.config.globalProperties.qs = qs;
 // treat all tags starting with 'ion-' as custom elements
 // app.config.compilerOptions.isCustomElement = (tag) => {

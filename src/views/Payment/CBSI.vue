@@ -290,7 +290,7 @@ export default {
     printBSI() {
       let vm = this;
       window.open(
-        vm.ip +
+        vm.ip2 +
           "/detailsTagihanStudi/downloadTagihanBSI/" +
           vm.$store.state.biodata.identity,
         "_blank"

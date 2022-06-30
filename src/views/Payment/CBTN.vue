@@ -297,7 +297,7 @@ export default {
     printBTN() {
       let vm = this;
       window.open(
-        vm.ip +
+        vm.ip2 +
           "/detailsTagihanStudi/downloadTagihanBTN/" +
           vm.$store.state.biodata.identity,
         "_blank"
