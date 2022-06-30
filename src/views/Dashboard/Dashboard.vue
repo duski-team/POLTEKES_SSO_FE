@@ -167,9 +167,9 @@
           </div> -->
           <div
             class="toolsdemo text-start"
-            v-if="$store.state.payment.status_tagihan == 1 && $store.state.payment.length"
+            v-if="$store.state.payment"
           >
-            <div class="box-info">
+            <div class="box-info" v-if="$store.state.payment.status_tagihan == 1">
               <div class="row">
                 <div class="col">
                   <!-- <div class="d-flex justify-content-between" style="width: 80%">
@@ -194,12 +194,7 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            class="toolsdemo text-start"
-            v-if="$store.state.payment.status_tagihan == 0 && $store.state.payment.length"
-          >
-            <div class="box-info">
+             <div class="box-info" v-if="$store.state.payment.status_tagihan == 0">
               <div class="row">
                 <div class="col">
                   <div class="text-tagihan">
@@ -228,6 +223,7 @@
               </div>
             </div>
           </div>
+        
         </section>
       </div>
       <div class="d-xl-none d-lg-none d-md-none">
@@ -403,9 +399,9 @@
           </div> -->
           <div
             class="toolsdemo-hp text-start"
-            v-if="$store.state.payment.status_tagihan == 1 && $store.state.payment.length"
+            v-if="$store.state.payment"
           >
-            <div class="box-info">
+            <div class="box-info"  v-if="$store.state.payment.status_tagihan == 1">
               <div class="row">
                 <div class="col">
                   <!-- <div class="d-flex justify-content-between" style="width: 80%">
@@ -430,12 +426,7 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            class="toolsdemo-hp text-start"
-            v-if="$store.state.payment.status_tagihan == 0 && $store.state.payment.length"
-          >
-            <div class="box-info">
+              <div class="box-info"  v-if="$store.state.payment.status_tagihan == 0">
               <div class="row">
                 <div class="col">
                   <div class="text-tagihan">
@@ -464,6 +455,7 @@
               </div>
             </div>
           </div>
+        
         </section>
       </div>
 

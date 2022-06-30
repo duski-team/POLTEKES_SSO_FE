@@ -179,7 +179,7 @@ const actions = {
     commit("biodata_foto", value);
   },
   payment({ commit }, value) {
-    // console.log(value);
+    console.log(value);
     let x = value.tahun_kb.includes("-1");
     let v = value.tahun_kb.substring(0, 4);
     if (x) {
