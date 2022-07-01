@@ -180,8 +180,7 @@
                     </button>
                   </div> -->
                   <div class="text-tagihan">
-                    Status anda adalah Mahasiswa Aktif Poltekkes Kemenkes Jawa
-                    Tengah.
+                    Status anda adalah Mahasiswa Aktif Poltekkes Kemenkes Semarang.
                   </div>
                   <div class="text-tagihan">
                     Pada Semester Ganjil Tahun Akademik 2022
@@ -412,8 +411,7 @@
                     </button>
                   </div> -->
                   <div class="text-tagihan">
-                    Status anda adalah Mahasiswa Aktif Poltekkes Kemenkes Jawa
-                    Tengah.
+                    Status anda adalah Mahasiswa Aktif Poltekkes Kemenkes Semarang.
                   </div>
                   <div class="text-tagihan">
                     Pada Semester Ganjil Tahun Akademik 2022
