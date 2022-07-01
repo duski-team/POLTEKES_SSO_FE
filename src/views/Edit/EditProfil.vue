@@ -89,7 +89,7 @@
             />
           </div>
           <div class="input-box">
-            <span class="details"><p>Mobile Phone</p></span>
+            <span class="details"><p>No. Handphone</p></span>
             <input
               type="text"
               placeholder="Masukkan email lengkap"
@@ -102,7 +102,7 @@
         <div class="box-info">
           <div class="input-box">
             <span class="details d-flex"
-              ><p class="input-label text-strong">Identitas</p>
+              ><p class="input-label text-strong">NIM / NIP</p>
               <p class="text-muted fst-italic">* tidak dapat diubah</p></span
             >
             <input
