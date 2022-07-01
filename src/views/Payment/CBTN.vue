@@ -14,7 +14,7 @@
         <div>Nama</div>
         <div>{{ $store.state.biodata.nama_lengkap_users }}</div>
       </div>
-      <div class="bank" v-if="cek.createdate != '000000'">
+      <div class="bank">
         <div>Nomor VA</div>
         <div>{{ Va }}</div>
       </div>
@@ -40,8 +40,7 @@
           <button
             class="btn btn-outline-success CreateVa"
             @click="printBTN()"
-            :disabled="!cek.datetime_created"
-            v-if="cek.datetime_created"
+            v-if="cek.createdate"
           >
             Simpan Tagihan
           </button>
@@ -202,6 +201,7 @@ export default {
       cek: "",
       date: "",
       interval: "",
+      expired: "",
     };
   },
   computed: {
@@ -212,11 +212,26 @@ export default {
     },
     kadaluarsaVa() {
       let vm = this;
-      return vm.$moment(vm.date).format("HH:mm:ss");
+      console.log(vm.date, "date ");
+      let h = vm.date.hours();
+      let m = vm.date.minutes();
+      let s = vm.date.seconds();
+      if (Number(h) < 10) {
+        h = "0" + h;
+      }
+      if (Number(m) < 10) {
+        m = "0" + m;
+      }
+      if (Number(s) < 10) {
+        s = "0" + s;
+      }
+      return `${h} : ${m} : ${s}`;
+      // return vm.date
     },
     today() {
-      let x = this.cek.expired < this.$moment();
-      // console.log(this.$moment, "moment", this.cek.expired, "exp");
+      let vm = this
+      let x = vm.expired < this.$moment();
+      // console.log(vm.$moment(), "moment", this.cek.expired, "exp");
       return x;
     },
   },
@@ -240,14 +255,7 @@ export default {
       });
       console.log(cek, "cek");
       vm.cek = await cek.data.data[0];
-      let x = vm.$moment();
-      let y = "";
-      if (vm.cek.expired != "") {
-        let z = "20" + vm.cek.expired;
-        console.log(z, "z");
-        y = vm.$moment(z, "YYYYMMDDHHmmss");
-      }
-      vm.date = vm.$moment.duration(x.diff(y)).asHours();
+      vm.expired = vm.$moment(vm.cek.expired, "YYMMDDHHmm");
       vm.setTimer();
       vm.$store.dispatch("set_loading", false);
     },
@@ -255,8 +263,7 @@ export default {
       let vm = this;
       let interval = setInterval(() => {
         let now = vm.$moment();
-        let expired = vm.$moment(vm.cek.expired);
-        vm.date = vm.$moment.duration(expired.diff(now));
+        vm.date = vm.$moment.duration(vm.expired.diff(now));
       }, 1000);
       vm.interval = interval;
       clearInterval(interval - 1);

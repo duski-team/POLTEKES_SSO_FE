@@ -26,7 +26,7 @@ const state = {
   bsi_client_id: "2576",
   bni_client_id: "29873",
   bni_prefix: "988",
-  btn_prefix: "94851000000",
+  btn_prefix: "95673000000",
   payment: "",
 };
 

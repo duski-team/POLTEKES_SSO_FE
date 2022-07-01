@@ -53,7 +53,7 @@ instance.interceptors.request.use(async (req) => {
               ip + "oauth/token",
               qs.stringify(datas)
             );
-            // console.log(response.data);
+            console.log(response.data);
             store.dispatch("save_token_intercept", response.data);
             req.headers.Authorization = `Bearer ${store.state.sso_access_token}`;
             console.log("tokenbaru", store.state.sso_access_token);
