@@ -212,7 +212,13 @@ export default {
     },
     today() {
       let x = this.$moment(this.cek.datetime_expired) <= this.$moment();
-      console.log(this.$moment().format('lll'), "moment", this.cek.datetime_expired, "exp", x);
+      console.log(
+        this.$moment().format("lll"),
+        "moment",
+        this.cek.datetime_expired,
+        "exp",
+        x
+      );
       return x;
     },
   },

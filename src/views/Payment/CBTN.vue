@@ -230,7 +230,12 @@ export default {
     today() {
       let vm = this;
       let x = vm.$moment(vm.cek.expired) < vm.$moment();
-      console.log(vm.$moment().add(1,'days'), "moment", this.cek.expired, "exp");
+      console.log(
+        vm.$moment().add(1, "days"),
+        "moment",
+        this.cek.expired,
+        "exp"
+      );
       return x;
     },
   },
