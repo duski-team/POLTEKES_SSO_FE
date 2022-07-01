@@ -69,7 +69,6 @@ const mutations = {
     state.sso_user_role = null;
     state.payment = null;
     state.app = null;
-    localStorage.clear()
   },
   set_loading_state(state, value) {
     state.loading = value;
@@ -143,7 +142,6 @@ const actions = {
     commit("set_intercept_token", int_respon);
   },
   clear_token({ commit }) {
-    console.log("clear");
     commit("set_clear_token");
   },
   set_loading({ commit }, value) {
