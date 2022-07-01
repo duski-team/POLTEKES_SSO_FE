@@ -212,7 +212,6 @@ export default {
     },
     kadaluarsaVa() {
       let vm = this;
-      console.log(vm.date, "date ");
       let h = vm.date.hours();
       let m = vm.date.minutes();
       let s = vm.date.seconds();
