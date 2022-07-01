@@ -165,11 +165,11 @@
               </div>
             </div>
           </div> -->
-          <div
-            class="toolsdemo text-start"
-            v-if="$store.state.payment"
-          >
-            <div class="box-info" v-if="$store.state.payment.status_tagihan == 1">
+          <div class="toolsdemo text-start" v-if="$store.state.payment">
+            <div
+              class="box-info"
+              v-if="$store.state.payment.status_tagihan == 1"
+            >
               <div class="row">
                 <div class="col">
                   <!-- <div class="d-flex justify-content-between" style="width: 80%">
@@ -180,7 +180,8 @@
                     </button>
                   </div> -->
                   <div class="text-tagihan">
-                    Status anda adalah Mahasiswa Aktif Poltekkes Kemenkes Semarang.
+                    Status anda adalah Mahasiswa Aktif Poltekkes Kemenkes
+                    Semarang.
                   </div>
                   <div class="text-tagihan">
                     Pada Semester Ganjil Tahun Akademik 2022
@@ -193,7 +194,10 @@
                 </div>
               </div>
             </div>
-             <div class="box-info" v-if="$store.state.payment.status_tagihan == 0">
+            <div
+              class="box-info"
+              v-if="$store.state.payment.status_tagihan == 0"
+            >
               <div class="row">
                 <div class="col">
                   <div class="text-tagihan">
@@ -222,7 +226,6 @@
               </div>
             </div>
           </div>
-        
         </section>
       </div>
       <div class="d-xl-none d-lg-none d-md-none">
@@ -396,11 +399,11 @@
               </div>
             </div>
           </div> -->
-          <div
-            class="toolsdemo-hp text-start"
-            v-if="$store.state.payment"
-          >
-            <div class="box-info"  v-if="$store.state.payment.status_tagihan == 1">
+          <div class="toolsdemo-hp text-start" v-if="$store.state.payment">
+            <div
+              class="box-info"
+              v-if="$store.state.payment.status_tagihan == 1"
+            >
               <div class="row">
                 <div class="col">
                   <!-- <div class="d-flex justify-content-between" style="width: 80%">
@@ -411,7 +414,8 @@
                     </button>
                   </div> -->
                   <div class="text-tagihan">
-                    Status anda adalah Mahasiswa Aktif Poltekkes Kemenkes Semarang.
+                    Status anda adalah Mahasiswa Aktif Poltekkes Kemenkes
+                    Semarang.
                   </div>
                   <div class="text-tagihan">
                     Pada Semester Ganjil Tahun Akademik 2022
@@ -424,7 +428,10 @@
                 </div>
               </div>
             </div>
-              <div class="box-info"  v-if="$store.state.payment.status_tagihan == 0">
+            <div
+              class="box-info"
+              v-if="$store.state.payment.status_tagihan == 0"
+            >
               <div class="row">
                 <div class="col">
                   <div class="text-tagihan">
@@ -453,7 +460,6 @@
               </div>
             </div>
           </div>
-        
         </section>
       </div>
 

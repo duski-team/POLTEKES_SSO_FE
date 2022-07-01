@@ -21,7 +21,7 @@
       <div class="bank" v-if="cek.datetime_expired">
         <div>Kadaluarsa VA</div>
         <div v-if="!today">{{ kadaluarsaVa }}</div>
-        <div v-else >Expired</div>
+        <div v-else>Expired</div>
       </div>
 
       <div class="mb-4 mt-4" v-if="cek">

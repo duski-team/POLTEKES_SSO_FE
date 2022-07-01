@@ -28,7 +28,7 @@
           <button
             class="btn btn-outline-success CreateVa"
             @click="createVA()"
-            v-if="cek.createdate == '000000' || today "
+            v-if="cek.createdate == '000000' || today"
           >
             Create Virtual Account
           </button>

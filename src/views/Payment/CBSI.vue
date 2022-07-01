@@ -146,8 +146,8 @@
             <div class="text-cara-line">
               <p>4.</p>
               <p>
-                Masukkan Kode Akademik (2576) / Nama Akademik (POLTEKKES KEMENKES
-                SEMARANG).
+                Masukkan Kode Akademik (2576) / Nama Akademik (POLTEKKES
+                KEMENKES SEMARANG).
               </p>
             </div>
             <div class="text-cara-line">
