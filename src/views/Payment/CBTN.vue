@@ -228,7 +228,7 @@ export default {
       // return vm.date
     },
     today() {
-      let vm = this
+      let vm = this;
       let x = vm.expired < this.$moment();
       // console.log(vm.$moment(), "moment", this.cek.expired, "exp");
       return x;

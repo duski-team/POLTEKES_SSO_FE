@@ -111,10 +111,10 @@ router.beforeEach(function (to, from, next) {
   let token = store.state.sso_access_token != null;
   let otp = store.state.kode_otp;
   let too = to.path;
-  if (too == "/logout"){
-    localStorage.clear()
-    next({path:'/'});
-  } 
+  if (too == "/logout") {
+    window.localStorage.removeItem('vuex');
+    next({ path: "/" });
+  }
   if (!token) {
     if (to.meta.requiresAuth && too != "/") {
       next({ path: "/" });
