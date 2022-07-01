@@ -309,7 +309,7 @@ export default {
       this.$store.dispatch("set_loading", true);
       try {
         let register = await vm.$axios.post("users/register", vm.state);
-        console.log(register);
+        // console.log(register);
         if (register.data.status == 200) {
           if (register.data.message == "sukses") {
             vm.aktiv = "step4";

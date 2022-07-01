@@ -230,12 +230,12 @@ export default {
     today() {
       let vm = this;
       let x = vm.$moment(vm.cek.expired) < vm.$moment();
-      console.log(
-        vm.$moment().add(1, "days"),
-        "moment",
-        this.cek.expired,
-        "exp"
-      );
+      // console.log(
+      //   vm.$moment().add(1, "days"),
+      //   "moment",
+      //   this.cek.expired,
+      //   "exp"
+      // );
       return x;
     },
   },
@@ -257,7 +257,7 @@ export default {
         ref: vm.$store.state.payment.trx_id,
         va: vm.Va,
       });
-      console.log(cek, "cek");
+      // console.log(cek, "cek");
       vm.cek = await cek.data.data[0];
       vm.expired = vm.$moment(vm.cek.expired, "YYMMDDHHmm");
       vm.setTimer();

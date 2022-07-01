@@ -239,7 +239,7 @@ export default {
       let cek = await vm.$axiosbilling.post("bsi/detailsById", {
         trx_id: vm.$store.state.payment.trx_id,
       });
-      console.log(cek.data.data, "cek");
+      // console.log(cek.data.data, "cek");
       vm.cek = cek.data.data[0];
       vm.setTimer();
       vm.$store.dispatch("set_loading", false);

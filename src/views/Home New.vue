@@ -100,7 +100,7 @@ export default {
           "content-type": "application/x-www-form-urlencoded;charset=utf-8",
         },
       });
-      console.log(login);
+      // console.log(login);
       if (login.status == 200) {
         localStorage.setItem("SSO_access_token", login.data.accessToken);
         localStorage.setItem("SSO_refresh_token", login.data.refreshToken);

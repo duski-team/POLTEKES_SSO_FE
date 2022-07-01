@@ -618,7 +618,7 @@ export default {
           nim: vm.$store.state.biodata.identity,
         }
       );
-      console.log(tagihan, "tagihan");
+      // console.log(tagihan, "tagihan");
       vm.$store.dispatch("payment", tagihan.data.data[0]);
     },
     goApp(x) {

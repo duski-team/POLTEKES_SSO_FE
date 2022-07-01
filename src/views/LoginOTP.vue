@@ -90,7 +90,7 @@ export default {
       let vm = this;
       vm.$store.dispatch("set_loading", true);
       let login = await vm.$axios.post("users/applyOTP", vm.data);
-      console.log(login, "login otp");
+      // console.log(login, "login otp");
       if (login.data.status == 201) {
         vm.$store.dispatch("set_alert_show_fail", login.data.message);
         vm.$store.dispatch("set_loading", false);
@@ -112,7 +112,7 @@ export default {
         let vm = this;
         vm.$store.dispatch("set_loading", true);
         let kirim = await vm.$axios.post("users/kirimUlangOTP", vm.data);
-        console.log(kirim);
+        // console.log(kirim);
         vm.show = true;
         if (kirim.data.status == 200) {
           vm.$store.dispatch("set_loading", false);

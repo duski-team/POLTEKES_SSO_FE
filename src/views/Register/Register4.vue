@@ -43,7 +43,7 @@ export default {
       let vm = this;
       vm.busy = true;
       let kirim = await vm.$axios.post("users/kirimUlangPassword", vm.state);
-      console.log(kirim);
+      // console.log(kirim);
       if (kirim.data.status == 201) {
         vm.busy = false;
         alert(kirim.data.message);

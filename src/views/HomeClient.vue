@@ -122,7 +122,7 @@ export default {
             "content-type": "application/x-www-form-urlencoded;charset=utf-8",
           },
         });
-        console.log(login);
+        // console.log(login);
         if (login.status == 200) {
           vm.$store.dispatch("set_alert_show_success", "Sukses");
           setTimeout(() => {

@@ -159,7 +159,7 @@ export default {
         vm.busy = true;
         vm.state.username = vm.$store.state.sso_username;
         let login = await vm.$axios.post("users/changepassword", vm.state);
-        console.log(login);
+        // console.log(login);
         if (login.data.status == 200) {
           if (login.data.message == "sukses") {
             vm.busy = false;
