@@ -590,10 +590,12 @@ export default {
           vm.$store.dispatch("set_profil", {});
         }
 
-        let app = await vm.$axios.get("client/clientsByRole/" + vm.$store.state.sso_user_role);
+        let app = await vm.$axios.get(
+          "client/clientsByRole/" + vm.$store.state.sso_user_role
+        );
         // console.log(app.data.data)
 
-        vm.$store.dispatch("set_app", app.data.data,'app');
+        vm.$store.dispatch("set_app", app.data.data, "app");
 
         let tagihan = await vm.$axiosbilling.post(
           "detailsTagihanStudi/listDetailsTagihanStudiByNIM",

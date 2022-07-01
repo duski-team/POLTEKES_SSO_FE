@@ -40,8 +40,7 @@
           <button
             class="btn btn-outline-success CreateVa"
             @click="printBSI()"
-            :disabled="!cek.datetime_created"
-            v-if="cek.datetime_created"
+            v-if="cek.datetime_created && !today"
           >
             Simpan Tagihan
           </button>
@@ -212,8 +211,8 @@ export default {
       return `${h} : ${m} : ${s}`;
     },
     today() {
-      let x = this.cek.datetime_expired < this.$moment();
-      // console.log(this.$moment, "moment", this.cek.datetime_expired, "exp");
+      let x = this.$moment(this.cek.datetime_expired) <= this.$moment();
+      console.log(this.$moment().format('lll'), "moment", this.cek.datetime_expired, "exp", x);
       return x;
     },
   },

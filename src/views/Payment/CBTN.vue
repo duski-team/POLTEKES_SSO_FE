@@ -14,7 +14,7 @@
         <div>Nama</div>
         <div>{{ $store.state.biodata.nama_lengkap_users }}</div>
       </div>
-      <div class="bank">
+      <div class="bank" v-if="cek.createdate != '000000'">
         <div>Nomor VA</div>
         <div>{{ Va }}</div>
       </div>
@@ -40,7 +40,7 @@
           <button
             class="btn btn-outline-success CreateVa"
             @click="printBTN()"
-            v-if="cek.createdate"
+            v-if="cek.createdate != '000000' && !today"
           >
             Simpan Tagihan
           </button>
@@ -229,8 +229,8 @@ export default {
     },
     today() {
       let vm = this;
-      let x = vm.expired < this.$moment();
-      // console.log(vm.$moment(), "moment", this.cek.expired, "exp");
+      let x = vm.$moment(vm.cek.expired) < vm.$moment();
+      console.log(vm.$moment().add(1,'days'), "moment", this.cek.expired, "exp");
       return x;
     },
   },

@@ -112,7 +112,7 @@ router.beforeEach(function (to, from, next) {
   let otp = store.state.kode_otp;
   let too = to.path;
   if (too == "/logout") {
-    window.localStorage.removeItem('vuex');
+    window.localStorage.removeItem("vuex");
     next({ path: "/" });
   }
   if (!token) {
