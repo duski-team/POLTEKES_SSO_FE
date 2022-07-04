@@ -200,6 +200,7 @@ export default {
   setup() {
     const state = reactive({
       username: "",
+      usernames:"",
       role: "",
       identity: "",
       NIK: "",
@@ -267,13 +268,7 @@ export default {
     },
     setForm(x) {
       let vm = this;
-      vm.state.username = ""
-      if (vm.state.role != "mahasiswa") {
-        vm.state.username = x.username + "@poltekkes-smg.ac.id";
-      } else {
-        vm.state.username = x.username + ".mhs@poltekkes-smg.ac.id";
-      }
-
+      vm.state.usernames = x.usernames
       vm.state.NIK = x.NIK;
       vm.state.identity = x.identity;
       vm.state.no_hp_users = x.no_hp_users;
@@ -308,6 +303,12 @@ export default {
       vm.busy = true;
       console.log(vm.state);
       this.$store.dispatch("set_loading", true);
+      vm.state.username = ""
+      if (vm.state.role != "mahasiswa") {
+        vm.state.username = vm.state.usernames + "@poltekkes-smg.ac.id";
+      } else {
+        vm.state.username = vm.state.usernames + ".mhs@poltekkes-smg.ac.id";
+      }
       try {
         let register = await vm.$axios.post("users/register", vm.state);
         // console.log(register);

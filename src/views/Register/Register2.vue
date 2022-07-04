@@ -44,7 +44,7 @@
                   type="text"
                   placeholder="Masukkan email lengkap"
                   required
-                  v-model="data.username"
+                  v-model="data.usernames"
                 />
                 <span
                   class="input-group-text"
@@ -60,7 +60,7 @@
                 >
               </div>
               <span class="text-danger fst-italic">{{
-                ifValid("username")
+                ifValid("usernames")
               }}</span>
             </div>
             <div class="input-box">
@@ -135,7 +135,7 @@ export default {
   props: ["aktiv", "state"],
   setup() {
     const data = reactive({
-      username: "",
+      usernames: "",
       role: "",
       identity: "",
       NIK: "",
@@ -147,7 +147,7 @@ export default {
 
     const rules = computed(() => {
       return {
-        username: {
+        usernames: {
           required,
           alphaNum
         },
