@@ -16,7 +16,10 @@
           v-if="data.role != 'mahasiswa'"
           @click="data.role = 'mahasiswa'"
         >
-          <img src="@/assets/mahasiswa.jpg" alt="" />
+          <center>
+            <img src="@/assets/mahasiswa.jpg" alt="" />
+          </center>
+
           <!-- <i class="fa-regular fa-face-grin-wide fa-10x"></i> -->
           <div>
             <center><p class="SSO">Mahasiswa</p></center>
@@ -41,7 +44,10 @@
           @click="data.role = 'dosen'"
         >
           <!-- <i class="fa-regular fa-face-meh fa-10x"></i> -->
-          <img src="@/assets/dosen.jpg" alt="" />
+          <center>
+            <img src="@/assets/dosen.jpg" alt="" />
+          </center>
+
           <div>
             <center><p class="SSO">Dosen</p></center>
           </div>
@@ -60,7 +66,10 @@
           v-if="data.role != 'pegawai'"
           @click="data.role = 'pegawai'"
         >
-          <img src="@/assets/tenagaPendidik.jpg" alt="" />
+          <center>
+            <img src="@/assets/tenagaPendidik.jpg" alt="" />
+          </center>
+
           <!-- <i class="fa-regular fa-face-flushed fa-10x"></i> -->
           <div>
             <center><p class="SSO">Tenaga Pendidik</p></center>

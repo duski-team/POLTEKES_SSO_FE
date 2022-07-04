@@ -151,7 +151,7 @@ export default {
         },
         identity: {
           required,
-          numeric,
+          // numeric,
         },
         NIK: {
           required,
