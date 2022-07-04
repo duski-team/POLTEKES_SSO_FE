@@ -105,14 +105,21 @@
         </div>
       </div>
     </div>
+    <div>
+      <regis />
+    </div>
   </div>
 </template>
 
 <script>
 import qs from "qs";
+import regis from "@/components/regis";
 
 export default {
   name: "Home",
+  components: {
+    regis,
+  },
   data() {
     return {
       data: {
