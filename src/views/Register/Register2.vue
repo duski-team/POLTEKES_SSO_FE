@@ -128,6 +128,7 @@ import {
   minLength,
   numeric,
   maxLength,
+  alphaNum
 } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
 export default {
@@ -148,6 +149,7 @@ export default {
       return {
         username: {
           required,
+          alphaNum
         },
         identity: {
           required,
@@ -212,6 +214,8 @@ export default {
             return `* Data minimal ${l} digits`;
           } else if (y == "maxLength") {
             return `* Data maksimal ${l} digits`;
+          } else if (y == "alphaNum") {
+            return `* Data tidak boleh mengandung spasi atau simbol`;
           }
         }
       }
