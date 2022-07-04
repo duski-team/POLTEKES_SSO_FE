@@ -10,7 +10,12 @@
             industry. Lorem Ipsum has been the industry's standard dummy text
           </h5> -->
           <h5 class="card-title mb-4 mt-4">
-            <p class="kirim" @click="kirim()">Klik Disini</p>
+            <p class="kirim" v-if="countdown > 0">
+              Klik Disini <span v-if="countdown > 0">dalam {{ countdown }} detik</span>
+            </p>
+            <p class="kirim" v-else @click="kirim()">
+              Klik Disini
+            </p>
             Jika anda tidak menerima email konfirmasi pendaftaran SSO di email
             yang sudah terdaftar di SSO
           </h5>
@@ -32,6 +37,7 @@ export default {
     return {
       msg: "",
       busy: false,
+      countdown: 60,
     };
   },
   methods: {
@@ -41,21 +47,35 @@ export default {
     },
     async kirim() {
       let vm = this;
-      vm.busy = true;
+      this.$store.dispatch("set_loading", true);
       let kirim = await vm.$axios.post("users/kirimUlangPassword", vm.state);
       // console.log(kirim);
       if (kirim.data.status == 201) {
-        vm.busy = false;
-        alert(kirim.data.message);
+        vm.$store.dispatch("set_loading", false);
+        vm.$store.dispatch("set_alert_show_success", kirim.data.message);
+        vm.countdown = 60;
         // vm.showing = true;
         // setTimeout(() => {
         //   vm.showing = false;
         // }, 4000);
       } else {
-        vm.busy = false;
+        this.$store.dispatch("set_loading", false);
+        vm.$store.dispatch("set_alert_show_success", kirim.data.message);
         localStorage.setItem("username", this.state.username);
         // this.$router.push({ path: "/" });
       }
+    },
+  },
+  watch: {
+    countdown: {
+      handler(val) {
+        if (val > 0) {
+          setTimeout(() => {
+            this.countdown--;
+          }, 1000);
+        }
+      },
+      immediate: true,
     },
   },
 };
@@ -116,6 +136,12 @@ export default {
 .kirim {
   font-weight: 700;
   color: #1c3aa9;
+  cursor: pointer;
+}
+
+.kirim:disabled {
+  font-weight: 700;
+  color: grey;
   cursor: pointer;
 }
 </style>

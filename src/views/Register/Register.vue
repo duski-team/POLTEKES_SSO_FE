@@ -47,7 +47,7 @@
                     aktiv != 'step2' &&
                     state.identity != '' &&
                     state.no_hp_users != '' &&
-                    state.username != '' &&
+                    state.usernames != '' &&
                     state.email_pribadi != '' &&
                     state.NIK != ''
                   "
@@ -69,7 +69,7 @@
                     aktiv != 'step2' &&
                     state.identity == '' &&
                     state.no_hp_users == '' &&
-                    state.username == '' &&
+                    state.usernames == '' &&
                     state.email_pribadi == '' &&
                     state.NIK == ''
                   "
@@ -164,7 +164,11 @@
           :state="state"
           @form="setForm($event)"
         />
-        <Step3 v-if="aktiv == 'step3'" @kebijakan="setKebijakan($event)" />
+        <Step3
+          v-if="aktiv == 'step3'"
+          :state="state"
+          @kebijakan="setKebijakan($event)"
+        />
         <Step4 v-if="aktiv == 'step4'" :state="state" />
       </div>
     </div>
@@ -200,13 +204,14 @@ export default {
   setup() {
     const state = reactive({
       username: "",
-      usernames:"",
+      usernames: "",
       role: "",
       identity: "",
       NIK: "",
       no_hp_users: "",
       email_pribadi: "",
       syarat_kebijakan: "",
+      terdaftar: false,
     });
 
     // const busy = reactive(false);
@@ -268,7 +273,7 @@ export default {
     },
     setForm(x) {
       let vm = this;
-      vm.state.usernames = x.usernames
+      vm.state.usernames = x.usernames;
       vm.state.NIK = x.NIK;
       vm.state.identity = x.identity;
       vm.state.no_hp_users = x.no_hp_users;
@@ -284,11 +289,15 @@ export default {
     },
     gostep(x) {
       let vm = this;
-      if (x == "step2") {
-        if (vm.state.role != "") {
+      if (x == "step1") {
+        if (!vm.state.terdaftar) {
+          this.aktiv = "step1";
+        }
+      } else if (x == "step2") {
+        if (vm.state.role != "" && !vm.state.terdaftar) {
           this.aktiv = "step2";
         }
-      } else if (x == "step3") {
+      } else if (x == "step3" && !vm.state.terdaftar) {
         if (vm.valid) {
           this.aktiv = "step3";
         }
@@ -301,54 +310,59 @@ export default {
     async register() {
       let vm = this;
       vm.busy = true;
-      console.log(vm.state);
-      this.$store.dispatch("set_loading", true);
-      vm.state.username = ""
-      if (vm.state.role != "mahasiswa") {
-        vm.state.username = vm.state.usernames + "@poltekkes-smg.ac.id";
-      } else {
-        vm.state.username = vm.state.usernames + ".mhs@poltekkes-smg.ac.id";
-      }
-      try {
-        let register = await vm.$axios.post("users/register", vm.state);
-        // console.log(register);
-        if (register.data.status == 200) {
-          if (register.data.message == "sukses") {
-            vm.aktiv = "step4";
-            vm.emails = true;
-            vm.$store.dispatch("set_loading", false);
-            vm.$store.dispatch("set_alert_show_success", register.data.message);
-            setTimeout(() => {
-              vm.$store.dispatch("set_alert_hide");
-            }, 2000);
+      if (!vm.state.terdaftar) {
+        this.$store.dispatch("set_loading", true);
+        vm.state.username = "";
+        if (vm.state.role != "mahasiswa") {
+          vm.state.username = vm.state.usernames + "@poltekkes-smg.ac.id";
+        } else {
+          vm.state.username = vm.state.usernames + ".mhs@poltekkes-smg.ac.id";
+        }
+        try {
+          let register = await vm.$axios.post("users/register", vm.state);
+          // console.log(register);
+          if (register.data.status == 200) {
+            if (register.data.message == "sukses") {
+              vm.aktiv = "step4";
+              vm.emails = true;
+              vm.state.terdaftar = true
+              vm.$store.dispatch("set_loading", false);
+              vm.$store.dispatch(
+                "set_alert_show_success",
+                register.data.message
+              );
+              setTimeout(() => {
+                vm.$store.dispatch("set_alert_hide");
+              }, 2000);
+            } else {
+              // alert(register.data.message);
+              vm.$store.dispatch("set_alert_show_fail", register.data.message);
+              setTimeout(() => {
+                vm.$store.dispatch("set_alert_hide");
+              }, 2000);
+              vm.$store.dispatch("set_loading", false);
+            }
           } else {
-            // alert(register.data.message);
+            vm.$store.dispatch("set_loading", false);
             vm.$store.dispatch("set_alert_show_fail", register.data.message);
             setTimeout(() => {
               vm.$store.dispatch("set_alert_hide");
             }, 2000);
-            vm.$store.dispatch("set_loading", false);
+            console.log("error");
           }
-        } else {
-          vm.$store.dispatch("set_loading", false);
-          vm.$store.dispatch("set_alert_show_fail", register.data.message);
-          setTimeout(() => {
-            vm.$store.dispatch("set_alert_hide");
-          }, 2000);
-          console.log("error");
-        }
-      } catch (error) {
-        if (error) {
-          vm.$store.dispatch(
-            "set_alert_show_fail",
-            "Terjadi Kesalahan Pada Server"
-          );
-          console.log(error.message, "catch");
-          setTimeout(() => {
-            vm.$store.dispatch("set_alert_hide");
-          }, 2000);
-          this.show = true;
-          this.$store.dispatch("set_loading", false);
+        } catch (error) {
+          if (error) {
+            vm.$store.dispatch(
+              "set_alert_show_fail",
+              "Terjadi Kesalahan Pada Server"
+            );
+            console.log(error.message, "catch");
+            setTimeout(() => {
+              vm.$store.dispatch("set_alert_hide");
+            }, 2000);
+            this.show = true;
+            this.$store.dispatch("set_loading", false);
+          }
         }
       }
     },
@@ -361,6 +375,7 @@ export default {
         no_hp_users: "",
         NIK: "",
         syarat_kebijakan: "",
+        terdaftar: false,
       };
     },
     ifValid(fieldName, l) {
