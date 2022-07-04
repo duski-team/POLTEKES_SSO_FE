@@ -267,6 +267,7 @@ export default {
     },
     setForm(x) {
       let vm = this;
+      vm.state.username = ""
       if (vm.state.role != "mahasiswa") {
         vm.state.username = x.username + "@poltekkes-smg.ac.id";
       } else {
