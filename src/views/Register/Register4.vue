@@ -37,7 +37,7 @@ export default {
     return {
       msg: "",
       busy: false,
-      countdown: 60,
+      countdown: 30,
     };
   },
   methods: {
@@ -50,10 +50,10 @@ export default {
       this.$store.dispatch("set_loading", true);
       let kirim = await vm.$axios.post("users/kirimUlangPassword", vm.state);
       // console.log(kirim);
+      vm.countdown = 60;
       if (kirim.data.status == 201) {
         vm.$store.dispatch("set_loading", false);
         vm.$store.dispatch("set_alert_show_success", kirim.data.message);
-        vm.countdown = 60;
         // vm.showing = true;
         // setTimeout(() => {
         //   vm.showing = false;
@@ -69,6 +69,7 @@ export default {
   watch: {
     countdown: {
       handler(val) {
+        console.log(val)
         if (val > 0) {
           setTimeout(() => {
             this.countdown--;
