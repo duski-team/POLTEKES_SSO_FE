@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col d-flex justify-content-center">
-        <div class="card cb1 m-2">
+        <div class="card m-2">
           <div class="card-body">
             <img class="mb-4" src="@/assets/logo-poltekes.jpg" alt="" />
 
@@ -208,7 +208,7 @@ export default {
   /* background-image: url("https://picsum.photos/seed/picsum/200/300"); */
   background-size: cover;
   background-position: center center;
-  background-attachment: fixed;
+  /* background-attachment: fixed; */
   min-height: 100vh;
   padding: 10%;
   /* background-color: red; */
@@ -233,9 +233,14 @@ img {
   max-width: 480px;
   height: 621px;
   padding: 2rem 2.5rem;
-  text-align: start;
+  /* text-align: start; */
 
   border-radius: 1rem;
+   position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .card-title {

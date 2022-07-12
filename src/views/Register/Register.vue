@@ -47,7 +47,7 @@
                     aktiv != 'step2' &&
                     state.identity != '' &&
                     state.no_hp_users != '' &&
-                    state.usernames != '' &&
+                    state.usernamex != '' &&
                     state.email_pribadi != '' &&
                     state.NIK != ''
                   "
@@ -69,7 +69,7 @@
                     aktiv != 'step2' &&
                     state.identity == '' &&
                     state.no_hp_users == '' &&
-                    state.usernames == '' &&
+                    state.usernamex == '' &&
                     state.email_pribadi == '' &&
                     state.NIK == ''
                   "
@@ -204,7 +204,7 @@ export default {
   setup() {
     const state = reactive({
       username: "",
-      usernames: "",
+      usernamex: "",
       role: "",
       identity: "",
       NIK: "",
@@ -273,7 +273,7 @@ export default {
     },
     setForm(x) {
       let vm = this;
-      vm.state.usernames = x.usernames;
+      vm.state.usernamex = x.usernamex;
       vm.state.NIK = x.NIK;
       vm.state.identity = x.identity;
       vm.state.no_hp_users = x.no_hp_users;
@@ -281,6 +281,7 @@ export default {
       vm.state.email_pribadi = x.email_pribadi;
       vm.valid = true;
       vm.aktiv = "step3";
+      console.log(x.usernamex,'x', vm.state.usernamex,'state')
     },
     setKebijakan(x) {
       let vm = this;
@@ -314,10 +315,11 @@ export default {
         this.$store.dispatch("set_loading", true);
         vm.state.username = "";
         if (vm.state.role != "mahasiswa") {
-          vm.state.username = vm.state.usernames + "@poltekkes-smg.ac.id";
+          vm.state.username = vm.state.usernamex + "@poltekkes-smg.ac.id";
         } else {
-          vm.state.username = vm.state.usernames + ".mhs@poltekkes-smg.ac.id";
+          vm.state.username = vm.state.usernamex + ".mhs@poltekkes-smg.ac.id";
         }
+        console.log(vm.state.username,'name', vm.state.usernamex,'names')
         try {
           let register = await vm.$axios.post("users/register", vm.state);
           // console.log(register);

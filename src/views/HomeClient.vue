@@ -122,15 +122,15 @@ export default {
             "content-type": "application/x-www-form-urlencoded;charset=utf-8",
           },
         });
-        // console.log(login);
+        console.log(login);
         if (login.status == 200) {
           vm.$store.dispatch("set_alert_show_success", "Sukses");
           setTimeout(() => {
             vm.$store.dispatch("set_alert_hide");
           }, 4000);
-          console.log(this.client.redirect_uri);
+          // console.log(this.client.redirect_uri);
           window.open(
-            this.client.redirect_uri + "?token=" + login.data.accessToken
+            this.client.redirect_uri + "?token=" + login.data.accessToken + "&refresh=" + login.data.refreshToken
           );
           this.$store.dispatch("set_loading", false);
         } else {

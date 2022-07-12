@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row d-flex">
+    <div class="row d-flex d-none d-sm-block">
       <div class="col-md-12 d-flex justify-content-center">
         <div class="box">
           <div class="title">
@@ -44,23 +44,128 @@
                   type="text"
                   placeholder="Masukkan email lengkap"
                   required
-                  v-model="data.usernames"
+                  v-model="data.usernamex"
+                  @input="ihir()"
                 />
-                <span
-                  class="input-group-text"
-                  id="basic-addon2"
-                  v-if="state.role == 'mahasiswa'"
-                  >.mhs@poltekkes-smg.ac.id</span
+                <div class="prepend" v-if="state.role == 'mahasiswa'"
+                  >.mhs@poltekkes-smg.ac.id</div
                 >
-                <span
-                  class="input-group-text"
-                  id="basic-addon2"
-                  v-if="state.role != 'mahasiswa'"
-                  >@poltekkes-smg.ac.id</span
+                <div class="prepend" v-if="state.role != 'mahasiswa'"
+                  >@poltekkes-smg.ac.id</div
                 >
               </div>
               <span class="text-danger fst-italic">{{
-                ifValid("usernames")
+                ifValid("usernamex", 4)
+              }}</span>
+            </div>
+            <div class="input-box">
+              <span class="details">Email Pribadi *</span>
+              <input
+                type="text"
+                placeholder="Masukkan email lengkap"
+                required
+                v-model="data.email_pribadi"
+              />
+              <span class="text-danger fst-italic">{{
+                ifValid("email_pribadi")
+              }}</span>
+            </div>
+            <div class="input-box">
+              <span class="details">No. Handphone</span>
+              <input
+                type="text"
+                placeholder="Masukkan No. Handphone Aktif"
+                required
+                v-model="data.no_hp_users"
+              />
+              <span class="text-danger fst-italic">{{
+                ifValid("no_hp_users")
+              }}</span>
+            </div>
+            <div class="input-box">
+              <span class="details">NIK</span>
+              <input
+                type="text"
+                placeholder="Masukkan NIK"
+                required
+                v-model="data.NIK"
+              />
+              <span class="text-danger fst-italic">{{
+                ifValid("NIK", 16)
+              }}</span>
+            </div>
+
+            <div class="mb-3 mt-3">
+              <div class="d-flex justify-content-center">
+                <div class="col-12">
+                  <button
+                    :disabled="!isValid"
+                    class="btn btn-outline-success"
+                    @click="lanjut()"
+                  >
+                    Simpan Data
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row d-flex d-xl-none d-lg-none d-md-none">
+      <div class="col-md-12 d-flex justify-content-center">
+        <div class="box2">
+          <div class="title">
+            <div><h1>Formulir</h1></div>
+          </div>
+          <div>
+            <h6>Isi data diri Anda sesuai dengan formulir yang ada</h6>
+          </div>
+          <div class="forms">
+            <div class="input-box">
+              <span class="details">NIM / NIP *</span>
+              <input
+                type="text"
+                placeholder="Masukkan nomor identitas akademik"
+                required
+                v-model="data.identity"
+              />
+              <span class="text-danger fst-italic">{{
+                ifValid("identity")
+              }}</span>
+            </div>
+          </div>
+          <div class="forms">
+            <!-- <div class="input-box">
+              <span class="details">Nama Lengkap</span>
+              <input
+                type="text"
+                placeholder="Masukkan Nama lengkap"
+                required
+                v-model="data.nama_lengkap_users"
+              />
+              <span class="text-danger fst-italic">{{
+                ifValid("nama_lengkap_users")
+              }}</span>
+            </div> -->
+            <div class="input-box">
+              <span class="details">Email Official *</span>
+                <input
+                  type="text"
+                  placeholder="Masukkan email lengkap"
+                  required
+                  v-model="data.usernamex"
+                  @input="ihir()"
+                />
+              
+              <div class="prepend" v-if="state.role == 'mahasiswa'"
+                  >.mhs@poltekkes-smg.ac.id</div
+                >
+                <div class="prepend" v-if="state.role != 'mahasiswa'"
+                  >@poltekkes-smg.ac.id</div
+                >
+              <span class="text-danger fst-italic">{{
+                ifValid("usernamex", 4)
               }}</span>
             </div>
             <div class="input-box">
@@ -128,14 +233,14 @@ import {
   minLength,
   numeric,
   maxLength,
-  alphaNum
+  alphaNum,
 } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
 export default {
   props: ["aktiv", "state"],
   setup() {
     const data = reactive({
-      usernames: "",
+      usernamex: "",
       role: "",
       identity: "",
       NIK: "",
@@ -147,12 +252,14 @@ export default {
 
     const rules = computed(() => {
       return {
-        usernames: {
+        usernamex: {
           required,
-          alphaNum
+          alphaNum,
+          minLength: minLength(4),
         },
         identity: {
           required,
+          alphaNum,
           // numeric,
         },
         NIK: {
@@ -228,6 +335,9 @@ export default {
         }
       }
     },
+    ihir() {
+      console.log(this.data.usernamex);
+    },
   },
 };
 </script>
@@ -299,6 +409,10 @@ p {
 .box {
   padding: 100px;
   width: 80%;
+}
+.box2{
+  padding: 20px;
+  width: 100%;
 }
 
 .details {
@@ -406,5 +520,36 @@ form .user-details .input-box {
   font-weight: 500;
   margin-bottom: 5px;
   display: block;
+}
+
+.prepend {
+  display: flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+.prepend2 {
+  display: flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  width: 100%;
 }
 </style>

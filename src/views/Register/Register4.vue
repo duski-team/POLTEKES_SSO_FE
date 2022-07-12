@@ -16,7 +16,7 @@
             <p class="kirim" v-else @click="kirim()">
               Klik Disini
             </p>
-            Jika anda tidak menerima email konfirmasi pendaftaran SSO di email
+            Jika anda tidak menerima email konfirmasi pendaftaran SSO di email pribadi
             yang sudah terdaftar di SSO
           </h5>
         </div>

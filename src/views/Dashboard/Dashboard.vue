@@ -570,9 +570,9 @@ export default {
     };
   },
   mounted() {
-    if (!this.$store.state.biodata || !this.$store.state.app) {
+    // if (!this.$store.state.biodata || !this.$store.state.app) {
       this.getData();
-    }
+    // }
     this.getTagihan();
   },
   methods: {
@@ -623,7 +623,7 @@ export default {
     },
     goApp(x) {
       window.open(
-        x.redirect_uri + "?token=" + this.$store.state.sso_access_token
+        x.redirect_uri + "?token=" + this.$store.state.sso_access_token + '&refresh=' + this.$store.state.sso_refresh_token
       );
     },
     convert(x) {

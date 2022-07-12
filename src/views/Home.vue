@@ -175,7 +175,7 @@ export default {
         if (error) {
           vm.$store.dispatch(
             "set_alert_show_fail",
-            "Username salah atau tidak terdaftar"
+            "Username / Password Salah"
           );
           console.log(error.message);
           setTimeout(() => {

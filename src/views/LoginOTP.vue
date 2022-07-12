@@ -9,7 +9,7 @@
             <!-- <span class="card-number">01</span> -->
             <img class="mb-4" src="@/assets/logo-poltekes.jpg" alt="" />
             <p class="card-title mb-4">Verifikasi Kode Authentifikasi</p>
-            <p class="card-email mb-4">Terkirim ke {{ data.username }}</p>
+            <p class="card-email mb-4">Terkirim ke {{ data.username }} dan email pribadi yang terdaftar di SSO</p>
 
             <!-- <div v-if="show">
               <div :class="color" role="alert">
