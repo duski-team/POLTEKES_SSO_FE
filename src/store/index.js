@@ -32,7 +32,7 @@ const state = {
 
 const mutations = {
   set_login_token(state, tokens) {
-    console.log(tokens, "set store login");
+    // console.log(tokens, "set store login");
     state.sso_access_token = tokens.accessToken;
     state.sso_refresh_token = tokens.refreshToken;
     state.sso_client_id = tokens.client.id;
@@ -53,7 +53,7 @@ const mutations = {
     state.sso_username = tokens.user.username;
   },
   set_clear_token(state) {
-    console.log("set_clear");
+    // console.log("set_clear");
     state.sso_access_token = null;
     state.sso_refresh_token = null;
     state.sso_client_id = null;
@@ -178,7 +178,7 @@ const actions = {
     commit("biodata_foto", value);
   },
   payment({ commit }, value) {
-    console.log(value);
+    // console.log(value);
     let x = value.tahun_kb.includes("-1");
     let v = value.tahun_kb.substring(0, 4);
     if (x) {

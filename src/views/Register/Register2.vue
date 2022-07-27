@@ -47,12 +47,12 @@
                   v-model="data.usernamex"
                   @input="ihir()"
                 />
-                <div class="prepend" v-if="state.role == 'mahasiswa'"
-                  >.mhs@poltekkes-smg.ac.id</div
-                >
-                <div class="prepend" v-if="state.role != 'mahasiswa'"
-                  >@poltekkes-smg.ac.id</div
-                >
+                <div class="prepend" v-if="state.role == 'mahasiswa'">
+                  .mhs@poltekkes-smg.ac.id
+                </div>
+                <div class="prepend" v-if="state.role != 'mahasiswa'">
+                  @poltekkes-smg.ac.id
+                </div>
               </div>
               <span class="text-danger fst-italic">{{
                 ifValid("usernamex", 4)
@@ -150,20 +150,20 @@
             </div> -->
             <div class="input-box">
               <span class="details">Email Official *</span>
-                <input
-                  type="text"
-                  placeholder="Masukkan email lengkap"
-                  required
-                  v-model="data.usernamex"
-                  @input="ihir()"
-                />
-              
-              <div class="prepend" v-if="state.role == 'mahasiswa'"
-                  >.mhs@poltekkes-smg.ac.id</div
-                >
-                <div class="prepend" v-if="state.role != 'mahasiswa'"
-                  >@poltekkes-smg.ac.id</div
-                >
+              <input
+                type="text"
+                placeholder="Masukkan email lengkap"
+                required
+                v-model="data.usernamex"
+                @input="ihir()"
+              />
+
+              <div class="prepend" v-if="state.role == 'mahasiswa'">
+                .mhs@poltekkes-smg.ac.id
+              </div>
+              <div class="prepend" v-if="state.role != 'mahasiswa'">
+                @poltekkes-smg.ac.id
+              </div>
               <span class="text-danger fst-italic">{{
                 ifValid("usernamex", 4)
               }}</span>
@@ -410,7 +410,7 @@ p {
   padding: 100px;
   width: 80%;
 }
-.box2{
+.box2 {
   padding: 20px;
   width: 100%;
 }

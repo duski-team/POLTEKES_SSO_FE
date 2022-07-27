@@ -40,14 +40,14 @@
       <div class="card-footer bg-warning">
         <div>
           <!-- <hr /> -->
-            <div align="right">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                @click="warning = false"
-              >
-                Tutup
-              </button>
+          <div align="right">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              @click="warning = false"
+            >
+              Tutup
+            </button>
           </div>
         </div>
       </div>
@@ -63,7 +63,7 @@ export default {
       popup: "",
       show: false,
       status: true,
-      warning: true
+      warning: true,
     };
   },
   mounted() {
@@ -86,8 +86,8 @@ export default {
 
         if (vm.popup.length) {
           this.warning = true;
-        }else{
-          this.warning = false
+        } else {
+          this.warning = false;
         }
       } catch (error) {
         console.log(error.message);

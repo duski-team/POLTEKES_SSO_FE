@@ -64,7 +64,7 @@ export default {
   background-attachment: fixed;
   min-height: 100vh;
   padding: 75px 25px 75px 25px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   /* color: aqua; */
 }
 

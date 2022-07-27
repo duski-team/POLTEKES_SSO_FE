@@ -130,7 +130,11 @@ export default {
           }, 4000);
           // console.log(this.client.redirect_uri);
           window.open(
-            this.client.redirect_uri + "?token=" + login.data.accessToken + "&refresh=" + login.data.refreshToken
+            this.client.redirect_uri +
+              "?token=" +
+              login.data.accessToken +
+              "&refresh=" +
+              login.data.refreshToken
           );
           this.$store.dispatch("set_loading", false);
         } else {

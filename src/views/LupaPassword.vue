@@ -9,8 +9,10 @@
 
             <h5 class="card-title mb-4">Lupa Password ?</h5>
             <h5 class="card-instruction mb-4">
-              Masukkan <span><strong> Email Official / Username </strong></span>anda yang terdaftar. Kami akan kirimkan Instruksi
-              Ke Email Pribadi yang terdaftar di SSO
+              Masukkan
+              <span><strong> Email Official / Username </strong></span>anda yang
+              terdaftar. Kami akan kirimkan Instruksi Ke Email Pribadi yang
+              terdaftar di SSO
             </h5>
 
             <div class="mb-3">
@@ -61,7 +63,10 @@ export default {
       let login = await vm.$axios.post("users/kirimUlangOTP", vm.data);
       if (login.data.status == 201) {
         vm.$store.dispatch("set_loading", false);
-        vm.$store.dispatch("set_alert_show_fail", 'EMAIL OFFICIAL TIDAK TERDAFTAR');
+        vm.$store.dispatch(
+          "set_alert_show_fail",
+          "EMAIL OFFICIAL TIDAK TERDAFTAR"
+        );
         setTimeout(() => {
           vm.$store.dispatch("set_alert_hide");
         }, 2000);

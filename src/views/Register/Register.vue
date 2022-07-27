@@ -281,7 +281,7 @@ export default {
       vm.state.email_pribadi = x.email_pribadi;
       vm.valid = true;
       vm.aktiv = "step3";
-      console.log(x.usernamex,'x', vm.state.usernamex,'state')
+      console.log(x.usernamex, "x", vm.state.usernamex, "state");
     },
     setKebijakan(x) {
       let vm = this;
@@ -319,7 +319,7 @@ export default {
         } else {
           vm.state.username = vm.state.usernamex + ".mhs@poltekkes-smg.ac.id";
         }
-        console.log(vm.state.username,'name', vm.state.usernamex,'names')
+        console.log(vm.state.username, "name", vm.state.usernamex, "names");
         try {
           let register = await vm.$axios.post("users/register", vm.state);
           // console.log(register);
@@ -327,7 +327,7 @@ export default {
             if (register.data.message == "sukses") {
               vm.aktiv = "step4";
               vm.emails = true;
-              vm.state.terdaftar = true
+              vm.state.terdaftar = true;
               vm.$store.dispatch("set_loading", false);
               vm.$store.dispatch(
                 "set_alert_show_success",

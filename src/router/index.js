@@ -11,7 +11,7 @@ import GantiPassword from "../views/GantiPassword.vue";
 import GantiPasswordOTP from "../views/GantiPasswordOTP.vue";
 import store from "@/store/index.js";
 import payment from "../views/Payment/payment.vue";
-import kebijakan from "../views/kebijakan.vue"
+import kebijakan from "../views/kebijakan.vue";
 
 const routes = [
   {
@@ -93,10 +93,10 @@ const routes = [
     },
   },
 
-    {
-      path: "/kebijakan",
-      name: "User Agrement",
-      component: kebijakan,
+  {
+    path: "/kebijakan",
+    name: "User Agrement",
+    component: kebijakan,
   },
   {
     path: "/about",

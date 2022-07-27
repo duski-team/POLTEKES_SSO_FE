@@ -11,13 +11,12 @@
           </h5> -->
           <h5 class="card-title mb-4 mt-4">
             <p class="kirim" v-if="countdown > 0">
-              Klik Disini <span v-if="countdown > 0">dalam {{ countdown }} detik</span>
-            </p>
-            <p class="kirim" v-else @click="kirim()">
               Klik Disini
+              <span v-if="countdown > 0">dalam {{ countdown }} detik</span>
             </p>
-            Jika anda tidak menerima email konfirmasi pendaftaran SSO di email pribadi
-            yang sudah terdaftar di SSO
+            <p class="kirim" v-else @click="kirim()">Klik Disini</p>
+            Jika anda tidak menerima email konfirmasi pendaftaran SSO di email
+            pribadi yang sudah terdaftar di SSO
           </h5>
         </div>
       </div>
@@ -69,7 +68,7 @@ export default {
   watch: {
     countdown: {
       handler(val) {
-        console.log(val)
+        console.log(val);
         if (val > 0) {
           setTimeout(() => {
             this.countdown--;

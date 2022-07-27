@@ -236,7 +236,7 @@ img {
   /* text-align: start; */
 
   border-radius: 1rem;
-   position: absolute;
+  position: absolute;
   z-index: 2;
   top: 50%;
   left: 50%;

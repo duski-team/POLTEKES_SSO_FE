@@ -211,13 +211,18 @@
                     Rp. {{ convert($store.state.payment.totalTagihan) }}
                     <span style="color: grey">pada semester Ganjil 2022</span>
                   </div>
-                  <div>
+                  <div v-if="!deadline">
                     <button
                       class="button-payment"
                       @click="$router.push('/payment')"
                     >
                       Bayar Sekarang
                     </button>
+                  </div>
+                  <div v-else class="text-tagihan">
+                    Periode Pembayaran sudah berakhir untuk melanjutkan silahkan
+                    hubungi bagian administrasi Kampus Poltekkes Kemenkkes
+                    Semarang
                   </div>
                   <div class="text-invoice">
                     NO. INVOICE : {{ $store.state.payment.trx_id }}
@@ -445,13 +450,18 @@
                     Rp. {{ convert($store.state.payment.totalTagihan) }}
                     <span style="color: grey">pada semester Ganjil 2022</span>
                   </div>
-                  <div>
+                  <div v-if="!deadline">
                     <button
                       class="button-payment"
                       @click="$router.push('/payment')"
                     >
                       Bayar Sekarang
                     </button>
+                  </div>
+                  <div v-else class="text-tagihan">
+                    Periode Pembayaran sudah berakhir untuk melanjutkan silahkan
+                    hubungi bagian administrasi Kampus Poltekkes Kemenkkes
+                    Semarang
                   </div>
                   <div class="text-invoice">
                     NO. INVOICE : {{ $store.state.payment.trx_id }}
@@ -549,17 +559,20 @@
       <Footer />
     </div>
     <div class="popup"><Popup /></div>
+    <add />
   </div>
 </template>
 <script>
 import Header from "@/components/header.vue";
 import Footer from "@/components/footer.vue";
 import Popup from "@/components/popup.vue";
+import add  from "@/components/modalAdd"
 export default {
   components: {
     Header,
     Footer,
     Popup,
+    add
   },
   data() {
     return {
@@ -569,9 +582,18 @@ export default {
       backup: false,
     };
   },
+  computed: {
+    deadline() {
+      let x =
+        this.$moment().format("lll") >
+        this.$moment(this.$store.state.payment.bayar_tutup).format("lll");
+      // console.log(x, this.$moment().format('lll'), this.$moment(this.$store.state.payment.bayar_tutup).format('lll'));
+      return x;
+    },
+  },
   mounted() {
     // if (!this.$store.state.biodata || !this.$store.state.app) {
-      this.getData();
+    this.getData();
     // }
     this.getTagihan();
   },
@@ -618,12 +640,16 @@ export default {
           nim: vm.$store.state.biodata.identity,
         }
       );
-      // console.log(tagihan, "tagihan");
+      console.log(tagihan, "tagihan");
       vm.$store.dispatch("payment", tagihan.data.data[0]);
     },
     goApp(x) {
       window.open(
-        x.redirect_uri + "?token=" + this.$store.state.sso_access_token + '&refresh=' + this.$store.state.sso_refresh_token
+        x.redirect_uri +
+          "?token=" +
+          this.$store.state.sso_access_token +
+          "&refresh=" +
+          this.$store.state.sso_refresh_token
       );
     },
     convert(x) {

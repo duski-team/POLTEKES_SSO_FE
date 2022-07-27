@@ -145,13 +145,17 @@
             <div class="text-cara-line">
               <p>4.</p>
               <p>
-                Masukkan Kode Akademik <span style="color: green">(2576) </span> / Nama Akademik (POLTEKKES
-                KEMENKES SEMARANG).
+                Masukkan Kode Akademik
+                <span style="color: green">(2576) </span> / Nama Akademik
+                (POLTEKKES KEMENKES SEMARANG).
               </p>
             </div>
             <div class="text-cara-line">
               <p>5.</p>
-              <p>Masukkan nomor Pembayaran <span style="color: green">{{noPelanggan}}</span> .</p>
+              <p>
+                Masukkan nomor Pembayaran
+                <span style="color: green">{{ noPelanggan }}</span> .
+              </p>
             </div>
             <div class="text-cara-line">
               <p>6.</p>
@@ -194,8 +198,10 @@ export default {
       let x = vm.$store.state.biodata.identity;
       return vm.$store.state.bsi_client_id + x.substring(x.length - 8);
     },
-    noPelanggan(){
-      return this.$store.state.biodata.identity.substring(this.$store.state.biodata.identity.length - 8);
+    noPelanggan() {
+      return this.$store.state.biodata.identity.substring(
+        this.$store.state.biodata.identity.length - 8
+      );
     },
     kadaluarsaVa() {
       let vm = this;

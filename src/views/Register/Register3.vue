@@ -13,14 +13,16 @@
     </div>
     <div class="row d-flex justify-content-center mt-4">
       <!-- <div class="col-md-2 btn-red"><p>Lihat</p></div> -->
-      <button class="col-md-2 btn-green" @click="setuju()"><p>Setuju</p></button>
+      <button class="col-md-2 btn-green" @click="setuju()">
+        <p>Setuju</p>
+      </button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props:['state'],
+  props: ["state"],
   data() {
     return {
       data: {
