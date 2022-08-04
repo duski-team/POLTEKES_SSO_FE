@@ -281,7 +281,7 @@ export default {
       vm.state.email_pribadi = x.email_pribadi;
       vm.valid = true;
       vm.aktiv = "step3";
-      console.log(x.usernamex, "x", vm.state.usernamex, "state");
+      // console.log(x.usernamex, "x", vm.state.usernamex, "state");
     },
     setKebijakan(x) {
       let vm = this;

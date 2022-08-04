@@ -566,13 +566,11 @@
 import Header from "@/components/header.vue";
 import Footer from "@/components/footer.vue";
 import Popup from "@/components/popup.vue";
-import add  from "@/components/modalAdd"
 export default {
   components: {
     Header,
     Footer,
     Popup,
-    add
   },
   data() {
     return {

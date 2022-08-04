@@ -234,6 +234,7 @@ import {
   numeric,
   maxLength,
   alphaNum,
+  helpers,
 } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
 export default {
@@ -250,11 +251,13 @@ export default {
       step: "step3",
     });
 
+    const official = helpers.regex(/^[a-zA-Z0-9.]*$/);
+
     const rules = computed(() => {
       return {
         usernamex: {
           required,
-          alphaNum,
+          official,
           minLength: minLength(4),
         },
         identity: {
@@ -322,6 +325,8 @@ export default {
           } else if (y == "maxLength") {
             return `* Data maksimal ${l} digits`;
           } else if (y == "alphaNum") {
+            return `* Data tidak boleh mengandung spasi atau simbol`;
+          } else if (y == "official") {
             return `* Data tidak boleh mengandung spasi atau simbol`;
           }
         }
