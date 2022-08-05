@@ -548,7 +548,9 @@
               </div>
               <div>
                 <h6>{{ item.nama_client }}</h6>
-                <p>{{ item.deskripsi_client }}</p>
+                <div class="ellipsis two-lines">
+                  <p>{{ item.deskripsi_client }}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -994,6 +996,7 @@ h6 {
 .cards {
   display: flex;
   padding: 20px;
+  height: 135px;
   text-align: start;
   background-color: #ffffff;
   border-radius: 1rem;
@@ -1071,5 +1074,20 @@ img {
   padding: 10px;
   color: #eaecf0;
   font-size: 24px;
+}
+
+/* ellipse */
+.ellipsis {
+  white-space: nowrap;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.two-lines {
+  -webkit-line-clamp: 3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  white-space: normal;
 }
 </style>
