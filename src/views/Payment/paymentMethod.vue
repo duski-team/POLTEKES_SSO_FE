@@ -25,6 +25,9 @@
           <div class="box-bank" @click="(show = 2), (bank = 'BSI')">
             <img src="@/assets/BSILOGO.png" alt="" class="img-bank" />
           </div>
+          <div class="box-bank" @click="(show = 2), (bank = 'MANDIRI')">
+            <img src="@/assets/MANDIRILOGO.png" alt="" class="img-bank" />
+          </div>
         </div>
         <div class="cara" v-if="show == 2 && bank == 'BNI'">
           <CBNI :tagihan="tagihan" />
@@ -34,6 +37,9 @@
         </div>
         <div class="cara" v-if="show == 2 && bank == 'BTN'">
           <CBTN :tagihan="tagihan" />
+        </div>
+        <div class="cara" v-if="show == 2 && bank == 'MANDIRI'">
+          <CMANDIRI :tagihan="tagihan" />
         </div>
       </div>
 
@@ -56,8 +62,9 @@
 import CBNI from "./CBNI.vue";
 import CBSI from "./CBSI.vue";
 import CBTN from "./CBTN.vue";
+import CMANDIRI from "./CMANDIRI.vue"
 export default {
-  components: { CBNI, CBSI, CBTN },
+  components: { CBNI, CBSI, CBTN, CMANDIRI },
   props: ["open", "tagihan"],
   data() {
     return {

@@ -28,7 +28,7 @@
                   class="foto mb-3"
                   :src="$store.state.biodata.foto"
                   alt="user photo profil"
-                  @error="backup = true"
+                  @error="set_no_profil($store.state.biodata.foto)"
                 />
                 <img
                   v-else
@@ -651,6 +651,10 @@ export default {
           "&refresh=" +
           this.$store.state.sso_refresh_token
       );
+    },
+    set_no_profil(x) {
+      console.log(x, "foto");
+      this.backup = true;
     },
     convert(x) {
       if (x) {
