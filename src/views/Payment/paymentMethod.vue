@@ -62,9 +62,9 @@
 import CBNI from "./CBNI.vue";
 import CBSI from "./CBSI.vue";
 import CBTN from "./CBTN.vue";
-import CMANDIRI from "./CMANDIRI.vue"
+import CMANDIRI from "./CMANDIRIs.vue";
 export default {
-  components: { CBNI, CBSI, CBTN, CMANDIRI },
+  components: { CBNI, CBSI, CBTN, CMANDIRI},
   props: ["open", "tagihan"],
   data() {
     return {
