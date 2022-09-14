@@ -18,7 +18,7 @@
         <div>Nomor VA</div>
         <div>{{ Va }}</div>
       </div>
-      <div class="bank" v-if="cek.expired != ''">
+      <div class="bank" v-if="cek.expired != '' && cek">
         <div>Kadaluarsa VA</div>
         <div v-if="!today">{{ kadaluarsaVa }}</div>
         <div v-else>Expired</div>
@@ -257,7 +257,7 @@ export default {
         ref: vm.$store.state.payment.trx_id,
         va: vm.Va,
       });
-      // console.log(cek, "cek");
+      console.log(cek, "cek");
       vm.cek = await cek.data.data[0];
       vm.expired = vm.$moment(vm.cek.expired, "YYMMDDHHmm");
       vm.setTimer();

@@ -80,6 +80,7 @@ const mutations = {
     state.kode_otp = value;
   },
   set_payment(state, value) {
+    state.payment = null
     state.payment = value;
   },
   set_data_biodata(state, value) {

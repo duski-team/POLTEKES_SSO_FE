@@ -592,10 +592,8 @@ export default {
     },
   },
   mounted() {
-    // if (!this.$store.state.biodata || !this.$store.state.app) {
     this.getData();
-    // }
-    this.getTagihan();
+    // this.getTagihan();
   },
   methods: {
     async getData() {
@@ -634,6 +632,7 @@ export default {
     },
     async getTagihan() {
       let vm = this;
+      vm.$store.dispatch("set_loading", true);
       let tagihan = await vm.$axiosbilling.post(
         "detailsTagihanStudi/listDetailsTagihanStudiByNIM",
         {
