@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="cara-box">
+  <div class="row">
+    <div class="col cara-box">
       <div class="bank">
         <div>Total Tagihan</div>
         <div>Rp. {{ convert($store.state.payment.totalTagihan) }}</div>

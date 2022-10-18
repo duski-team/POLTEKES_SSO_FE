@@ -5,16 +5,18 @@
         <h5 class="card-title">PILIH METODE PEMBAYARAN</h5>
       </div>
       <div class="card-body">
-        <div class="transfer">
-          <div v-if="show != 1" @click="show = 1">
+        <!-- <div class="transfer"> -->
+        <!-- <div v-if="show != 1" @click="show = 1">
             <font-awesome-icon
               icon="fa-solid fa-arrow-left"
               size="2x"
               style="padding-left: 1.5rem"
             />
-          </div>
-          <div v-else><h5 class="transfer-title">TRANSFER BANK</h5></div>
+          </div> -->
+        <div v-if="show == 1">
+          <h5 class="transfer-title">TRANSFER BANK</h5>
         </div>
+        <!-- </div> -->
         <div v-if="show == 1">
           <div class="box-bank" @click="(show = 2), (bank = 'BNI')">
             <img src="@/assets/BNILOGO.png" alt="" class="img-bank" />
@@ -25,9 +27,9 @@
           <div class="box-bank" @click="(show = 2), (bank = 'BSI')">
             <img src="@/assets/BSILOGO.png" alt="" class="img-bank" />
           </div>
-          <!-- <div class="box-bank" @click="(show = 2), (bank = 'MANDIRI')">
+          <div class="box-bank" @click="(show = 2), (bank = 'MANDIRI')">
             <img src="@/assets/MANDIRILOGO.png" alt="" class="img-bank" />
-          </div> -->
+          </div>
         </div>
         <div class="cara" v-if="show == 2 && bank == 'BNI'">
           <CBNI :tagihan="tagihan" />
@@ -38,9 +40,9 @@
         <div class="cara" v-if="show == 2 && bank == 'BTN'">
           <CBTN :tagihan="tagihan" />
         </div>
-        <!-- <div class="cara" v-if="show == 2 && bank == 'MANDIRI'">
+        <div class="cara" v-if="show == 2 && bank == 'MANDIRI'">
           <CMANDIRI :tagihan="tagihan" />
-        </div> -->
+        </div>
       </div>
 
       <div class="card-footer">
@@ -62,9 +64,9 @@
 import CBNI from "./CBNI.vue";
 import CBSI from "./CBSI.vue";
 import CBTN from "./CBTN.vue";
-// import CMANDIRI from "./CMANDIRIs.vue";
+import CMANDIRI from "./CMANDIRIs.vue";
 export default {
-  components: { CBNI, CBSI, CBTN},
+  components: { CBNI, CBSI, CBTN, CMANDIRI },
   props: ["open", "tagihan"],
   data() {
     return {
@@ -93,7 +95,8 @@ export default {
 .card {
   padding: 3rem 1.75rem;
   position: absolute;
-  width: 540px;
+  min-width: 440px;
+  max-width: 540px;
   /* left: calc((100% - 540px) / 2); */
   /* min-height: 80%; */
   backdrop-filter: blur(0.09rem);
@@ -101,6 +104,14 @@ export default {
   /* top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); */
+}
+
+.card-header {
+  background-color: white;
+}
+
+.card-title {
+  font-weight: bolder;
 }
 
 .transfer {
@@ -114,6 +125,7 @@ export default {
   font-weight: 200;
   text-align: start;
   margin-left: 20px;
+  font-weight: 700;
 }
 
 .box-bank {

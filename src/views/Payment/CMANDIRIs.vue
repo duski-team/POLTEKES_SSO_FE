@@ -28,19 +28,18 @@
           <button
             class="btn btn-outline-success CreateVa"
             @click="createVA()"
-            v-if="cek.createdate == '000000' || today"
+            v-if="!cek.masa_berlaku_va || today"
           >
             Create Virtual Account
           </button>
         </center>
       </div>
-
       <div class="mb-4 mt-4">
         <center>
           <button
             class="btn btn-outline-success CreateVa"
-            @click="printBTN()"
-            v-if="cek.createdate != '000000' && !today"
+            @click="printMandiri()"
+            v-if="cek.masa_berlaku_va && !today"
           >
             Simpan Tagihan
           </button>
@@ -50,7 +49,7 @@
       <div
         @click="cara = !cara"
         style="margin-bottom: 20px"
-        v-if="cek.createdate != '000000'"
+        v-if="!cek.masa_berlaku_va"
       >
         <font-awesome-icon icon="fa-regular fa-circle-question" />
         <span> Cara Bayar </span>
@@ -60,7 +59,7 @@
         /><font-awesome-icon v-else icon="fa-regular fa-square-caret-down" />
       </div>
 
-      <div v-if="cek.createdate != '000000'">
+      <div v-if="cek.masa_berlaku_va">
         <div @click="steps('ATM')" class="card-cara">
           <div class="card-cara-button">
             <span>ATM</span>
@@ -87,11 +86,17 @@
             </div>
             <div class="text-cara-line">
               <p>4.</p>
-              <p>Masukkan kode biller perusahaan (biasanya sudah tercantum di instruksi pembayaran).</p>
+              <p>
+                Masukkan kode biller perusahaan (biasanya sudah tercantum di
+                instruksi pembayaran).
+              </p>
             </div>
             <div class="text-cara-line">
               <p>5.</p>
-              <p>Masukkan nomor Virtual account <span style="color: green">{{ Va }}</span> > Benar.</p>
+              <p>
+                Masukkan nomor Virtual account
+                <span style="color: green">{{ Va }}</span> > Benar.
+              </p>
             </div>
             <div class="text-cara-line">
               <p>6.</p>
@@ -103,9 +108,7 @@
             </div>
             <div class="text-cara-line">
               <p>8.</p>
-              <p>
-                Selesai.
-              </p>
+              <p>Selesai.</p>
             </div>
             <!-- <div class="text-cara-line">
               <p>9.</p>
@@ -138,9 +141,7 @@
           <div v-if="step == 'IB'" class="mt-4">
             <div class="text-cara-line">
               <p>1.</p>
-              <p>
-                Buka aplikasi m-banking.
-              </p>
+              <p>Buka aplikasi m-banking.</p>
             </div>
             <div class="text-cara-line">
               <p>2.</p>
@@ -152,26 +153,25 @@
             </div>
             <div class="text-cara-line">
               <p>4.</p>
-              <p>
-                Pilih Penyedia Jasa yang digunakan > Lanjut.
-                
-              </p>
+              <p>Pilih Penyedia Jasa yang digunakan > Lanjut.</p>
             </div>
             <div class="text-cara-line">
               <p>5.</p>
-              <p>Masukkan nomor Virtual account <span style="color: green">{{ Va }}</span> > Lanjut.</p>
+              <p>
+                Masukkan nomor Virtual account
+                <span style="color: green">{{ Va }}</span> > Lanjut.
+              </p>
             </div>
             <div class="text-cara-line">
               <p>6.</p>
               <p>
-                Layar akan menampilkan konfirmasi. Jika sudah sesuai, masukkan PIN transaksi dan akhiri dengan OK.
+                Layar akan menampilkan konfirmasi. Jika sudah sesuai, masukkan
+                PIN transaksi dan akhiri dengan OK.
               </p>
             </div>
             <div class="text-cara-line">
               <p>7.</p>
-              <p>
-                Selesai.
-              </p>
+              <p>Selesai.</p>
             </div>
             <!-- <div class="text-cara-line">
               <p>8.</p>
@@ -205,7 +205,9 @@ export default {
     Va() {
       let vm = this;
       let x = vm.$store.state.biodata.identity;
-      return vm.$store.state.btn_prefix + x.substring(x.length - 8);
+      return (
+        vm.$store.state.mandiri_client_id + "000" + x.substring(x.length - 8)
+      );
     },
     kadaluarsaVa() {
       let vm = this;
@@ -226,13 +228,14 @@ export default {
     },
     today() {
       let vm = this;
-      let x = vm.$moment(vm.cek.expired) < vm.$moment();
-      // console.log(
-      //   vm.$moment().add(1, "days"),
-      //   "moment",
-      //   this.cek.expired,
-      //   "exp"
-      // );
+      let x = vm.$moment(this.cek.masa_berlaku_va) <= vm.$moment();
+      console.log(
+        vm.$moment().format("lll"),
+        "moment",
+        vm.cek.masa_berlaku_va,
+        "exp",
+        x
+      );
       return x;
     },
   },
@@ -250,15 +253,19 @@ export default {
     async cekCreated() {
       let vm = this;
       vm.$store.dispatch("set_loading", true);
-      let cek = await vm.$axiosbilling.post("btn/detailsById", {
-        ref: vm.$store.state.payment.trx_id,
-        va: vm.Va,
+      let cek = await vm.$axiosbilling.post("mandiri/detailsById", {
+        trx_id: vm.$store.state.payment.trx_id,
       });
-      // console.log(cek, "cek");
-      vm.cek = await cek.data.data[0];
-      vm.expired = vm.$moment(vm.cek.expired, "YYMMDDHHmm");
-      vm.setTimer();
-      vm.$store.dispatch("set_loading", false);
+      console.log(cek, "cek");
+      if (cek.status == 200) {
+        vm.cek = await cek.data.data[0];
+        vm.expired = vm.$moment(vm.cek.masa_berlaku_va);
+        vm.setTimer();
+        vm.$store.dispatch("set_loading", false);
+      } else {
+        vm.cek = cek.data.message;
+        vm.$store.dispatch("set_loading", false);
+      }
     },
     setTimer() {
       let vm = this;
@@ -272,7 +279,7 @@ export default {
     async createVA() {
       let vm = this;
       vm.$store.dispatch("set_loading", true);
-      let create = await vm.$axiosbilling.post("btn/register", {
+      let create = await vm.$axiosbilling.post("mandiri/register", {
         nim: vm.$store.state.biodata.identity,
       });
       console.log(create);
@@ -307,11 +314,11 @@ export default {
         return x.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
       }
     },
-    printBTN() {
+    printMandiri() {
       let vm = this;
       window.open(
         vm.ip2 +
-          "/detailsTagihanStudi/downloadTagihanBTN/" +
+          "/detailsTagihanStudi/downloadTagihanMandiri/" +
           vm.$store.state.biodata.identity,
         "_blank"
       );
@@ -323,6 +330,12 @@ export default {
 <style scoped>
 .container-fluid {
   overflow-y: auto;
+  /* border-top-color: rgba(225, 225, 225, 0.5);
+  border-left-color: rgba(225, 225, 225, 0.5);
+  border-bottom-color: rgba(225, 225, 225, 0.1);
+  border-right-color: rgba(225, 225, 225, 0.1); */
+  background-color: rgba(225, 225, 225, 0.1);
+  box-shadow: 0.25rem 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.1);
 }
 .cara-box {
   min-height: 80%;
@@ -336,7 +349,7 @@ export default {
   border-right-color: rgba(225, 225, 225, 0.1); */
   /* background-color: rgba(225, 225, 225, 0.1); */
   /* box-shadow: 1rem 1rem 1rem 1rem rgba(0, 0, 0, 0.1); */
-  background-color: rgba(225, 225, 225, 0.5);
+  /* background-color: rgba(225, 225, 225, 0.5); */
   padding: 5px;
 }
 .card-cara {

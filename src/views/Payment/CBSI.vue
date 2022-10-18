@@ -1,6 +1,6 @@
 <template>
-  <div class="container-fluid">
-    <div class="cara-box">
+  <div class="row">
+    <div class="col cara-box">
       <div class="bank">
         <div>Total Tagihan</div>
         <div>Rp. {{ convert($store.state.payment.totalTagihan) }}</div>
@@ -248,7 +248,7 @@ export default {
       let cek = await vm.$axiosbilling.post("bsi/detailsById", {
         trx_id: vm.$store.state.payment.trx_id,
       });
-      // console.log(cek.data.data, "cek");
+      console.log(cek.data.data, "cek");
       vm.cek = cek.data.data[0];
       vm.setTimer();
       vm.$store.dispatch("set_loading", false);

@@ -27,6 +27,7 @@ const state = {
   bni_client_id: "29873",
   bni_prefix: "988",
   btn_prefix: "95673000000",
+  mandiri_client_id:"88976",
   payment: "",
 };
 
@@ -198,7 +199,9 @@ const modules = {};
 //     removeItem: key => Cookies.remove(key)
 //   }
 // })];
-const plugins = [createPersistedState()];
+const plugins = [createPersistedState({
+  key:'SSO'
+})];
 export default new createStore({
   state,
   mutations,

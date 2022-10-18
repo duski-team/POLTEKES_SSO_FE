@@ -1,6 +1,6 @@
 <template>
-  <div class="container-fluid">
-    <div class="cara-box">
+  <div class="row">
+    <div class="col cara-box">
       <div class="bank">
         <div>Total Tagihan</div>
         <div>Rp. {{ convert($store.state.payment.totalTagihan) }}</div>
@@ -229,12 +229,15 @@ export default {
     },
     today() {
       let vm = this;
-      let x = vm.$moment(vm.cek.expired) < vm.$moment();
+      // let now = vm.$moment();
+      let x = vm.$moment(this.cek.expired) <= vm.$moment();
+      // let x = vm.$moment.duration(vm.cek.expired.diff(now)) > 0;
       // console.log(
-      //   vm.$moment().add(1, "days"),
+      //  vm.$moment().format("lll"),
       //   "moment",
-      //   this.cek.expired,
-      //   "exp"
+      //  vm.cek.expired,
+      //   "exp",
+      //   x
       // );
       return x;
     },

@@ -67,7 +67,7 @@
                     </span>
                   </div>
                 </div>
-                <div class="row box-checkout" style="margin-top: 15mm">
+                <div class="row box-checkout" style="margin-top: 5mm">
                   <center>
                     <button
                       class="btn btn-checkout"

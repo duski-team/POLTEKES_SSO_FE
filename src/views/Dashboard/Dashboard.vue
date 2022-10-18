@@ -37,7 +37,7 @@
                   alt="user photo profil"
                 />
               </div>
-              <div class="nama">
+              <div class="nama text-center">
                 <p>{{ $store.state.biodata.nama_lengkap_users }}</p>
               </div>
               <div class="role">
@@ -584,16 +584,16 @@ export default {
   },
   computed: {
     deadline() {
-      let x =
-        this.$moment().format("lll") >
-        this.$moment(this.$store.state.payment.bayar_tutup).format("lll");
-      // console.log(x, this.$moment().format('lll'), this.$moment(this.$store.state.payment.bayar_tutup).format('lll'));
+      let x = this.$moment().diff(this.$moment(this.$store.state.payment.bayar_tutup), "seconds") > 0
+        // this.$moment().format("lll") >
+        // this.$moment(this.$store.state.payment.bayar_tutup).format("lll");
+      console.log(x, this.$moment().format('lll'), this.$moment(this.$store.state.payment.bayar_tutup).format('lll'));
       return x;
     },
   },
   mounted() {
     this.getData();
-    // this.getTagihan();
+    this.getTagihan();
   },
   methods: {
     async getData() {

@@ -4,8 +4,8 @@ import "moment/locale/id";
 import store from "@/store/index.js";
 import qs from "qs";
 
-// const ip = "http://localhost:8104/";
-const ip = "https://billing.poltekkes-smg.ac.id/api/";
+const ip = "http://localhost:8104/";
+// const ip = "https://billing.poltekkes-smg.ac.id/api/";
 const ipsso = "https://sso.poltekkes-smg.ac.id/api/";
 
 // export function setToken(token) {
