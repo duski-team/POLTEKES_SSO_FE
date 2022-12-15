@@ -82,14 +82,11 @@
             </div>
             <div class="text-cara-line">
               <p>3.</p>
-              <p>Pilih opsi Lainnya > Multipayment.</p>
+              <p>Kemudian Pilih submenu Pendidikan.</p>
             </div>
             <div class="text-cara-line">
               <p>4.</p>
-              <p>
-                Masukkan kode biller perusahaan (biasanya sudah tercantum di
-                instruksi pembayaran).
-              </p>
+              <p>Masukkan kode Institusi 88976.</p>
             </div>
             <div class="text-cara-line">
               <p>5.</p>
@@ -100,7 +97,12 @@
             </div>
             <div class="text-cara-line">
               <p>6.</p>
-              <p>Masukkan angka yang diminta untuk memilih tagihan > Ya.</p>
+              <p>
+                Layar Akan menampilkan
+                <span style="color: green">NOMOR VA, NAMA, dan KET</span>
+                kemudian tekan <span style="color: green">1</span> jika data
+                telah sesuai
+              </p>
             </div>
             <div class="text-cara-line">
               <p>7.</p>
@@ -110,20 +112,6 @@
               <p>8.</p>
               <p>Selesai.</p>
             </div>
-            <!-- <div class="text-cara-line">
-              <p>9.</p>
-              <p>
-                Tagihan yang harus dibayarkan akan muncul pada layar konfirmasi
-              </p>
-            </div>
-            <div class="text-cara-line">
-              <p>10.</p>
-              <p>Konfirmasi, apabila telah sesuai, lanjutkan transaksi</p>
-            </div>
-            <div class="text-cara-line">
-              <p>11.</p>
-              <p>Transaksi Anda telah selesai</p>
-            </div> -->
           </div>
         </div>
 
@@ -149,11 +137,11 @@
             </div>
             <div class="text-cara-line">
               <p>3.</p>
-              <p>Pilih menu Bayar > One Time > Multipayment.</p>
+              <p>Pilih menu Bayar > Pendidikan.</p>
             </div>
             <div class="text-cara-line">
               <p>4.</p>
-              <p>Pilih Penyedia Jasa yang digunakan > Lanjut.</p>
+              <p>Masukkan kode Institusi 88976 atau ketik POLKESMAR.</p>
             </div>
             <div class="text-cara-line">
               <p>5.</p>
@@ -165,22 +153,19 @@
             <div class="text-cara-line">
               <p>6.</p>
               <p>
-                Layar akan menampilkan konfirmasi. Jika sudah sesuai, masukkan
-                PIN transaksi dan akhiri dengan OK.
+                Layar akan menampilkan
+                <span style="color: green">NOMOR VA, NAMA, dan KET</span>. Jika
+                sudah sesuai kemudian tekan lanjut Bayar jika data telah sesuai.
               </p>
             </div>
             <div class="text-cara-line">
               <p>7.</p>
-              <p>Selesai.</p>
-            </div>
-            <!-- <div class="text-cara-line">
-              <p>8.</p>
-              <p>Tekan “Kirim”</p>
+              <p>Untuk melakukan eksekusi masukkan PIN transaksi anda.</p>
             </div>
             <div class="text-cara-line">
-              <p>9.</p>
-              <p>Pembayaran Anda Telah Berhasil</p>
-            </div> -->
+              <p>8.</p>
+              <p>Selesai.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -229,13 +214,13 @@ export default {
     today() {
       let vm = this;
       let x = vm.$moment(this.cek.masa_berlaku_va) <= vm.$moment();
-      console.log(
-        vm.$moment().format("lll"),
-        "moment",
-        vm.cek.masa_berlaku_va,
-        "exp",
-        x
-      );
+      // console.log(
+      //   vm.$moment().format("lll"),
+      //   "moment",
+      //   vm.cek.masa_berlaku_va,
+      //   "exp",
+      //   x
+      // );
       return x;
     },
   },
@@ -253,7 +238,7 @@ export default {
     async cekCreated() {
       let vm = this;
       vm.$store.dispatch("set_loading", true);
-      let cek = await vm.$axiosbilling.post("mandiri/detailsById", {
+      let cek = await vm.$axiosbilling.post("va/mandiri/detailsById", {
         trx_id: vm.$store.state.payment.trx_id,
       });
       console.log(cek, "cek");
@@ -279,7 +264,7 @@ export default {
     async createVA() {
       let vm = this;
       vm.$store.dispatch("set_loading", true);
-      let create = await vm.$axiosbilling.post("mandiri/register", {
+      let create = await vm.$axiosbilling.post("va/mandiri/register", {
         nim: vm.$store.state.biodata.identity,
       });
       console.log(create);
