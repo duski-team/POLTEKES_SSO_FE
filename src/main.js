@@ -15,6 +15,7 @@ import ip2 from "@/ip2";
 import "bootstrap/dist/js/bootstrap.js";
 import qs from "qs";
 import ipsso from "@/axios/sso.js";
+import ipsimadu from "@/axios/simadu.js";
 import ipbilling from "@/axios/billing.js";
 import VueCookies from "vue-cookies";
 
@@ -44,6 +45,7 @@ const app = createApp(App)
 
 app.config.globalProperties.$axios = ipsso;
 app.config.globalProperties.$axiosbilling = ipbilling;
+app.config.globalProperties.$axiossimadu = ipsimadu;
 app.config.globalProperties.$moment = moment;
 app.config.globalProperties.ip = ip;
 app.config.globalProperties.ip2 = ip2;

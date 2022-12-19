@@ -37,7 +37,7 @@
               }}</span>
             </div> -->
             <div class="input-box">
-              <span class="details">Email Official *</span>
+              <span class="details">Akun Official *</span>
               <div class="input-group2">
                 <input
                   class="input2"
@@ -149,7 +149,7 @@
               }}</span>
             </div> -->
             <div class="input-box">
-              <span class="details">Email Official *</span>
+              <span class="details">Akun Official *</span>
               <input
                 type="text"
                 placeholder="Masukkan email lengkap"
@@ -341,7 +341,7 @@ export default {
       }
     },
     ihir() {
-      console.log(this.data.usernamex);
+      // console.log(this.data.usernamex);
     },
   },
 };

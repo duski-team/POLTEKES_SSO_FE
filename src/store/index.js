@@ -27,8 +27,9 @@ const state = {
   bni_client_id: "29873",
   bni_prefix: "988",
   btn_prefix: "95673000000",
-  mandiri_client_id:"88976",
-  payment: "",
+  mandiri_client_id: "88976",
+  payment: null,
+  semester: null
 };
 
 const mutations = {
@@ -81,7 +82,7 @@ const mutations = {
     state.kode_otp = value;
   },
   set_payment(state, value) {
-    state.payment = null
+    state.payment = null;
     state.payment = value;
   },
   set_data_biodata(state, value) {
@@ -134,6 +135,9 @@ const mutations = {
   biodata_foto(state, value) {
     state.biodata.foto = value;
   },
+  set_semester(state,value){
+    state.semester = value
+  }
 };
 const actions = {
   save_token_login({ commit }, log_respon) {
@@ -199,9 +203,11 @@ const modules = {};
 //     removeItem: key => Cookies.remove(key)
 //   }
 // })];
-const plugins = [createPersistedState({
-  key:'SSO'
-})];
+const plugins = [
+  createPersistedState({
+    key: "SSO",
+  }),
+];
 export default new createStore({
   state,
   mutations,

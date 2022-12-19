@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div v-if="$store.state.biodata"><Header /></div>
+    <div v-if="biodata"><Header /></div>
     <div class="container">
       <div
-        v-if="$store.state.biodata"
+        v-if="biodata"
         class="alert alert-success alert-dismissible fade show"
         role="alert"
       >
         <p>
           <strong>Welcome!</strong>
-          {{ $store.state.biodata.nama_lengkap_users }}
+          {{ biodata.nama_lengkap_users }}
         </p>
         <button
           type="button"
@@ -19,16 +19,16 @@
         ></button>
       </div>
       <div class="d-none d-sm-block">
-        <section v-if="$store.state.biodata" class="glass">
+        <section v-if="biodata" class="glass">
           <div class="dashboard">
             <div class="user">
               <div>
                 <img
                   v-if="!backup"
                   class="foto mb-3"
-                  :src="$store.state.biodata.foto"
+                  :src="biodata.foto"
                   alt="user photo profil"
-                  @error="set_no_profil($store.state.biodata.foto)"
+                  @error="set_no_profil(biodata.foto)"
                 />
                 <img
                   v-else
@@ -38,21 +38,21 @@
                 />
               </div>
               <div class="nama text-center">
-                <p>{{ $store.state.biodata.nama_lengkap_users }}</p>
+                <p>{{ biodata.nama_lengkap_users }}</p>
               </div>
               <div class="role">
-                <div v-if="$store.state.biodata.role == 'pegawai'">
+                <div v-if="biodata.role == 'pegawai'">
                   <p class="mr-1">TENDIK</p>
                 </div>
                 <div v-else>
                   <p class="mr-1">
-                    {{ $store.state.biodata.role.toUpperCase() }}
+                    {{ biodata.role.toUpperCase() }}
                   </p>
                 </div>
                 <div><p>|</p></div>
                 <div>
                   <p class="ml-1" style="color: #027a48">
-                    <strong>{{ $store.state.biodata.identity }}</strong>
+                    <strong>{{ biodata.identity }}</strong>
                   </p>
                 </div>
               </div>
@@ -69,7 +69,7 @@
             <div class="line"></div>
             <div
               class="jurusan-wrapper mt-3"
-              v-if="$store.state.biodata.role == 'mahasiswa'"
+              v-if="biodata.role == 'mahasiswa'"
             >
               <h5 style="line-height: 14px">
                 {{ $store.state.profil.f_jenjang }}
@@ -80,20 +80,14 @@
             </div>
             <div
               class="jurusan-wrapper mt-3"
-              v-if="
-                $store.state.biodata.role == 'dosen' ||
-                $store.state.biodata.role == 'pegawai'
-              "
+              v-if="biodata.role == 'dosen' || biodata.role == 'pegawai'"
             >
               <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
               <p style="line-height: 14px; font-size: 14px">
                 {{ $store.state.profil.skpd }}
               </p>
             </div>
-            <div
-              class="jurusan-wrapper mt-3"
-              v-if="$store.state.biodata.role == 'admin'"
-            >
+            <div class="jurusan-wrapper mt-3" v-if="biodata.role == 'admin'">
               <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
               <p style="line-height: 14px; font-size: 14px">Admin</p>
             </div>
@@ -165,11 +159,8 @@
               </div>
             </div>
           </div> -->
-          <div class="toolsdemo text-start" v-if="$store.state.payment">
-            <div
-              class="box-info"
-              v-if="$store.state.payment.status_tagihan == 1"
-            >
+          <div class="toolsdemo text-start" v-if="payment">
+            <div class="box-info" v-if="payment.status_tagihan == 1">
               <div class="row">
                 <div class="col">
                   <!-- <div class="d-flex justify-content-between" style="width: 80%">
@@ -183,41 +174,47 @@
                     Status anda adalah Mahasiswa Aktif Poltekkes Kemenkes
                     Semarang.
                   </div>
+                  <!-- <div class="text-tagihan">
+                    Prodi {{ payment.nama_prodi }} 
+                  </div> -->
                   <div class="text-tagihan">
-                    Pada Semester Ganjil Tahun Akademik 2022
+                    Pada Semester {{ semester.nama_semester }}
                   </div>
 
                   <div class="text-tagihan">
-                    <span style="color: grey">Email Official</span> anda akan
+                    <span style="color: grey">Akun Official</span> anda akan
                     aktif dalam 2 x 24 jam setelah status anda aktif
                   </div>
                 </div>
               </div>
             </div>
-            <div
-              class="box-info"
-              v-if="$store.state.payment.status_tagihan == 0"
-            >
+            <div class="box-info" v-if="payment.status_tagihan == 0">
               <div class="row">
                 <div class="col">
                   <div class="text-tagihan">
-                    Halo, {{ $store.state.biodata.nama_lengkap_users }} (
-                    {{ $store.state.biodata.identity }} )
+                    Halo, {{ biodata.nama_lengkap_users }} (
+                    {{ biodata.identity }} )
                   </div>
+                  <!-- <div class="text-tagihan">Prodi {{ payment.nama_prodi }} </div> -->
                   <div class="text-tagihan">
                     Anda memiliki tagihan biaya pendidikan sebesar :
                   </div>
                   <div class="text-tagihan">
-                    Rp. {{ convert($store.state.payment.totalTagihan) }}
-                    <span style="color: grey">pada semester Ganjil 2022</span>
+                    Rp. {{ convert(payment.totalTagihan) }}
+                    <span style="color: grey"
+                      >pada semester
+                      {{ $store.state.semester.nama_semester }}</span
+                    >
                   </div>
-                  <div v-if="!deadline">
-                    <button
+                  <div v-if="!deadline" class="text-tagihan">
+                    Silahkan Lakukan Pembayaran Biaya Studi Melalui Aplikasi
+                    Simadu V2
+                    <!-- <button
                       class="button-payment"
                       @click="$router.push('/payment')"
                     >
                       Bayar Sekarang
-                    </button>
+                    </button> -->
                   </div>
                   <div v-else class="text-tagihan">
                     Periode Pembayaran sudah berakhir untuk melanjutkan silahkan
@@ -225,7 +222,7 @@
                     Semarang
                   </div>
                   <div class="text-invoice">
-                    NO. INVOICE : {{ $store.state.payment.trx_id }}
+                    NO. INVOICE : {{ payment.trx_id }}
                   </div>
                 </div>
               </div>
@@ -234,7 +231,7 @@
         </section>
       </div>
       <div class="d-xl-none d-lg-none d-md-none">
-        <section v-if="$store.state.biodata">
+        <section v-if="biodata">
           <div class="row glass-hp">
             <div class="col">
               <div class="dashboard-hp">
@@ -243,7 +240,7 @@
                     <img
                       v-if="!backup"
                       class="foto mb-3"
-                      :src="$store.state.biodata.foto"
+                      :src="biodata.foto"
                       alt="user photo profil"
                       @error="backup = true"
                     />
@@ -255,21 +252,21 @@
                     />
                   </div>
                   <div class="nama">
-                    <p>{{ $store.state.biodata.nama_lengkap_users }}</p>
+                    <p>{{ biodata.nama_lengkap_users }}</p>
                   </div>
                   <div class="role">
-                    <div v-if="$store.state.biodata.role == 'pegawai'">
+                    <div v-if="biodata.role == 'pegawai'">
                       <p class="mr-1">TENDIK</p>
                     </div>
                     <div v-else>
                       <p class="mr-1">
-                        {{ $store.state.biodata.role.toUpperCase() }}
+                        {{ biodata.role.toUpperCase() }}
                       </p>
                     </div>
                     <div><p>|</p></div>
                     <div>
                       <p class="ml-1" style="color: #027a48">
-                        <strong>{{ $store.state.biodata.identity }}</strong>
+                        <strong>{{ biodata.identity }}</strong>
                       </p>
                     </div>
                   </div>
@@ -286,7 +283,7 @@
                 <div class="line"></div>
                 <div
                   class="jurusan-wrapper mt-3 text-center"
-                  v-if="$store.state.biodata.role == 'mahasiswa'"
+                  v-if="biodata.role == 'mahasiswa'"
                 >
                   <h5 style="line-height: 14px">
                     {{ $store.state.profil.f_jenjang }}
@@ -297,10 +294,7 @@
                 </div>
                 <div
                   class="jurusan-wrapper mt-3 text-center"
-                  v-if="
-                    $store.state.biodata.role == 'dosen' ||
-                    $store.state.biodata.role == 'pegawai'
-                  "
+                  v-if="biodata.role == 'dosen' || biodata.role == 'pegawai'"
                 >
                   <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
                   <p style="line-height: 14px; font-size: 14px">
@@ -309,7 +303,7 @@
                 </div>
                 <div
                   class="jurusan-wrapper mt-3 text-center"
-                  v-if="$store.state.biodata.role == 'admin'"
+                  v-if="biodata.role == 'admin'"
                 >
                   <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
                   <p style="line-height: 14px; font-size: 14px">Admin</p>
@@ -404,11 +398,8 @@
               </div>
             </div>
           </div> -->
-          <div class="toolsdemo-hp text-start" v-if="$store.state.payment">
-            <div
-              class="box-info"
-              v-if="$store.state.payment.status_tagihan == 1"
-            >
+          <div class="toolsdemo-hp text-start" v-if="payment">
+            <div class="box-info" v-if="payment.status_tagihan == 1">
               <div class="row">
                 <div class="col">
                   <!-- <div class="d-flex justify-content-between" style="width: 80%">
@@ -422,49 +413,50 @@
                     Status anda adalah Mahasiswa Aktif Poltekkes Kemenkes
                     Semarang.
                   </div>
+                  <!-- <div class="text-tagihan">Prodi {{ payment.nama_prodi }}</div> -->
                   <div class="text-tagihan">
-                    Pada Semester Ganjil Tahun Akademik 2022
+                    Pada Semester {{ $store.state.semester.nama_semester }}
                   </div>
 
                   <div class="text-tagihan">
-                    <span style="color: grey">Email Official</span> anda akan
+                    <span style="color: grey">Akun Official</span> anda akan
                     aktif dalam 2 x 24 jam setelah status anda aktif
                   </div>
                 </div>
               </div>
             </div>
-            <div
-              class="box-info"
-              v-if="$store.state.payment.status_tagihan == 0"
-            >
+            <div class="box-info" v-if="payment.status_tagihan == 0">
               <div class="row">
                 <div class="col">
                   <div class="text-tagihan">
-                    Halo, {{ $store.state.biodata.nama_lengkap_users }} (
-                    {{ $store.state.biodata.identity }} )
+                    Halo, {{ biodata.nama_lengkap_users }}
                   </div>
+                  <div class="text-tagihan">({{ biodata.identity }} )</div>
+                  <!-- <div class="text-tagihan">({{ payment.nama_prodi }} )</div> -->
                   <div class="text-tagihan">
                     Anda memiliki tagihan biaya pendidikan sebesar :
                   </div>
                   <div class="text-tagihan">
-                    Rp. {{ convert($store.state.payment.totalTagihan) }}
+                    Rp. {{ convert(payment.totalTagihan) }}
                     <span style="color: grey">pada semester Ganjil 2022</span>
                   </div>
-                  <div v-if="!deadline">
-                    <button
+                  <div v-if="!deadline" class="text-tagihan text-justify">
+                    Silahkan Lakukan Pembayaran Biaya Studi Melalui Aplikasi
+                    Simadu V2
+                    <!-- <button
                       class="button-payment"
                       @click="$router.push('/payment')"
                     >
                       Bayar Sekarang
-                    </button>
+                    </button> -->
                   </div>
-                  <div v-else class="text-tagihan">
+                  <div v-else class="text-tagihan text-justify">
                     Periode Pembayaran sudah berakhir untuk melanjutkan silahkan
-                    hubungi bagian administrasi Kampus Poltekkes Kemenkkes
+                    hubungi bagian administrasi Kampus Poltekkes Kemenkes
                     Semarang
                   </div>
                   <div class="text-invoice">
-                    NO. INVOICE : {{ $store.state.payment.trx_id }}
+                    NO. INVOICE : {{ payment.trx_id }}
                   </div>
                 </div>
               </div>
@@ -576,7 +568,6 @@ export default {
   },
   data() {
     return {
-      biodata: "",
       app: "",
       popup: "",
       backup: false,
@@ -584,11 +575,26 @@ export default {
   },
   computed: {
     deadline() {
-      let x = this.$moment().diff(this.$moment(this.$store.state.payment.bayar_tutup), "seconds") > 0
-        // this.$moment().format("lll") >
-        // this.$moment(this.$store.state.payment.bayar_tutup).format("lll");
-      console.log(x, this.$moment().format('lll'), this.$moment(this.$store.state.payment.bayar_tutup).format('lll'));
+      let x =
+        this.$moment().diff(this.$moment(this.payment.bayar_tutup), "seconds") >
+        0;
+      // this.$moment().format("lll") >
+      // this.$moment(this.$store.state.payment.bayar_tutup).format("lll");
+      // console.log(
+      //   x,
+      //   this.$moment().format("lll"),
+      //   this.$moment(this.$store.state.payment.bayar_tutup).format("lll")
+      // );
       return x;
+    },
+    payment() {
+      return this.$store.state.payment;
+    },
+    biodata() {
+      return this.$store.state.biodata;
+    },
+    semester() {
+      return this.$store.state.semester;
     },
   },
   mounted() {
@@ -624,6 +630,10 @@ export default {
           }
         );
         vm.$store.dispatch("payment", tagihan.data.data[0]);
+
+        let semester = await vm.$axiossimadu("semester/listSemesterAKtif");
+        console.log(semester.data.data, "semester");
+        vm.$store.commit("set_semester", semester.data.data[0]);
         vm.$store.dispatch("set_loading", false);
       } catch (error) {
         vm.$store.dispatch("set_loading", false);
