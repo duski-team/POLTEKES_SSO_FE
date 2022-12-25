@@ -168,7 +168,7 @@
                     {{ biodata.identity }} )
                   </div>
                   <div class="text-tagihan">{{ status_mahasiswa }}</div>
-                  <div v-if="payment.status_tagihan == 0">
+                  <div v-if="!lunas">
                     <div class="text-tagihan">
                       Anda memiliki tagihan biaya pendidikan sebesar :
                     </div>
@@ -383,7 +383,7 @@
                   <div class="text-tagihan text-justify">
                     {{ status_mahasiswa }}
                   </div>
-                  <div v-if="payment.status_tagihan == 0">
+                  <div v-if="!lunas">
                     <div class="text-tagihan">
                       Anda memiliki tagihan biaya pendidikan sebesar :
                     </div>
@@ -529,6 +529,12 @@ export default {
       foto: null,
     };
   },
+  created() {
+    this.getData();
+    this.getTagihan();
+    this.get_cuti();
+    this.get_detail_herreg();
+  },
   computed: {
     deadline() {
       let x =
@@ -537,46 +543,63 @@ export default {
       return x;
     },
     payment() {
-      return this.$store.state.payment;
+      if (this.$store.state.payment) {
+        return this.$store.state.payment;
+      } else {
+        return false;
+      }
     },
     biodata() {
       return this.$store.state.biodata;
     },
     semester() {
-      return this.$store.state.semester;
+      if (this.$store.state.semester) {
+        return this.$store.state.semester;
+      } else {
+        return false;
+      }
     },
     isHerreg() {
-      return this.$store.state.herreg;
+      if (this.$store.state.herreg) {
+        return;
+      } else {
+        return false;
+      }
     },
     isCuti() {
-      return this.$store.state.cuti;
+      if (this.$store.state.cuti) {
+        return this.$store.state.cuti;
+      } else {
+        return false;
+      }
+    },
+    lunas() {
+      if (this.payment) {
+        return this.$store.state.payment.status_tagihan >= 1;
+      } else {
+        return false;
+      }
     },
     status_mahasiswa() {
       let vm = this;
-      if (!vm.isCuti && !vm.isHerreg) {
+      if (!vm.isCuti && !vm.isHerreg && vm.semester && vm.payment) {
         return `Anda belum menentukan status akademik anda untuk semester ${this.semester.nama_semester} , silahkan login ke aplikasi Simadu V2 untuk menentukan status akademik anda`;
-      } else if (vm.isCuti) {
+      } else if (vm.isCuti && vm.semester && vm.payment) {
         if (vm.isCuti.status_pengajuan == 1) {
           return "Pengajuan cuti anda sedang di verifikasi";
         } else if (vm.isCuti.status_pengajuan == 0) {
           return "Pengajuan cuti anda ditolak untuk merubah status aktif atau pengajuan banding silahkan login melalui aplikasi Simadu V2";
-        } else if (
-          vm.isCuti.status_pengajuan == 2 &&
-          vm.payment.status_tagihan == 0
-        ) {
+        } else if (vm.isCuti.status_pengajuan == 2 && !vm.lunas) {
           return "Pengajuan cuti anda disetujui untuk melanjutkan segera lunasi tagihan akademik anda melalui aplikasi Simadu V2";
-        } else if (
-          vm.isCuti.status_pengajuan == 3 &&
-          vm.payment.status_tagihan == 1
-        ) {
+        } else if (vm.isCuti.status_pengajuan == 3 && vm.lunas) {
           return `Status anda adalah Mahasiswa Cuti untuk semester ${this.semester.nama_semester} Poltekkes Kemenkes Semarang`;
         } else {
           return "";
         }
-      } else if (vm.isHerreg) {
-        if (vm.isHerreg && vm.payment.status_tagihan == 0) {
+      } else if (vm.isHerreg && vm.semester && vm.payment) {
+        if (vm.isHerreg && !vm.lunas) {
           return `Anda memilih untuk Aktif pada semester ${this.semester.nama_semester}, segera lunasi tagihan anda untuk melanjutkan proses kegiatan akademik  `;
-        } else if (vm.isHerreg && vm.payment.status_tagihan == 1) {
+        } else if (vm.isHerreg && vm.lunas) {
           return `Anda adalah Mahasiswa Aktif semester ${this.semester.nama_semester} Poltekkes Kemenkes Semarang`;
         } else {
           return "";
@@ -585,12 +608,6 @@ export default {
         return "";
       }
     },
-  },
-  mounted() {
-    this.getData();
-    this.getTagihan();
-    this.get_cuti();
-    this.get_detail_herreg();
   },
   methods: {
     async getData() {
@@ -606,7 +623,7 @@ export default {
         vm.$store.commit("set_tahun", tahun_aktif.data.data[0]);
 
         let semester = await vm.$axiossimadu("semester/listSemesterAKtif");
-        console.log(semester.data.data, "semester");
+        // console.log(semester.data.data, "semester");
         vm.$store.commit("set_semester", semester.data.data[0]);
 
         let app = await vm.$axios.get(
@@ -631,15 +648,16 @@ export default {
     },
     async getTagihan() {
       let vm = this;
-      vm.$store.dispatch("set_loading", true);
       let tagihan = await vm.$axiosbilling.post(
         "detailsTagihanStudi/listDetailsTagihanStudiByNIM",
         {
           nim: vm.$store.state.biodata.identity,
         }
       );
-      console.log(tagihan, "tagihan");
-      vm.$store.dispatch("payment", tagihan.data.data[0]);
+      // console.log(tagihan, "tagihan");
+      if (tagihan.data.status == 200) {
+        vm.$store.dispatch("payment", tagihan.data.data[0]);
+      }
     },
 
     async get_cuti() {
@@ -649,8 +667,11 @@ export default {
           NIM: vm.$store.state.biodata.identity,
           semester_id: vm.$store.state.semester.semester_id,
         });
-        console.log(cuti, "cuti", this.$store.state.cuti);
-        vm.$store.commit("set_cuti", cuti.data.data[0]);
+
+        if (cuti.data.status == 200) {
+          vm.$store.commit("set_cuti", cuti.data.data[0]);
+        }
+        // console.log(cuti, "cuti", this.$store.state.cuti);
       } catch (err) {
         console.log(err);
       }
@@ -665,9 +686,11 @@ export default {
           semester_id: vm.$store.state.semester.semester_id,
         }
       );
-      console.log(herreg.data.data, "herreg");
+      // console.log(herreg.data.data, "herreg");
 
-      vm.$store.commit("set_herreg", herreg.data.data[0]);
+      if (herreg.data.status == 200) {
+        vm.$store.commit("set_herreg", herreg.data.data[0]);
+      }
     },
 
     goApp(x) {

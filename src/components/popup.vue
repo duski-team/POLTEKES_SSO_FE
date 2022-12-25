@@ -36,7 +36,7 @@
                   type="checkbox"
                   v-model="status"
                   :value="true"
-                  @change="$store.dispatch('set_popup', status), ihir()"
+                  @change="$store.dispatch('set_popup', status)"
                   id="flexCheckChecked"
                 />
                 <label class="form-check-label" for="flexCheckChecked">
@@ -98,7 +98,7 @@ export default {
         }
         return item;
       });
-      console.log(popup);
+      // console.log(popup);
       if (popup) {
         this.show = true;
       }

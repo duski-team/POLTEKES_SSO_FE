@@ -201,11 +201,11 @@ export default {
       }
     },
   },
-  watch: {
-    isValid: function (val) {
-      console.log(val);
-    },
-  },
+  // watch: {
+  //   isValid: function (val) {
+  //     console.log(val);
+  //   },
+  // },
 };
 </script>
 
