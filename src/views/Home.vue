@@ -155,15 +155,17 @@ export default {
         if (login.status == 200) {
           vm.$store.dispatch("save_token_login", login.data);
           vm.$store.dispatch("set_alert_show_success", "Sukses");
+          vm.get_bio();
           setTimeout(() => {
             vm.$store.dispatch("set_alert_hide");
-          }, 4000);
-          if (vm.$store.state.sso_user_status == 0) {
-            vm.$router.push({ path: "/1stlogin" });
-          } else {
-            vm.$router.push({ path: "/dashboard" });
-          }
-          this.$store.dispatch("set_loading", false);
+            if (vm.$store.state.sso_user_status == 0) {
+              vm.$router.push({ path: "/1stlogin" });
+            } else {
+              vm.$router.push({ path: "/dashboard" });
+            }
+          }, 2000);
+
+          vm.$store.dispatch("set_loading", false);
         } else {
           vm.$store.dispatch("set_alert_show_fail", login.data.message);
           setTimeout(() => {
@@ -184,6 +186,18 @@ export default {
           this.show = true;
           this.$store.dispatch("set_loading", false);
         }
+      }
+    },
+    async get_bio() {
+      let vm = this;
+      let biodata = await vm.$axios.get(
+        "users/detailsById/" + vm.$store.state.sso_user_id
+      );
+      vm.$store.dispatch("set_biodata", biodata.data.data[0]);
+      if (biodata.data.profil[0]) {
+        vm.$store.dispatch("set_profil", biodata.data.profil[0]);
+      } else {
+        vm.$store.dispatch("set_profil", {});
       }
     },
     async recaptcha() {

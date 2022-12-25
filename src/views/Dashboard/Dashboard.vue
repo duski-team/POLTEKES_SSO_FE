@@ -159,70 +159,44 @@
               </div>
             </div>
           </div> -->
-          <div class="toolsdemo text-start" v-if="payment">
-            <div class="box-info" v-if="payment.status_tagihan == 1">
-              <div class="row">
-                <div class="col">
-                  <!-- <div class="d-flex justify-content-between" style="width: 80%">
-                    <button class="button-payment">Lihat Panduan SSO</button>
-
-                    <button class="button-payment">
-                      Lihat Pedoman Akademik
-                    </button>
-                  </div> -->
-                  <div class="text-tagihan">
-                    Status anda adalah Mahasiswa Aktif Poltekkes Kemenkes
-                    Semarang.
-                  </div>
-                  <!-- <div class="text-tagihan">
-                    Prodi {{ payment.nama_prodi }} 
-                  </div> -->
-                  <div class="text-tagihan">
-                    Pada Semester {{ semester.nama_semester }}
-                  </div>
-
-                  <div class="text-tagihan">
-                    <span style="color: grey">Akun Official</span> anda akan
-                    aktif dalam 2 x 24 jam setelah status anda aktif
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="box-info" v-if="payment.status_tagihan == 0">
+          <div class="toolsdemo text-start">
+            <div class="box-info">
               <div class="row">
                 <div class="col">
                   <div class="text-tagihan">
                     Halo, {{ biodata.nama_lengkap_users }} (
                     {{ biodata.identity }} )
                   </div>
-                  <!-- <div class="text-tagihan">Prodi {{ payment.nama_prodi }} </div> -->
-                  <div class="text-tagihan">
-                    Anda memiliki tagihan biaya pendidikan sebesar :
-                  </div>
-                  <div class="text-tagihan">
-                    Rp. {{ convert(payment.totalTagihan) }}
-                    <span style="color: grey"
-                      >pada semester
-                      {{ $store.state.semester.nama_semester }}</span
-                    >
-                  </div>
-                  <div v-if="!deadline" class="text-tagihan">
-                    Silahkan Lakukan Pembayaran Biaya Studi Melalui Aplikasi
-                    Simadu V2
-                    <!-- <button
+                  <div class="text-tagihan">{{ status_mahasiswa }}</div>
+                  <div v-if="payment.status_tagihan == 0">
+                    <div class="text-tagihan">
+                      Anda memiliki tagihan biaya pendidikan sebesar :
+                    </div>
+                    <div class="text-tagihan">
+                      Rp. {{ convert(payment.totalTagihan) }}
+                      <span style="color: grey"
+                        >pada semester
+                        {{ $store.state.semester.nama_semester }}</span
+                      >
+                    </div>
+                    <div v-if="!deadline" class="text-tagihan">
+                      Silahkan Lakukan Pembayaran Biaya Studi Melalui Aplikasi
+                      Simadu V2
+                      <!-- <button
                       class="button-payment"
                       @click="$router.push('/payment')"
                     >
                       Bayar Sekarang
                     </button> -->
-                  </div>
-                  <div v-else class="text-tagihan">
-                    Periode Pembayaran sudah berakhir untuk melanjutkan silahkan
-                    hubungi bagian administrasi Kampus Poltekkes Kemenkkes
-                    Semarang
-                  </div>
-                  <div class="text-invoice">
-                    NO. INVOICE : {{ payment.trx_id }}
+                    </div>
+                    <div v-else class="text-tagihan">
+                      Periode Pembayaran sudah berakhir untuk melanjutkan
+                      silahkan hubungi bagian administrasi Kampus Poltekkes
+                      Kemenkkes Semarang
+                    </div>
+                    <div class="text-invoice">
+                      NO. INVOICE : {{ payment.trx_id }}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -398,65 +372,46 @@
               </div>
             </div>
           </div> -->
-          <div class="toolsdemo-hp text-start" v-if="payment">
-            <div class="box-info" v-if="payment.status_tagihan == 1">
-              <div class="row">
-                <div class="col">
-                  <!-- <div class="d-flex justify-content-between" style="width: 80%">
-                    <button class="button-payment">Lihat Panduan SSO</button>
-
-                    <button class="button-payment">
-                      Lihat Pedoman Akademik
-                    </button>
-                  </div> -->
-                  <div class="text-tagihan">
-                    Status anda adalah Mahasiswa Aktif Poltekkes Kemenkes
-                    Semarang.
-                  </div>
-                  <!-- <div class="text-tagihan">Prodi {{ payment.nama_prodi }}</div> -->
-                  <div class="text-tagihan">
-                    Pada Semester {{ $store.state.semester.nama_semester }}
-                  </div>
-
-                  <div class="text-tagihan">
-                    <span style="color: grey">Akun Official</span> anda akan
-                    aktif dalam 2 x 24 jam setelah status anda aktif
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="box-info" v-if="payment.status_tagihan == 0">
+          <div class="toolsdemo-hp text-start">
+            <div class="box-info">
               <div class="row">
                 <div class="col">
                   <div class="text-tagihan">
                     Halo, {{ biodata.nama_lengkap_users }}
                   </div>
                   <div class="text-tagihan">({{ biodata.identity }} )</div>
-                  <!-- <div class="text-tagihan">({{ payment.nama_prodi }} )</div> -->
-                  <div class="text-tagihan">
-                    Anda memiliki tagihan biaya pendidikan sebesar :
+                  <div class="text-tagihan text-justify">
+                    {{ status_mahasiswa }}
                   </div>
-                  <div class="text-tagihan">
-                    Rp. {{ convert(payment.totalTagihan) }}
-                    <span style="color: grey">pada semester Ganjil 2022</span>
-                  </div>
-                  <div v-if="!deadline" class="text-tagihan text-justify">
-                    Silahkan Lakukan Pembayaran Biaya Studi Melalui Aplikasi
-                    Simadu V2
-                    <!-- <button
+                  <div v-if="payment.status_tagihan == 0">
+                    <div class="text-tagihan">
+                      Anda memiliki tagihan biaya pendidikan sebesar :
+                    </div>
+                    <div class="text-tagihan">
+                      Rp. {{ convert(payment.totalTagihan) }}
+                      <span style="color: grey"
+                        >pada semester
+                        {{ $store.state.semester.nama_semester }}</span
+                      >
+                    </div>
+                    <div v-if="!deadline" class="text-tagihan text-justify">
+                      Silahkan Lakukan Pembayaran Biaya Studi Melalui Aplikasi
+                      Simadu V2
+                      <!-- <button
                       class="button-payment"
                       @click="$router.push('/payment')"
                     >
                       Bayar Sekarang
                     </button> -->
-                  </div>
-                  <div v-else class="text-tagihan text-justify">
-                    Periode Pembayaran sudah berakhir untuk melanjutkan silahkan
-                    hubungi bagian administrasi Kampus Poltekkes Kemenkes
-                    Semarang
-                  </div>
-                  <div class="text-invoice">
-                    NO. INVOICE : {{ payment.trx_id }}
+                    </div>
+                    <div v-else class="text-tagihan text-justify">
+                      Periode pembayaran biaya studi sudah berakhir untuk
+                      melanjutkan silahkan hubungi bagian administrasi Kampus
+                      Poltekkes Kemenkes Semarang
+                    </div>
+                    <div class="text-invoice">
+                      NO. INVOICE : {{ payment.trx_id }}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -571,6 +526,7 @@ export default {
       app: "",
       popup: "",
       backup: false,
+      foto: null,
     };
   },
   computed: {
@@ -578,13 +534,6 @@ export default {
       let x =
         this.$moment().diff(this.$moment(this.payment.bayar_tutup), "seconds") >
         0;
-      // this.$moment().format("lll") >
-      // this.$moment(this.$store.state.payment.bayar_tutup).format("lll");
-      // console.log(
-      //   x,
-      //   this.$moment().format("lll"),
-      //   this.$moment(this.$store.state.payment.bayar_tutup).format("lll")
-      // );
       return x;
     },
     payment() {
@@ -596,25 +545,69 @@ export default {
     semester() {
       return this.$store.state.semester;
     },
+    isHerreg() {
+      return this.$store.state.herreg;
+    },
+    isCuti() {
+      return this.$store.state.cuti;
+    },
+    status_mahasiswa() {
+      let vm = this;
+      if (!vm.isCuti && !vm.isHerreg) {
+        return `Anda belum menentukan status akademik anda untuk semester ${this.semester.nama_semester} , silahkan login ke aplikasi Simadu V2 untuk menentukan status akademik anda`;
+      } else if (vm.isCuti) {
+        if (vm.isCuti.status_pengajuan == 1) {
+          return "Pengajuan cuti anda sedang di verifikasi";
+        } else if (vm.isCuti.status_pengajuan == 0) {
+          return "Pengajuan cuti anda ditolak untuk merubah status aktif atau pengajuan banding silahkan login melalui aplikasi Simadu V2";
+        } else if (
+          vm.isCuti.status_pengajuan == 2 &&
+          vm.payment.status_tagihan == 0
+        ) {
+          return "Pengajuan cuti anda disetujui untuk melanjutkan segera lunasi tagihan akademik anda melalui aplikasi Simadu V2";
+        } else if (
+          vm.isCuti.status_pengajuan == 3 &&
+          vm.payment.status_tagihan == 1
+        ) {
+          return `Status anda adalah Mahasiswa Cuti untuk semester ${this.semester.nama_semester} Poltekkes Kemenkes Semarang`;
+        } else {
+          return "";
+        }
+      } else if (vm.isHerreg) {
+        if (vm.isHerreg && vm.payment.status_tagihan == 0) {
+          return `Anda memilih untuk Aktif pada semester ${this.semester.nama_semester}, segera lunasi tagihan anda untuk melanjutkan proses kegiatan akademik  `;
+        } else if (vm.isHerreg && vm.payment.status_tagihan == 1) {
+          return `Anda adalah Mahasiswa Aktif semester ${this.semester.nama_semester} Poltekkes Kemenkes Semarang`;
+        } else {
+          return "";
+        }
+      } else {
+        return "";
+      }
+    },
   },
   mounted() {
     this.getData();
     this.getTagihan();
+    this.get_cuti();
+    this.get_detail_herreg();
   },
   methods: {
     async getData() {
       let vm = this;
       vm.$store.dispatch("set_loading", true);
       try {
-        let biodata = await vm.$axios.get(
-          "users/detailsById/" + vm.$store.state.sso_user_id
+        let tahun_aktif = await vm.$axiossimadu.post(
+          "tahunAjaran/listTahunAjaranByPeriodeAktif",
+          {
+            a_periode_aktif_tahun_ajaran: 1,
+          }
         );
-        vm.$store.dispatch("set_biodata", biodata.data.data[0]);
-        if (biodata.data.profil[0]) {
-          vm.$store.dispatch("set_profil", biodata.data.profil[0]);
-        } else {
-          vm.$store.dispatch("set_profil", {});
-        }
+        vm.$store.commit("set_tahun", tahun_aktif.data.data[0]);
+
+        let semester = await vm.$axiossimadu("semester/listSemesterAKtif");
+        console.log(semester.data.data, "semester");
+        vm.$store.commit("set_semester", semester.data.data[0]);
 
         let app = await vm.$axios.get(
           "client/clientsByRole/" + vm.$store.state.sso_user_role
@@ -630,10 +623,6 @@ export default {
           }
         );
         vm.$store.dispatch("payment", tagihan.data.data[0]);
-
-        let semester = await vm.$axiossimadu("semester/listSemesterAKtif");
-        console.log(semester.data.data, "semester");
-        vm.$store.commit("set_semester", semester.data.data[0]);
         vm.$store.dispatch("set_loading", false);
       } catch (error) {
         vm.$store.dispatch("set_loading", false);
@@ -652,6 +641,35 @@ export default {
       console.log(tagihan, "tagihan");
       vm.$store.dispatch("payment", tagihan.data.data[0]);
     },
+
+    async get_cuti() {
+      let vm = this;
+      try {
+        let cuti = await vm.$axiossimadu.post("pengajuanCuti/cekCuti", {
+          NIM: vm.$store.state.biodata.identity,
+          semester_id: vm.$store.state.semester.semester_id,
+        });
+        console.log(cuti, "cuti", this.$store.state.cuti);
+        vm.$store.commit("set_cuti", cuti.data.data[0]);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async get_detail_herreg() {
+      let vm = this;
+      let herreg = await vm.$axiossimadu.post(
+        "heregistrasiMahasiswa/detailsHerregMahasiswa",
+        {
+          NIM: vm.$store.state.biodata.identity,
+          tahun_ajaran_id: vm.$store.state.tahun.id,
+          semester_id: vm.$store.state.semester.semester_id,
+        }
+      );
+      console.log(herreg.data.data, "herreg");
+
+      vm.$store.commit("set_herreg", herreg.data.data[0]);
+    },
+
     goApp(x) {
       window.open(
         x.redirect_uri +
@@ -662,7 +680,7 @@ export default {
       );
     },
     set_no_profil(x) {
-      console.log(x, "foto");
+      this.foto = x;
       this.backup = true;
     },
     convert(x) {
@@ -1069,6 +1087,7 @@ img {
   font-weight: 900;
   margin: 3mm 3mm 3mm 3mm;
   letter-spacing: 1px;
+  text-align: justify;
 }
 
 .text-invoice {

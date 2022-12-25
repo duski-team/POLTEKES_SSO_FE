@@ -40,7 +40,7 @@
               <span class="details">Akun Official *</span>
               <div class="input-group2">
                 <input
-                  class="input2" 
+                  class="input2"
                   type="text"
                   placeholder="Masukkan email lengkap"
                   required

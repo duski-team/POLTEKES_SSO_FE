@@ -29,7 +29,10 @@ const state = {
   btn_prefix: "95673000000",
   mandiri_client_id: "88976",
   payment: null,
-  semester: null
+  semester: null,
+  tahun: null,
+  herreg: null,
+  cuti: null,
 };
 
 const mutations = {
@@ -71,6 +74,10 @@ const mutations = {
     state.sso_user_role = null;
     state.payment = null;
     state.app = null;
+    (state.herreg = null),
+      (state.cuti = null),
+      (state.semester = null),
+      (state.tahun = null);
   },
   set_loading_state(state, value) {
     state.loading = value;
@@ -135,9 +142,18 @@ const mutations = {
   biodata_foto(state, value) {
     state.biodata.foto = value;
   },
-  set_semester(state,value){
-    state.semester = value
-  }
+  set_semester(state, value) {
+    state.semester = value;
+  },
+  set_tahun(state, value) {
+    state.tahun = value;
+  },
+  set_herreg(state, value) {
+    state.herreg = value;
+  },
+  set_cuti(state, value) {
+    state.cuti = value;
+  },
 };
 const actions = {
   save_token_login({ commit }, log_respon) {

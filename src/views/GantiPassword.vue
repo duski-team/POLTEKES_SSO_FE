@@ -163,12 +163,13 @@ export default {
         if (login.data.status == 200) {
           if (login.data.message == "sukses") {
             vm.busy = false;
+            vm.get_bio();
             vm.$store.dispatch("set_alert_show_success", login.data.message);
             vm.$store.dispatch("set_loading", false);
             setTimeout(() => {
               vm.$store.dispatch("set_alert_hide");
+              vm.$router.push({ path: "/dashboard" });
             }, 2000);
-            vm.$router.push({ path: "/dashboard" });
           } else {
             vm.busy = false;
             vm.$store.dispatch("set_alert_show_fail", login.data.message);
@@ -185,6 +186,18 @@ export default {
             vm.$store.dispatch("set_alert_hide");
           }, 2000);
         }
+      }
+    },
+    async get_bio() {
+      let vm = this;
+      let biodata = await vm.$axios.get(
+        "users/detailsById/" + vm.$store.state.sso_user_id
+      );
+      vm.$store.dispatch("set_biodata", biodata.data.data[0]);
+      if (biodata.data.profil[0]) {
+        vm.$store.dispatch("set_profil", biodata.data.profil[0]);
+      } else {
+        vm.$store.dispatch("set_profil", {});
       }
     },
   },
