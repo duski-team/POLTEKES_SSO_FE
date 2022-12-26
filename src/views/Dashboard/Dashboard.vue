@@ -159,7 +159,7 @@
               </div>
             </div>
           </div> -->
-          <div class="toolsdemo text-start">
+          <div class="toolsdemo text-start" v-if="biodata.role == 'mahasiswa'">
             <div class="box-info">
               <div class="row">
                 <div class="col">
@@ -372,7 +372,10 @@
               </div>
             </div>
           </div> -->
-          <div class="toolsdemo-hp text-start">
+          <div
+            class="toolsdemo-hp text-start"
+            v-if="biodata.role == 'mahasiswa'"
+          >
             <div class="box-info">
               <div class="row">
                 <div class="col">
@@ -530,10 +533,13 @@ export default {
     };
   },
   created() {
-    this.getData();
-    this.getTagihan();
-    this.get_cuti();
-    this.get_detail_herreg();
+    this.get_app();
+    if (this.biodata.role == "mahasiswa") {
+      this.getData();
+      this.getTagihan();
+      this.get_cuti();
+      this.get_detail_herreg();
+    }
   },
   computed: {
     deadline() {
@@ -610,6 +616,15 @@ export default {
     },
   },
   methods: {
+    async get_app() {
+      let vm = this;
+      let app = await vm.$axios.get(
+        "client/clientsByRole/" + vm.$store.state.sso_user_role
+      );
+      // console.log(app.data.data)
+
+      vm.$store.dispatch("set_app", app.data.data, "app");
+    },
     async getData() {
       let vm = this;
       vm.$store.dispatch("set_loading", true);
@@ -626,20 +641,13 @@ export default {
         // console.log(semester.data.data, "semester");
         vm.$store.commit("set_semester", semester.data.data[0]);
 
-        let app = await vm.$axios.get(
-          "client/clientsByRole/" + vm.$store.state.sso_user_role
-        );
-        // console.log(app.data.data)
-
-        vm.$store.dispatch("set_app", app.data.data, "app");
-
-        let tagihan = await vm.$axiosbilling.post(
-          "detailsTagihanStudi/listDetailsTagihanStudiByNIM",
-          {
-            nim: vm.$store.state.biodata.identity,
-          }
-        );
-        vm.$store.dispatch("payment", tagihan.data.data[0]);
+        // let tagihan = await vm.$axiosbilling.post(
+        //   "detailsTagihanStudi/listDetailsTagihanStudiByNIM",
+        //   {
+        //     nim: vm.$store.state.biodata.identity,
+        //   }
+        // );
+        // vm.$store.dispatch("payment", tagihan.data.data[0]);
         vm.$store.dispatch("set_loading", false);
       } catch (error) {
         vm.$store.dispatch("set_loading", false);
