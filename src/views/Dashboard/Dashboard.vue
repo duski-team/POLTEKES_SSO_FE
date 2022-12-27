@@ -567,7 +567,7 @@ export default {
     },
     isHerreg() {
       if (this.$store.state.herreg) {
-        return;
+        return this.$store.state.herreg;
       } else {
         return false;
       }
@@ -618,6 +618,17 @@ export default {
   methods: {
     async get_app() {
       let vm = this;
+
+      let biodata = await vm.$axios.get(
+        "users/detailsById/" + vm.$store.state.sso_user_id
+      );
+      vm.$store.dispatch("set_biodata", biodata.data.data[0]);
+      if (biodata.data.profil[0]) {
+        vm.$store.dispatch("set_profil", biodata.data.profil[0]);
+      } else {
+        vm.$store.dispatch("set_profil", {});
+      }
+      
       let app = await vm.$axios.get(
         "client/clientsByRole/" + vm.$store.state.sso_user_role
       );
@@ -641,13 +652,6 @@ export default {
         // console.log(semester.data.data, "semester");
         vm.$store.commit("set_semester", semester.data.data[0]);
 
-        // let tagihan = await vm.$axiosbilling.post(
-        //   "detailsTagihanStudi/listDetailsTagihanStudiByNIM",
-        //   {
-        //     nim: vm.$store.state.biodata.identity,
-        //   }
-        // );
-        // vm.$store.dispatch("payment", tagihan.data.data[0]);
         vm.$store.dispatch("set_loading", false);
       } catch (error) {
         vm.$store.dispatch("set_loading", false);
@@ -694,7 +698,7 @@ export default {
           semester_id: vm.$store.state.semester.semester_id,
         }
       );
-      // console.log(herreg.data.data, "herreg");
+      console.log(herreg.data.data, "herreg");
 
       if (herreg.data.status == 200) {
         vm.$store.commit("set_herreg", herreg.data.data[0]);
