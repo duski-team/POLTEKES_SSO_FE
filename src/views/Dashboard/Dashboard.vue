@@ -170,15 +170,16 @@
                   <div class="text-tagihan">{{ status_mahasiswa }}</div>
                   <div v-if="!lunas">
                     <div class="text-tagihan">
-                      Anda memiliki tagihan biaya pendidikan sebesar :
+                      Anda memiliki tagihan biaya pendidikan sebesar : Rp.
+                      {{ convert(isHerreg.biaya_kuliah) }}
                     </div>
-                    <div class="text-tagihan">
-                      Rp. {{ convert(payment.totalTagihan) }}
+                    <!-- <div class="text-tagihan">
+                      
                       <span style="color: grey"
                         >pada semester
                         {{ $store.state.semester.nama_semester }}</span
                       >
-                    </div>
+                    </div> -->
                     <div v-if="!deadline" class="text-tagihan">
                       Silahkan Lakukan Pembayaran Biaya Studi Melalui Aplikasi
                       Simadu V2
@@ -388,15 +389,15 @@
                   </div>
                   <div v-if="!lunas">
                     <div class="text-tagihan">
-                      Anda memiliki tagihan biaya pendidikan sebesar :
+                      Anda memiliki tagihan biaya pendidikan sebesar : Rp. {{ convert(isHerreg.biaya_kuliah) }}
                     </div>
-                    <div class="text-tagihan">
-                      Rp. {{ convert(payment.totalTagihan) }}
+                    <!-- <div class="text-tagihan">
+                      
                       <span style="color: grey"
                         >pada semester
                         {{ $store.state.semester.nama_semester }}</span
                       >
-                    </div>
+                    </div> -->
                     <div v-if="!deadline" class="text-tagihan text-justify">
                       Silahkan Lakukan Pembayaran Biaya Studi Melalui Aplikasi
                       Simadu V2
@@ -588,7 +589,7 @@ export default {
     },
     status_mahasiswa() {
       let vm = this;
-      if (!vm.isCuti && !vm.isHerreg && vm.semester && vm.payment) {
+      if (!vm.isCuti && !vm.isHerreg && vm.semester) {
         return `Anda belum menentukan status akademik anda untuk semester ${this.semester.nama_semester} , silahkan login ke aplikasi Simadu V2 untuk menentukan status akademik anda`;
       } else if (vm.isCuti && vm.semester && vm.payment) {
         if (vm.isCuti.status_pengajuan == 1) {
@@ -602,7 +603,7 @@ export default {
         } else {
           return "";
         }
-      } else if (vm.isHerreg && vm.semester && vm.payment) {
+      } else if (vm.isHerreg && vm.semester) {
         if (vm.isHerreg && !vm.lunas) {
           return `Anda memilih untuk Aktif pada semester ${this.semester.nama_semester}, segera lunasi tagihan anda untuk melanjutkan proses kegiatan akademik  `;
         } else if (vm.isHerreg && vm.lunas) {
@@ -628,7 +629,7 @@ export default {
       } else {
         vm.$store.dispatch("set_profil", {});
       }
-      
+
       let app = await vm.$axios.get(
         "client/clientsByRole/" + vm.$store.state.sso_user_role
       );
@@ -660,15 +661,18 @@ export default {
     },
     async getTagihan() {
       let vm = this;
-      let tagihan = await vm.$axiosbilling.post(
-        "detailsTagihanStudi/listDetailsTagihanStudiByNIM",
+      let tagihan = await vm.$axiossimadu.post(
+        "masterUser/cekTagihanUserBySemesterId",
         {
-          nim: vm.$store.state.biodata.identity,
+          NIM_DTS: vm.$store.state.biodata.identity,
+          semester_id: vm.semester.semester_id,
         }
       );
-      // console.log(tagihan, "tagihan");
+      console.log(tagihan, "tagihan");
       if (tagihan.data.status == 200) {
-        vm.$store.dispatch("payment", tagihan.data.data[0]);
+        if (tagihan.data.data.length) {
+          vm.$store.dispatch("payment", tagihan.data.data[0]);
+        }
       }
     },
 
