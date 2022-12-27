@@ -389,7 +389,8 @@
                   </div>
                   <div v-if="!lunas">
                     <div class="text-tagihan">
-                      Anda memiliki tagihan biaya pendidikan sebesar : Rp. {{ convert(isHerreg.biaya_kuliah) }}
+                      Anda memiliki tagihan biaya pendidikan sebesar : Rp.
+                      {{ convert(isHerreg.biaya_kuliah) }}
                     </div>
                     <!-- <div class="text-tagihan">
                       
