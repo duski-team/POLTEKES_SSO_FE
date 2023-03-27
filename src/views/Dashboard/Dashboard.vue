@@ -6,6 +6,7 @@
         v-if="biodata"
         class="alert alert-success alert-dismissible fade show"
         role="alert"
+        @click="shows = !shows"
       >
         <p>
           <strong>Welcome!</strong>
@@ -92,74 +93,7 @@
               <p style="line-height: 14px; font-size: 14px">Admin</p>
             </div>
           </div>
-          <!-- <div class="tools text-start">
-            <div class="box-info">
-              <div class="box-title mb-3" style="color: #027a48">Resource</div>
-              <div class="box-content" @click="$router.push('/payment')">
-                <div>
-                  <img class="icons" src="@/assets/Icon1.jpg" alt="" />
-                </div>
-                <div>
-                  <h6>Tagihan</h6>
-                  <p>Pembayaran Tagihan Biaya Pendidikan Tahun 2022</p>
-                </div>
-              </div>
-
-              <div class="box-content">
-                <div>
-                  <img class="icons" src="@/assets/Icon2.jpg" alt="" />
-                </div>
-                <div>
-                  <h6>Lorem</h6>
-                  <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-                </div>
-              </div>
-              <div class="box-content">
-                <div>
-                  <img class="icons" src="@/assets/Icon3.jpg" alt="" />
-                </div>
-                <div>
-                  <h6>Lorem</h6>
-                  <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-                </div>
-              </div>
-            </div>
-            <div class="box-info">
-              <div class="box-title mb-3" style="color: #027a48">
-                Informasi Baru
-              </div>
-              <div class="box-content2">
-                <div>
-                  <img
-                    class="icons2"
-                    src="http://placekitten.com/700/500"
-                    alt=""
-                  />
-                </div>
-                <div>
-                  <h6>Lorem</h6>
-                  <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-                </div>
-              </div>
-              <div class="box-content2">
-                <div>
-                  <img
-                    class="icons2"
-                    src="http://placekitten.com/700/500"
-                    alt=""
-                  />
-                </div>
-                <div>
-                  <h6>Lorem</h6>
-                  <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-                </div>
-              </div>
-              <div class="box-title mb-3" style="color: #027a48">
-                Baca Informasi ->
-              </div>
-            </div>
-          </div> -->
-          <div class="toolsdemo text-start" v-if="biodata.role == 'mahasiswa'">
+          <div class="toolsdemo text-start" v-if="shows">
             <div class="box-info">
               <div class="row">
                 <div class="col">
@@ -168,10 +102,13 @@
                     {{ biodata.identity }} )
                   </div>
                   <div class="text-tagihan">{{ status_mahasiswa }}</div>
-                  <div v-if="!lunas">
+                  <div v-if="!lunas && payment">
                     <div class="text-tagihan">
                       Anda memiliki tagihan biaya pendidikan sebesar : Rp.
-                      {{ convert(isHerreg.biaya_kuliah) }}
+                      <span v-if="payment">{{
+                        convert(payment.totalTagihan)
+                      }}</span>
+                      <span v-else>{{ convert(isHerreg.biaya_kuliah) }}</span>
                     </div>
                     <!-- <div class="text-tagihan">
                       
@@ -286,97 +223,7 @@
               </div>
             </div>
           </div>
-          <!-- <div class="row glass-hp">
-            <div class="col">
-              <div class="tools-hp text-start">
-                <div class="box-info-hp">
-                  <div class="box-title mb-3" style="color: #027a48">
-                    Resource
-                  </div>
-                  <div class="box-content-hp" @click="$router.push('/payment')">
-                    <div>
-                      <img class="icons" src="@/assets/Icon1.jpg" alt="" />
-                    </div>
-                    <div>
-                      <h6>Tagihan</h6>
-                      <p>Pembayaran Tagihan Biaya Pendidikan Tahun 2022</p>
-                    </div>
-                  </div>
-
-                  <div class="box-content-hp">
-                    <div>
-                      <img class="icons" src="@/assets/Icon2.jpg" alt="" />
-                    </div>
-                    <div>
-                      <h6>Lorem</h6>
-                      <p>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing.
-                      </p>
-                    </div>
-                  </div>
-                  <div class="box-content-hp">
-                    <div>
-                      <img class="icons" src="@/assets/Icon3.jpg" alt="" />
-                    </div>
-                    <div>
-                      <h6>Lorem</h6>
-                      <p>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> -->
-          <!-- <div class="row glass-hp">
-            <div class="col">
-              <div class="tools-hp">
-                <div class="box-info-hp">
-                  <div class="box-title mb-3" style="color: #027a48">
-                    Informasi Baru
-                  </div>
-                  <div class="box-content2-hp">
-                    <div>
-                      <img
-                        class="icons2-hp"
-                        src="http://placekitten.com/700/500"
-                        alt=""
-                      />
-                    </div>
-                    <div>
-                      <h6>Lorem</h6>
-                      <p>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing.
-                      </p>
-                    </div>
-                  </div>
-                  <div class="box-content2-hp">
-                    <div>
-                      <img
-                        class="icons2-hp"
-                        src="http://placekitten.com/700/500"
-                        alt=""
-                      />
-                    </div>
-                    <div>
-                      <h6>Lorem</h6>
-                      <p>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing.
-                      </p>
-                    </div>
-                  </div>
-                  <div class="box-title mb-3" style="color: #027a48">
-                    Baca Informasi ->
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> -->
-          <div
-            class="toolsdemo-hp text-start"
-            v-if="biodata.role == 'mahasiswa'"
-          >
+          <div class="toolsdemo-hp text-start" v-if="shows">
             <div class="box-info">
               <div class="row">
                 <div class="col">
@@ -387,10 +234,13 @@
                   <div class="text-tagihan text-justify">
                     {{ status_mahasiswa }}
                   </div>
-                  <div v-if="!lunas">
+                  <div v-if="!lunas && payment">
                     <div class="text-tagihan">
                       Anda memiliki tagihan biaya pendidikan sebesar : Rp.
-                      {{ convert(isHerreg.biaya_kuliah) }}
+                      <span v-if="payment">{{
+                        convert(payment.totalTagihan)
+                      }}</span>
+                      <span v-else>{{ convert(isHerreg.biaya_kuliah) }}</span>
                     </div>
                     <!-- <div class="text-tagihan">
                       
@@ -424,60 +274,6 @@
           </div>
         </section>
       </div>
-
-      <!-- <section class="fas-wrapper">
-      <div class="app-title d-flex">
-        <p>Fasilitas</p>
-        /
-        <p>facilities</p>
-      </div>
-      <div class="row">
-        <div class="col-md-3 col-sm-4 mb-3">
-          <div class="cards">
-            <div>
-              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
-            </div>
-            <div>
-              <h6>Lorem</h6>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-4 mb-3">
-          <div class="cards">
-            <div>
-              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
-            </div>
-            <div>
-              <h6>Lorem</h6>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-4 mb-3">
-          <div class="cards">
-            <div>
-              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
-            </div>
-            <div>
-              <h6>Lorem</h6>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-4 mb-3">
-          <div class="cards">
-            <div>
-              <img class="icons" src="@/assets/Icon1.jpg" alt="" />
-            </div>
-            <div>
-              <h6>Lorem</h6>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section> -->
       <section class="fas-wrapper">
         <div class="app-title d-flex">
           <p>Aplikasi & Layanan</p>
@@ -532,16 +328,43 @@ export default {
       popup: "",
       backup: false,
       foto: null,
+      cek: 0,
+      shows: false,
     };
   },
   created() {
+    // this.$store.commit("set_clean");
     this.get_app();
     if (this.biodata.role == "mahasiswa") {
       this.getData();
-      this.getTagihan();
-      this.get_cuti();
-      this.get_detail_herreg();
+      // this.getTagihan();
+      // this.get_cuti();
     }
+  },
+  watch: {
+    ceks: function (val) {
+      if (val && this.biodata.role == "mahasiswa") {
+        this.shows = val;
+      }
+    },
+    semester: function (val) {
+      if (val && this.biodata.role == "mahasiswa") {
+        if (this.semester && this.tahuns) {
+          this.get_cuti();
+          this.get_detail_herreg();
+          this.getTagihan();
+        }
+      }
+    },
+    tahuns: function (val) {
+      if (val && this.biodata.role == "mahasiswa") {
+        if (this.semester && this.tahuns) {
+          this.get_cuti();
+          this.get_detail_herreg();
+          this.getTagihan();
+        }
+      }
+    },
   },
   computed: {
     deadline() {
@@ -550,9 +373,23 @@ export default {
         0;
       return x;
     },
+    ceks() {
+      if (this.cek == 4) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     payment() {
       if (this.$store.state.payment) {
         return this.$store.state.payment;
+      } else {
+        return false;
+      }
+    },
+    tahuns() {
+      if (this.$store.state.tahun) {
+        return this.$store.state.tahun;
       } else {
         return false;
       }
@@ -590,25 +427,29 @@ export default {
     },
     status_mahasiswa() {
       let vm = this;
-      if (!vm.isCuti && !vm.isHerreg && vm.semester) {
-        return `Anda belum menentukan status akademik anda untuk semester ${this.semester.nama_semester} , silahkan login ke aplikasi Simadu V2 untuk menentukan status akademik anda`;
-      } else if (vm.isCuti && vm.semester && vm.payment) {
-        if (vm.isCuti.status_pengajuan == 1) {
-          return "Pengajuan cuti anda sedang di verifikasi";
-        } else if (vm.isCuti.status_pengajuan == 0) {
-          return "Pengajuan cuti anda ditolak untuk merubah status aktif atau pengajuan banding silahkan login melalui aplikasi Simadu V2";
-        } else if (vm.isCuti.status_pengajuan == 2 && !vm.lunas) {
-          return "Pengajuan cuti anda disetujui untuk melanjutkan segera lunasi tagihan akademik anda melalui aplikasi Simadu V2";
-        } else if (vm.isCuti.status_pengajuan == 3 && vm.lunas) {
-          return `Status anda adalah Mahasiswa Cuti untuk semester ${this.semester.nama_semester} Poltekkes Kemenkes Semarang`;
-        } else {
-          return "";
-        }
-      } else if (vm.isHerreg && vm.semester) {
-        if (vm.isHerreg && !vm.lunas) {
-          return `Anda memilih untuk Aktif pada semester ${this.semester.nama_semester}, segera lunasi tagihan anda untuk melanjutkan proses kegiatan akademik  `;
-        } else if (vm.isHerreg && vm.lunas) {
-          return `Anda adalah Mahasiswa Aktif semester ${this.semester.nama_semester} Poltekkes Kemenkes Semarang`;
+      if (vm.shows) {
+        if (!vm.isCuti && !vm.isHerreg && vm.semester) {
+          return `Anda belum menentukan status akademik anda untuk semester ${this.semester.nama_semester} , silahkan login ke aplikasi Simadu V2 untuk menentukan status akademik anda`;
+        } else if (vm.isCuti && vm.semester) {
+          if (vm.isCuti.status_pengajuan == 1) {
+            return "Pengajuan cuti anda sedang di verifikasi";
+          } else if (vm.isCuti.status_pengajuan == 0) {
+            return "Pengajuan cuti anda ditolak untuk merubah status aktif atau pengajuan banding silahkan login melalui aplikasi Simadu V2";
+          } else if (vm.isCuti.status_pengajuan == 2 && !vm.lunas) {
+            return "Pengajuan cuti anda disetujui untuk melanjutkan segera lunasi tagihan akademik anda melalui aplikasi Simadu V2";
+          } else if (vm.isCuti.status_pengajuan == 3 && vm.lunas) {
+            return `Status anda adalah Mahasiswa Cuti untuk semester ${this.semester.nama_semester} Poltekkes Kemenkes Semarang`;
+          } else {
+            return "";
+          }
+        } else if (vm.isHerreg && vm.semester) {
+          if (vm.isHerreg && !vm.lunas) {
+            return `Anda memilih untuk Aktif pada semester ${this.semester.nama_semester}, segera lunasi tagihan anda untuk melanjutkan proses kegiatan akademik  `;
+          } else if (vm.isHerreg && vm.lunas) {
+            return `Anda adalah Mahasiswa Aktif semester ${this.semester.nama_semester} Poltekkes Kemenkes Semarang`;
+          } else {
+            return "";
+          }
         } else {
           return "";
         }
@@ -630,12 +471,9 @@ export default {
       } else {
         vm.$store.dispatch("set_profil", {});
       }
-
       let app = await vm.$axios.get(
         "client/clientsByRole/" + vm.$store.state.sso_user_role
       );
-      // console.log(app.data.data)
-
       vm.$store.dispatch("set_app", app.data.data, "app");
     },
     async getData() {
@@ -648,31 +486,42 @@ export default {
             a_periode_aktif_tahun_ajaran: 1,
           }
         );
-        vm.$store.commit("set_tahun", tahun_aktif.data.data[0]);
+        if (tahun_aktif.data.status == 200) {
+          vm.$store.commit("set_tahun", tahun_aktif.data.data[0]);
+        }
 
         let semester = await vm.$axiossimadu("semester/listSemesterAKtif");
         // console.log(semester.data.data, "semester");
-        vm.$store.commit("set_semester", semester.data.data[0]);
-
+        if (semester.data.status == 200) {
+          vm.$store.commit("set_semester", semester.data.data[0]);
+        }
         vm.$store.dispatch("set_loading", false);
       } catch (error) {
         vm.$store.dispatch("set_loading", false);
         console.log(error.response);
       }
+      vm.cek++;
     },
     async getTagihan() {
       let vm = this;
       let tagihan = await vm.$axiossimadu.post(
         "masterUser/cekTagihanUserBySemesterId",
         {
-          NIM_DTS: vm.$store.state.biodata.identity,
+          NIM_DTS: vm.biodata.identity,
           semester_id: vm.semester.semester_id,
         }
       );
-      console.log(tagihan, "tagihan");
       if (tagihan.data.status == 200) {
         if (tagihan.data.data.length) {
-          vm.$store.dispatch("payment", tagihan.data.data[0]);
+          let tagihan2 = await vm.$axiosbilling.post(
+            "detailsTagihanStudi/listDetailsTagihanStudiByNIM",
+            {
+              nim: vm.biodata.identity,
+            }
+          );
+          // console.log(tagihan, "tagihan");
+          vm.cek++;
+          vm.$store.dispatch("payment", tagihan2.data.data[0]);
         }
       }
     },
@@ -681,14 +530,14 @@ export default {
       let vm = this;
       try {
         let cuti = await vm.$axiossimadu.post("pengajuanCuti/cekCuti", {
-          NIM: vm.$store.state.biodata.identity,
-          semester_id: vm.$store.state.semester.semester_id,
+          NIM: vm.biodata.identity,
+          semester_id: vm.semester.semester_id,
         });
 
         if (cuti.data.status == 200) {
           vm.$store.commit("set_cuti", cuti.data.data[0]);
         }
-        // console.log(cuti, "cuti", this.$store.state.cuti);
+        vm.cek++;
       } catch (err) {
         console.log(err);
       }
@@ -698,16 +547,16 @@ export default {
       let herreg = await vm.$axiossimadu.post(
         "heregistrasiMahasiswa/detailsHerregMahasiswa",
         {
-          NIM: vm.$store.state.biodata.identity,
-          tahun_ajaran_id: vm.$store.state.tahun.id,
-          semester_id: vm.$store.state.semester.semester_id,
+          NIM: vm.biodata.identity,
+          tahun_ajaran_id: vm.tahuns.id,
+          semester_id: vm.semester.semester_id,
         }
       );
-      console.log(herreg.data.data, "herreg");
-
+      console.log(herreg.data.data, "herregsss");
       if (herreg.data.status == 200) {
         vm.$store.commit("set_herreg", herreg.data.data[0]);
       }
+      vm.cek++;
     },
 
     goApp(x) {
@@ -723,9 +572,10 @@ export default {
       this.foto = x;
       this.backup = true;
     },
-    convert(x) {
+    async convert(x) {
       if (x) {
-        return x.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+        let z = await x.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+        return z;
       }
     },
   },

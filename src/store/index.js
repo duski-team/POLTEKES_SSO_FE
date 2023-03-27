@@ -57,6 +57,13 @@ const mutations = {
     state.expired = tokens.accessTokenExpiresAt;
     state.sso_username = tokens.user.username;
   },
+  set_clean(state) {
+    state.payment = null;
+    state.semester = null;
+    state.tahun = null;
+    state.herreg = null;
+    state.cuti = null;
+  },
   set_clear_token(state) {
     // console.log("set_clear");
     state.sso_access_token = null;
@@ -143,15 +150,20 @@ const mutations = {
     state.biodata.foto = value;
   },
   set_semester(state, value) {
+    console.log(value);
     state.semester = value;
   },
   set_tahun(state, value) {
+    console.log(value);
     state.tahun = value;
   },
   set_herreg(state, value) {
+    console.log(value,'herreg');
+    state.herreg = null
     state.herreg = value;
   },
   set_cuti(state, value) {
+    state.cuti = null
     state.cuti = value;
   },
 };
@@ -201,14 +213,16 @@ const actions = {
   },
   payment({ commit }, value) {
     // console.log(value);
-    let x = value.tahun_kb.includes("-1");
-    let v = value.tahun_kb.substring(0, 4);
-    if (x) {
-      value.semester = v + " Ganjil";
-    } else {
-      value.semester = v + " Genap";
+    if (value) {
+      let x = value.tahun_kb.includes("-1");
+      let v = value.tahun_kb.substring(0, 4);
+      if (x) {
+        value.semester = v + " Ganjil";
+      } else {
+        value.semester = v + " Genap";
+      }
+      commit("set_payment", value);
     }
-    commit("set_payment", value);
   },
 };
 const modules = {};
