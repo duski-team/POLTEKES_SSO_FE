@@ -140,7 +140,7 @@ export default {
     logout() {
       this.$store.dispatch("clear_token");
       // this.$cookies.keys().forEach(cookie => this.$cookies.remove(cookie))
-      this.$router.push({ path: "/logout" });
+      this.$router.push({ path: "/" });
       // console.log("logout");
     },
   },

@@ -1,13 +1,9 @@
 <template>
   <div class="container-fluid" @click="$store.dispatch('set_alert_hide')">
-    <div
-      v-if="$store.state.show"
-      class="card text-white"
-      :style="$store.state.backColor"
-    >
+    <div v-if="show" class="card text-white" :style="color">
       <div class="card-body">
         <center>
-          <span v-html="$store.state.alert"></span>
+          <span v-html="alert"></span>
         </center>
       </div>
     </div>
@@ -20,6 +16,22 @@
 export default {
   data() {
     return {};
+  },
+  computed: {
+    show() {
+      return this.$store.state.show ? this.$store.state.show : false;
+    },
+    alert() {
+      return this.$store.state.alert ? this.$store.state.alert : null;
+    },
+    color() {
+      return this.$store.state.backColor ? this.$store.state.backColor : null;
+    },
+  },
+  watch: {
+    show: function (val) {
+      console.log(val);
+    },
   },
 };
 </script>

@@ -26,11 +26,19 @@ export default {
     showSpinner() {
       return this.$store.state.loading;
     },
+    show() {
+      return this.$store.state.show;
+    },
+    alert() {
+      return this.$store.state.alert;
+    },
   },
   methods: {
     hideAlert() {
-      if (this.$store.state.show) {
-        // console.log('iki')
+      if (
+        this.show &&
+        this.alert != "SESI LOGIN ANDA SUDAH SELESAI SILAHKAN LOGIN KEMBALI"
+      ) {
         this.$store.dispatch("set_alert_hide");
       }
     },
@@ -50,6 +58,13 @@ export default {
 
 #nav {
   padding: 30px;
+}
+body {
+  min-height: 100vh;
+  position: relative;
+  margin: 0;
+  padding-bottom: 50px;
+  box-sizing: border-box;
 }
 
 #nav a {

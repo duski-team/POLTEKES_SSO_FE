@@ -81,10 +81,10 @@ const mutations = {
     state.sso_user_role = null;
     state.payment = null;
     state.app = null;
-    (state.herreg = null),
-      (state.cuti = null),
-      (state.semester = null),
-      (state.tahun = null);
+    state.herreg = null;
+    state.cuti = null;
+    state.semester = null;
+    state.tahun = null;
   },
   set_loading_state(state, value) {
     state.loading = value;
@@ -130,6 +130,7 @@ const mutations = {
     state.alert = value.toUpperCase();
     state.backColor = "background-color: #FF6962";
     state.show = true;
+    console.log(state.show);
   },
   hide_alert(state) {
     state.alert = "";
@@ -168,7 +169,7 @@ const mutations = {
 };
 const actions = {
   save_token_login({ commit }, log_respon) {
-    console.log(log_respon,'store login')
+    console.log(log_respon, "store login");
     commit("set_login_token", log_respon);
   },
   save_token_intercept({ commit }, int_respon) {

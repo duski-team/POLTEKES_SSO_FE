@@ -2,7 +2,7 @@ import axios from "axios";
 import moment from "moment";
 import "moment/locale/id";
 import store from "@/store/index.js";
-import router from "../router/index.js"
+import router from "../router/index.js";
 // import qs from "qs";
 
 // const ip = "http://localhost:8869/";
@@ -41,7 +41,7 @@ instance.interceptors.request.use(async (req) => {
       const isExpired = now.diff(expired, "seconds") > 0;
       // const relog = now.diff(refresh_expired, "seconds") > 0;
       if (isExpired && token && expired) {
-        console.log("isExpired", isExpired, token, req.url);
+        // console.log("isExpired", isExpired, token, req.url);
         // let datas = {
         //   client_id: store.state.sso_client_id,
         //   grant_type: "refresh_token",
@@ -51,12 +51,14 @@ instance.interceptors.request.use(async (req) => {
         try {
           // if (!relog) {
           store.dispatch("clear_token");
-          store.dispatch("set_alert_show_fail", 'Sesi Login Anda sudah habis silahkan Login ulang');
+          store.dispatch(
+            "set_alert_show_fail",
+            "Sesi Login Anda sudah habis silahkan Login ulang"
+          );
           setTimeout(() => {
             store.dispatch("set_alert_hide");
             router.push({ path: "/" });
           }, 2000);
-          
           //   let response = await axios.post(
           //     ip + "oauth/token",
           //     qs.stringify(datas)

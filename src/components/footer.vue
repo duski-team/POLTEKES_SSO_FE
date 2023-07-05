@@ -19,6 +19,12 @@
   padding: 12px 0px;
 }
 
+.footer {
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+}
+
 .copyright {
   font-size: 20px;
   letter-spacing: 2px;

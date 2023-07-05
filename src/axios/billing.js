@@ -2,7 +2,7 @@ import axios from "axios";
 import moment from "moment";
 import "moment/locale/id";
 import store from "@/store/index.js";
-import router from "../router/index.js"
+import router from "../router/index.js";
 // import qs from "qs";
 
 // const ip = "http://localhost:8104/";
@@ -71,7 +71,10 @@ instance.interceptors.request.use(async (req) => {
           //   return req;
           // } else {
           store.dispatch("clear_token");
-          store.dispatch("set_alert_show_fail", 'Sesi Login Anda sudah habis silahkan Login ulang');
+          store.dispatch(
+            "set_alert_show_fail",
+            "Sesi Login Anda sudah habis silahkan Login ulang"
+          );
           setTimeout(() => {
             store.dispatch("set_alert_hide");
             router.push({ path: "/" });

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="h-100">
     <div v-if="biodata"><Header /></div>
     <div class="container">
       <div
@@ -328,6 +328,7 @@ export default {
       foto: null,
       cek: 0,
       shows: false,
+      sesi: "Sesi Login Anda sudah selesai silahkan login kembali",
     };
   },
   created() {
@@ -377,6 +378,9 @@ export default {
       } else {
         return false;
       }
+    },
+    expired() {
+      return this.$store.state.expired ? this.$store.state.expired : null;
     },
     payment() {
       return this.$store.state.payment ? this.$store.state.payment : null;
@@ -546,21 +550,33 @@ export default {
           semester_id: vm.semester.semester_id,
         }
       );
-      console.log(herreg.data.data, "herregsss");
+      // console.log(herreg.data.data, "herregsss");
       if (herreg.data.status == 200) {
         vm.$store.commit("set_herreg", herreg.data.data[0]);
       }
       vm.cek++;
     },
-
-    goApp(x) {
-      window.open(
-        x.redirect_uri +
-          "?token=" +
-          this.$store.state.sso_access_token +
-          "&refresh=" +
-          this.$store.state.sso_refresh_token
-      );
+    async goApp(x) {
+      let vm = this;
+      let expired = vm.expired;
+      let now = vm.$moment();
+      let isExpired = (await now.diff(expired, "seconds")) > 0;
+      if (isExpired) {
+        vm.$store.dispatch("set_alert_show_fail", vm.sesi);
+        vm.$store.dispatch("clear_token");
+        setTimeout(() => {
+          vm.$store.dispatch("set_alert_hide");
+          vm.$router.push({ path: "/" });
+        }, 2000);
+      } else {
+        window.open(
+          x.redirect_uri +
+            "?token=" +
+            vm.$store.state.sso_access_token +
+            "&refresh=" +
+            vm.$store.state.sso_refresh_token
+        );
+      }
     },
     set_no_profil(x) {
       this.foto = x;
