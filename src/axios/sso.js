@@ -2,7 +2,8 @@ import axios from "axios";
 import moment from "moment";
 import "moment/locale/id";
 import store from "@/store/index.js";
-import qs from "qs";
+import router from "../router/index.js"
+// import qs from "qs";
 
 // const ip = "http://localhost:8869/";
 const ip = "https://sso.poltekkes-smg.ac.id/api/";
@@ -21,7 +22,7 @@ const instance = axios.create({
 instance.interceptors.request.use(async (req) => {
   let token = store.state.sso_access_token;
   let expired = store.state.expired;
-  let refresh_expired = store.state.refresh_expired;
+  // let refresh_expired = store.state.refresh_expired;
   let now = moment();
   // console.log('start', token,req.url)
   if (!token) {
@@ -38,30 +39,37 @@ instance.interceptors.request.use(async (req) => {
     } else {
       // console.log('yes token', token)
       const isExpired = now.diff(expired, "seconds") > 0;
-      const relog = now.diff(refresh_expired, "seconds") > 0;
+      // const relog = now.diff(refresh_expired, "seconds") > 0;
       if (isExpired && token && expired) {
         console.log("isExpired", isExpired, token, req.url);
-        let datas = {
-          client_id: store.state.sso_client_id,
-          grant_type: "refresh_token",
-          client_secret: "SSO",
-          refresh_token: store.state.sso_refresh_token,
-        };
+        // let datas = {
+        //   client_id: store.state.sso_client_id,
+        //   grant_type: "refresh_token",
+        //   client_secret: "SSO",
+        //   refresh_token: store.state.sso_refresh_token,
+        // };
         try {
-          if (!relog) {
-            let response = await axios.post(
-              ip + "oauth/token",
-              qs.stringify(datas)
-            );
-            console.log(response.data);
-            store.dispatch("save_token_intercept", response.data);
-            req.headers.Authorization = `Bearer ${store.state.sso_access_token}`;
-            console.log("tokenbaru", store.state.sso_access_token);
-            return req;
-          } else {
-            this.$store.dispatch("clear_token");
-            this.$router.push({ path: "/" });
-          }
+          // if (!relog) {
+          store.dispatch("clear_token");
+          store.dispatch("set_alert_show_fail", 'Sesi Login Anda sudah habis silahkan Login ulang');
+          setTimeout(() => {
+            store.dispatch("set_alert_hide");
+            router.push({ path: "/" });
+          }, 2000);
+          
+          //   let response = await axios.post(
+          //     ip + "oauth/token",
+          //     qs.stringify(datas)
+          //   );
+          //   // console.log(response.data);
+          //   store.dispatch("save_token_intercept", response.data);
+          //   req.headers.Authorization = `Bearer ${store.state.sso_access_token}`;
+          //   // console.log("tokenbaru", store.state.sso_access_token);
+          //   return req;
+          // } else {
+          //   this.$store.dispatch("clear_token");
+          //   this.$router.push({ path: "/" });
+          // }
         } catch (error) {
           console.log(error);
         }

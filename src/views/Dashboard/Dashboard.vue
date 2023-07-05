@@ -105,9 +105,7 @@
                   <div v-if="!lunas && payment">
                     <div class="text-tagihan">
                       Anda memiliki tagihan biaya pendidikan sebesar : Rp.
-                      <span v-if="payment">{{
-                        convert(payment.totalTagihan)
-                      }}</span>
+                      <span v-if="payment">{{ convert(payment.tagihan) }}</span>
                       <span v-else>{{ convert(isHerreg.biaya_kuliah) }}</span>
                     </div>
                     <!-- <div class="text-tagihan">
@@ -381,11 +379,7 @@ export default {
       }
     },
     payment() {
-      if (this.$store.state.payment) {
-        return this.$store.state.payment;
-      } else {
-        return false;
-      }
+      return this.$store.state.payment ? this.$store.state.payment : null;
     },
     tahuns() {
       if (this.$store.state.tahun) {
@@ -519,9 +513,9 @@ export default {
               nim: vm.biodata.identity,
             }
           );
-          // console.log(tagihan, "tagihan");
-          vm.cek++;
+          console.log(tagihan, "tagihan");
           vm.$store.dispatch("payment", tagihan2.data.data[0]);
+          vm.cek++;
         }
       }
     },
@@ -572,9 +566,9 @@ export default {
       this.foto = x;
       this.backup = true;
     },
-    async convert(x) {
+    convert(x) {
       if (x) {
-        let z = await x.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+        let z = x.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
         return z;
       }
     },

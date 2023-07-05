@@ -108,7 +108,7 @@ export default {
       // Execute reCAPTCHA with action "login".
       const token = await this.$recaptcha("login");
       if (token) {
-        console.log("ok");
+        // console.log("ok");
         this.login();
       }
       // Do stuff with the received token.

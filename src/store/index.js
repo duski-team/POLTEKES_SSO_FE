@@ -158,18 +158,17 @@ const mutations = {
     state.tahun = value;
   },
   set_herreg(state, value) {
-    console.log(value,'herreg');
-    state.herreg = null
+    state.herreg = null;
     state.herreg = value;
   },
   set_cuti(state, value) {
-    state.cuti = null
+    state.cuti = null;
     state.cuti = value;
   },
 };
 const actions = {
   save_token_login({ commit }, log_respon) {
-    // console.log(log_respon,'store login')
+    console.log(log_respon,'store login')
     commit("set_login_token", log_respon);
   },
   save_token_intercept({ commit }, int_respon) {
