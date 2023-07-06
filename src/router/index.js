@@ -64,17 +64,17 @@ const routes = [
     path: "/1stlogin",
     name: "1stLogin",
     component: GantiPassword,
-    meta: {
-      requiresAuth: true,
-    },
+    // meta: {
+    //   requiresAuth: true,
+    // },
   },
   {
     path: "/gantiPassword2",
     name: "GantiPassword",
     component: GantiPasswordOTP,
-    meta: {
-      requiresOTP: true,
-    },
+    // meta: {
+    //   requiresOTP: true,
+    // },
   },
   {
     path: "/profil",

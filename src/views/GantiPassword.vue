@@ -59,9 +59,16 @@
                 placeholder="Konfirm Password"
                 @keydown.enter.prevent="kirim()"
               />
-              <!-- <span v-if="showing" class="text-danger fst-italic mt-2"
-                >"{{ msg }}</span
-              > -->
+              <small
+                v-if="v$.password2.$invalid"
+                :class="{
+                  'text-danger mb-2': v$.password2.$invalid
+                    ? !v$.password2.$anyError
+                    : 'mb-2',
+                }"
+              >
+                * Password dan Konfirm Password harus sama
+              </small>
             </div>
             <div class="mb-3 mt-3">
               <div class="d-flex justify-content-center align-items-center">
@@ -130,7 +137,7 @@ export default {
       };
     });
 
-    const v$ = useVuelidate(rules, state);
+    const v$ = useVuelidate(rules, state, { $lazy: true, $autoDirty: true });
 
     return {
       v$,
@@ -154,7 +161,8 @@ export default {
   methods: {
     async kirim() {
       let vm = this;
-      if (vm.isValid) {
+      vm.v$.$touch();
+      if (vm.isValid && vm.isDirty) {
         this.$store.dispatch("set_loading", true);
         vm.busy = true;
         vm.state.username = vm.$store.state.sso_username;

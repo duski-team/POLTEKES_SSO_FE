@@ -46,9 +46,16 @@
                 placeholder="Konfirm Password"
                 @keydown.enter.prevent="kirim()"
               />
-              <!-- <span v-if="showing" class="text-danger fst-italic mt-2"
-                >"{{ msg }}</span
-              > -->
+              <small
+                v-if="v$.password2.$invalid"
+                :class="{
+                  'text-danger mb-2': v$.password2.$invalid
+                    ? !v$.password2.$anyError
+                    : 'mb-2',
+                }"
+              >
+                * Password dan Konfirm Password harus sama
+              </small>
             </div>
             <div class="mb-3 mt-3">
               <div class="d-flex justify-content-center">
@@ -106,7 +113,7 @@ export default {
       };
     });
 
-    const v$ = useVuelidate(rules, state);
+    const v$ = useVuelidate(rules, state, { $lazy: true, $autoDirty: true });
 
     return {
       v$,
@@ -127,23 +134,33 @@ export default {
   },
   created() {
     this.username = localStorage.getItem("username");
+    this.v$.$reset();
   },
   methods: {
     async kirim() {
       let vm = this;
-      vm.$store.dispatch("set_loading", true);
-      vm.state.username = vm.$store.state.username;
-      vm.state.kode_otp = vm.$store.state.kode_otp;
-      let login = await vm.$axios.post("users/changePasswordOTP", vm.state);
-      // console.log(login);
-      if (login.data.status == 200) {
-        if (login.data.message == "sukses") {
-          vm.$store.dispatch("set_loading", false);
-          vm.$store.dispatch("set_alert_show_success", login.data.message);
-          setTimeout(() => {
-            vm.$store.dispatch("set_alert_hide");
-            this.$router.push({ path: "/" });
-          }, 2000);
+      vm.v$.$touch();
+      if (vm.isValid && vm.isDirty) {
+        vm.$store.dispatch("set_loading", true);
+        vm.state.username = vm.$store.state.username;
+        vm.state.kode_otp = vm.$store.state.kode_otp;
+        let login = await vm.$axios.post("users/changePasswordOTP", vm.state);
+        // console.log(login);
+        if (login.data.status == 200) {
+          if (login.data.message == "sukses") {
+            vm.$store.dispatch("set_loading", false);
+            vm.$store.dispatch("set_alert_show_success", login.data.message);
+            setTimeout(() => {
+              vm.$store.dispatch("set_alert_hide");
+              this.$router.push({ path: "/" });
+            }, 2000);
+          } else {
+            vm.$store.dispatch("set_loading", false);
+            vm.$store.dispatch("set_alert_show_fail", login.data.message);
+            setTimeout(() => {
+              vm.$store.dispatch("set_alert_hide");
+            }, 2000);
+          }
         } else {
           vm.$store.dispatch("set_loading", false);
           vm.$store.dispatch("set_alert_show_fail", login.data.message);
@@ -151,12 +168,13 @@ export default {
             vm.$store.dispatch("set_alert_hide");
           }, 2000);
         }
-      } else {
-        vm.$store.dispatch("set_loading", false);
-        vm.$store.dispatch("set_alert_show_fail", login.data.message);
-        setTimeout(() => {
-          vm.$store.dispatch("set_alert_hide");
-        }, 2000);
+      }
+    },
+    checkValidasi(type, fieldName) {
+      const field = this.v$[type][fieldName];
+      let x = field.$errors[0].$message;
+      if (x) {
+        return "Password dan Konfirm Password Harus Sama";
       }
     },
   },
