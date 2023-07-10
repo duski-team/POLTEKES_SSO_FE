@@ -386,49 +386,29 @@ export default {
       return this.$store.state.payment ? this.$store.state.payment : null;
     },
     tahuns() {
-      if (this.$store.state.tahun) {
-        return this.$store.state.tahun;
-      } else {
-        return false;
-      }
+      return this.$store.state.tahun ? this.$store.state.tahun : false;
     },
     biodata() {
       return this.$store.state.biodata;
     },
     semester() {
-      if (this.$store.state.semester) {
-        return this.$store.state.semester;
-      } else {
-        return false;
-      }
+      return this.$store.state.semester ? this.$store.state.semester : false;
     },
     isHerreg() {
-      if (this.$store.state.herreg) {
-        return this.$store.state.herreg;
-      } else {
-        return false;
-      }
+      return this.$store.state.herreg ? this.$store.state.herreg : false;
     },
     isCuti() {
-      if (this.$store.state.cuti) {
-        return this.$store.state.cuti;
-      } else {
-        return false;
-      }
+      return this.$store.state.cuti ? this.$store.state.cuti : false;
     },
     lunas() {
-      if (this.payment) {
-        return this.$store.state.payment.status_tagihan >= 1;
-      } else {
-        return false;
-      }
+      return this.payment ? this.payment.status_tagihan >= 1 : false;
     },
     status_mahasiswa() {
       let vm = this;
       if (vm.shows) {
         if (!vm.isCuti && !vm.isHerreg && vm.semester) {
           return `Anda belum menentukan status akademik anda untuk semester ${this.semester.nama_semester} , silahkan login ke aplikasi Simadu V2 untuk menentukan status akademik anda`;
-        } else if (vm.isCuti && vm.semester) {
+        } else if (vm.isCuti && vm.semester && !vm.isHerreg) {
           if (vm.isCuti.status_pengajuan == 1) {
             return "Pengajuan cuti anda sedang di verifikasi";
           } else if (vm.isCuti.status_pengajuan == 0) {

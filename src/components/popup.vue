@@ -5,22 +5,33 @@
         <h5 class="card-title">INFORMASI</h5>
       </div>
       <div class="card-body">
-        <div v-for="(item, idx) in popup" :key="idx">
-          <div v-if="item.file_pop_up">
-            <img
-              :src="item.src1"
-              alt=""
-              style="
-                height: auto;
-                width: 100%;
-                margin: 25px 0px 25px 0px;
-                border: solid black 2px;
-              "
-            />
+        <div class="menu-box">
+          <div class="col menu-content h-100" v-if="popup.length">
+            <div v-for="(item, idx) in popup" :key="idx">
+              <div v-if="item.file_pop_up">
+                <img
+                  :src="item.src1"
+                  alt=""
+                  style="
+                    height: auto;
+                    width: 100%;
+                    margin: 25px 0px 25px 0px;
+                    border: solid black 2px;
+                  "
+                />
+              </div>
+              <div class="text-center">
+                <h3>{{ item.judul_pop_up }}</h3>
+              </div>
+              <div class="card-body">
+                <span v-html="item.text_pop_up"></span>
+              </div>
+            </div>
           </div>
-          <div>{{ item.judul_pop_up }}</div>
-          <div class="card-body">
-            <span v-html="item.text_pop_up"></span>
+          <div v-else class="col menu-content h-100">
+            <br>
+            <br>
+            <br>
           </div>
         </div>
       </div>
@@ -116,7 +127,7 @@ export default {
   left: 25%;
   top: 25%;
   width: 50%;
-  height: 100%;
+  max-height: 600px;
   z-index: 9999999999;
   backdrop-filter: blur(0.09rem);
 }
@@ -124,5 +135,22 @@ export default {
 .card-body {
   overflow-y: auto;
   padding: 7mm;
+}
+
+.menu-box {
+  flex-grow: 1;
+  position: relative;
+  width: 100%;
+  /* max-height: 1000px; */
+}
+
+.menu-content {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: auto;
+  max-height: 800px;
+  /* position: absolute; */
 }
 </style>
