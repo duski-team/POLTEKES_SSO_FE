@@ -4,8 +4,8 @@
   <div class="container">
     <div class="alert alert-secondary alert-dismissible fade show" role="alert">
       <strong>Perhatian</strong> Data nomor telepon ini tidak digunakan sebagai
-      nomor telepon penerima kode OTP dari microsoft. Jika ingin merubah nomor
-      telepon penerima kode OTP login silahkan kunjungi
+      nomor telepon penerima kode OTP dari Poltekkes Semarang. Jika ingin
+      merubah nomor telepon penerima kode OTP login silahkan kunjungi
       <button
         type="button"
         class="btn-close"
@@ -14,59 +14,68 @@
       ></button>
     </div>
     <div v-if="biodata" class="glass">
-      <div class="dashboard">
-        <div class="user">
-          <div class="edit mb-4">Edit - Account Profile</div>
-          <div>
-            <img
-              v-if="!backup"
-              class="foto mb-3"
-              :src="$store.state.biodata.foto"
-              alt="user photo profil"
-              @error="backup = true"
-            />
-            <img
-              v-else
-              class="foto mb-3"
-              src="@/assets/noprofil.png"
-              alt="user photo profil"
-            />
-          </div>
-        </div>
-        <div
-          class="jurusan-wrapper mt-3"
-          v-if="$store.state.biodata.role == 'mahasiswa'"
-        >
-          <h5 style="line-height: 14px">{{ $store.state.profil.f_jenjang }}</h5>
-          <p style="line-height: 14px; font-size: 14px">
-            {{ $store.state.profil.f_namaprogdi_baru }}
-          </p>
-        </div>
-        <div class="jurusan-wrapper mt-3" v-else>
-          <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
-          <p style="line-height: 14px; font-size: 14px">
-            {{ $store.state.profil.skpd }}
-          </p>
-        </div>
-        <!-- <div class="line mt-1 mb-1"></div> -->
-        <div class="role mt-3">
-          <button @click="$router.push({ path: '/dashboard' })" class="btn-red">
-            <p>Kembali</p>
-          </button>
-          <div>
-            <button class="btn-green" @click="update()">
-              <p>Simpan</p>
-            </button>
+      <div class="row">
+        <div class="col">
+          <div class="dashboard">
+            <div class="user">
+              <div class="edit mb-4">Edit - Account Profile</div>
+              <div>
+                <img
+                  v-if="!backup"
+                  class="foto mb-3"
+                  :src="$store.state.biodata.foto"
+                  alt="user photo profil"
+                  @error="backup = true"
+                />
+                <img
+                  v-else
+                  class="foto mb-3"
+                  src="@/assets/noprofil.png"
+                  alt="user photo profil"
+                />
+              </div>
+            </div>
+            <div
+              class="jurusan-wrapper mt-3"
+              v-if="$store.state.biodata.role == 'mahasiswa'"
+            >
+              <h5 style="line-height: 14px">
+                {{ $store.state.profil.f_jenjang }}
+              </h5>
+              <p style="line-height: 14px; font-size: 14px">
+                {{ $store.state.profil.f_namaprogdi_baru }}
+              </p>
+            </div>
+            <div class="jurusan-wrapper mt-3" v-else>
+              <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
+              <p style="line-height: 14px; font-size: 14px">
+                {{ $store.state.profil.skpd }}
+              </p>
+            </div>
+            <!-- <div class="line mt-1 mb-1"></div> -->
+            <div class="role mt-3">
+              <button
+                @click="$router.push({ path: '/dashboard' })"
+                class="btn-red"
+              >
+                <p>Kembali</p>
+              </button>
+              <div>
+                <button class="btn-green" @click="update()">
+                  <p>Simpan</p>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div class="tools text-start">
         <div class="box-info">
           <div class="input-box">
-            <span class="details d-flex"
-              ><p class="input-label text-strong">Nama</p>
-              <p class="text-muted fst-italic">* tidak dapat diubah</p></span
-            >
+            <span class="details d-flex">
+              <p class="input-label text-strong">Nama</p>
+              <p class="text-muted fst-italic">* tidak dapat diubah</p>
+            </span>
             <input
               type="text"
               disabled
@@ -222,6 +231,60 @@ export default {
   text-align: center;
 }
 
+@media only screen and (max-width: 600px) {
+  .glass {
+    width: 100%;
+    padding: 2rem 0.5rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #ffffff;
+    border-radius: 15px;
+    overflow: auto;
+    position: relative;
+    font-size: 14px;
+  }
+
+  .tools {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100% !important;
+    height: 349px;
+    left: 422px;
+    top: 163px;
+    /* White */
+    background: #ffffff;
+    /* Gray/200 */
+    /* border: 1px solid #eaecf0; */
+    box-sizing: border-box;
+    /* Shadow/sm */
+    /* box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
+    0px 1px 2px rgba(16, 24, 40, 0.06);
+  border-radius: 8px; */
+  }
+
+  .box-info {
+    width: 100% !important;
+    /* background-color: #027a48; */
+    padding: 0.5rem !important;
+    height: 100%;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .dashboard {
+    width: 100% !important;
+    height: 349px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 24px;
+    background-color: transparent;
+    /* border: 1px solid #eaecf0; */
+    box-sizing: border-box;
+  }
+}
 .glass {
   width: 100%;
   padding: 2rem 0.5rem 2rem 2rem;

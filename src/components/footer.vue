@@ -29,4 +29,11 @@
   font-size: 20px;
   letter-spacing: 2px;
 }
+
+@media only screen and (max-width: 600px) {
+  .copyright {
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+}
 </style>

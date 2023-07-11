@@ -1,60 +1,62 @@
 <template>
   <div class="container-fluid">
-    <div class="card" v-if="show && popup.length">
-      <div class="card-header">
-        <h5 class="card-title">INFORMASI</h5>
-      </div>
-      <div class="card-body">
-        <div class="menu-box">
-          <div class="col menu-content h-100" v-if="popup.length">
-            <div v-for="(item, idx) in popup" :key="idx">
-              <div v-if="item.file_pop_up">
-                <img
-                  :src="item.src1"
-                  alt=""
-                  style="
-                    height: auto;
-                    width: 100%;
-                    margin: 25px 0px 25px 0px;
-                    border: solid black 2px;
-                  "
-                />
+    <div class="row">
+      <div class="col-12">
+        <div class="card" v-if="show && popup.length">
+          <div class="card-header">
+            <h5 class="card-title">INFORMASI</h5>
+          </div>
+          <div class="card-body">
+            <div class="menu-box">
+              <div class="col menu-content h-100" v-if="popup.length">
+                <div v-for="(item, idx) in popup" :key="idx">
+                  <div v-if="item.file_pop_up">
+                    <img
+                      :src="item.src1"
+                      alt=""
+                      style="
+                        height: auto;
+                        width: 100%;
+                        margin: 25px 0px 25px 0px;
+                        border: solid black 2px;
+                      "
+                    />
+                  </div>
+                  <div class="text-center">
+                    <h3>{{ item.judul_pop_up }}</h3>
+                  </div>
+                  <div class="card-body">
+                    <span v-html="item.text_pop_up"></span>
+                  </div>
+                </div>
               </div>
-              <div class="text-center">
-                <h3>{{ item.judul_pop_up }}</h3>
-              </div>
-              <div class="card-body">
-                <span v-html="item.text_pop_up"></span>
+              <div v-else class="col menu-content h-100">
+                <br />
+                <br />
+                <br />
               </div>
             </div>
           </div>
-          <div v-else class="col menu-content h-100">
-            <br>
-            <br>
-            <br>
-          </div>
-        </div>
-      </div>
 
-      <div class="card-footer">
-        <div>
-          <!-- <hr /> -->
-          <div class="d-flex justify-content-between">
+          <div class="card-footer">
             <div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  v-model="status"
-                  :value="true"
-                  @change="$store.dispatch('set_popup', status)"
-                  id="flexCheckChecked"
-                />
-                <label class="form-check-label" for="flexCheckChecked">
-                  Selalu Tampilkan
-                </label>
-              </div>
-              <!-- <b-form-checkbox
+              <!-- <hr /> -->
+              <div class="d-flex justify-content-between">
+                <div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      v-model="status"
+                      :value="true"
+                      @change="$store.dispatch('set_popup', status)"
+                      id="flexCheckChecked"
+                    />
+                    <label class="form-check-label" for="flexCheckChecked">
+                      Selalu Tampilkan
+                    </label>
+                  </div>
+                  <!-- <b-form-checkbox
                 id="checkbox-1"
                 v-model="status"
                 name="checkbox-1"
@@ -64,15 +66,17 @@
               >
                 Jangan tampilkan notifikasi lagi
               </b-form-checkbox> -->
-            </div>
-            <div>
-              <button
-                type="button"
-                class="btn btn-secondary"
-                @click="this.show = false"
-              >
-                Tutup
-              </button>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    @click="this.show = false"
+                  >
+                    Tutup
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -130,6 +134,23 @@ export default {
   max-height: 600px;
   z-index: 9999999999;
   backdrop-filter: blur(0.09rem);
+}
+
+@media only screen and (max-width: 600px) {
+  .card {
+    position: absolute;
+    left: 10%;
+    top: 10%;
+    width: 80%;
+    max-height: 600px;
+    z-index: 9999999999;
+    backdrop-filter: blur(0.09rem);
+  }
+
+  .card-body {
+    overflow-y: auto;
+    padding: 2mm !important;
+  }
 }
 
 .card-body {
