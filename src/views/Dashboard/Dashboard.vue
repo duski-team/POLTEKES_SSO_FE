@@ -6,7 +6,6 @@
         v-if="biodata"
         class="alert alert-success alert-dismissible fade show"
         role="alert"
-        @click="shows = !shows"
       >
         <p>
           <strong>Welcome!</strong>
@@ -73,10 +72,20 @@
               v-if="biodata.role == 'mahasiswa'"
             >
               <h5 style="line-height: 14px">
-                {{ $store.state.profil.f_jenjang }}
+                {{
+                  detail_mahasiswa
+                    ? detail_mahasiswa.nama_jenjang_didik
+                    : $store.state.profil
+                    ? $store.state.profil.f_jenjang
+                    : ""
+                }}
               </h5>
               <p style="line-height: 14px; font-size: 14px">
-                {{ $store.state.profil.f_namaprogdi_baru }}
+                {{
+                  detail_mahasiswa
+                    ? detail_mahasiswa.nama_program_studi_prodi
+                    : ""
+                }}
               </p>
             </div>
             <div
@@ -85,7 +94,7 @@
             >
               <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
               <p style="line-height: 14px; font-size: 14px">
-                {{ $store.state.profil.skpd }}
+                {{ $store.state.profil ? $store.state.profil.skpd : null }}
               </p>
             </div>
             <div class="jurusan-wrapper mt-3" v-if="biodata.role == 'admin'">
@@ -101,7 +110,12 @@
                     Halo, {{ biodata.nama_lengkap_users }} (
                     {{ biodata.identity }} )
                   </div>
-                  <div class="text-tagihan">{{ status_mahasiswa }}</div>
+                  <div v-if="lulus" class="text-tagihan">
+                    {{ text_lulus }}
+                  </div>
+                  <div v-else class="text-tagihan">
+                    {{ status_mahasiswa }}
+                  </div>
                   <div v-if="!lunas && payment">
                     <div class="text-tagihan">
                       Anda memiliki tagihan biaya pendidikan sebesar : Rp.
@@ -109,7 +123,6 @@
                       <span v-else>{{ convert(isHerreg.biaya_kuliah) }}</span>
                     </div>
                     <!-- <div class="text-tagihan">
-                      
                       <span style="color: grey"
                         >pada semester
                         {{ $store.state.semester.nama_semester }}</span
@@ -196,10 +209,20 @@
                   v-if="biodata.role == 'mahasiswa'"
                 >
                   <h5 style="line-height: 14px">
-                    {{ $store.state.profil.f_jenjang }}
+                    {{
+                      detail_mahasiswa
+                        ? detail_mahasiswa.nama_jenjang_didik
+                        : $store.state.profil
+                        ? $store.state.profil.f_jenjang
+                        : ""
+                    }}
                   </h5>
                   <p style="line-height: 14px; font-size: 14px">
-                    {{ $store.state.profil.f_namaprogdi_baru }}
+                    {{
+                      detail_mahasiswa
+                        ? detail_mahasiswa.nama_program_studi_prodi
+                        : ""
+                    }}
                   </p>
                 </div>
                 <div
@@ -208,7 +231,7 @@
                 >
                   <!-- <h5 style="line-height: 14px">Jurusan</h5> -->
                   <p style="line-height: 14px; font-size: 14px">
-                    {{ $store.state.profil.skpd }}
+                    {{ $store.state.profil ? $store.state.profil.skpd : "" }}
                   </p>
                 </div>
                 <div
@@ -229,6 +252,7 @@
                     Halo, {{ biodata.nama_lengkap_users }}
                   </div>
                   <div class="text-tagihan">({{ biodata.identity }} )</div>
+                  <div></div>
                   <div class="text-tagihan text-justify">
                     {{ status_mahasiswa }}
                   </div>
@@ -322,13 +346,15 @@ export default {
   },
   data() {
     return {
-      app: "",
-      popup: "",
+      app: null,
+      popup: null,
       backup: false,
       foto: null,
       cek: 0,
       shows: false,
       sesi: "Sesi Login Anda sudah selesai silahkan login kembali",
+      kuliah: ["Aktif", "Cuti", "Tidak Aktif", "Lulus Studi", "Menunggu UKOM"],
+      status: null,
     };
   },
   created() {
@@ -352,6 +378,8 @@ export default {
           this.get_cuti();
           this.get_detail_herreg();
           this.getTagihan();
+          this.get_detail_mahasiswa();
+          this.get_status();
         }
       }
     },
@@ -361,11 +389,18 @@ export default {
           this.get_cuti();
           this.get_detail_herreg();
           this.getTagihan();
+          this.get_detail_mahasiswa();
+          this.get_status();
         }
       }
     },
   },
   computed: {
+    detail_mahasiswa() {
+      return this.$store.state.detail_mahasiswa
+        ? this.$store.state.detail_mahasiswa
+        : null;
+    },
     deadline() {
       let x =
         this.$moment().diff(this.$moment(this.payment.bayar_tutup), "seconds") >
@@ -379,6 +414,16 @@ export default {
         return false;
       }
     },
+    lulus() {
+      return this.status
+        ? this.status.nama_status_mahasiswa == "Lulus"
+          ? this.status
+          : false
+        : false;
+    },
+    text_lulus() {
+      return `Anda telah menyelesaikan pendidikan Jenjang  "${this.lulus.nama_jenjang_didik}" Program Studi "${this.lulus.nama_program_studi_prodi}" Poltekkes Kemenkes Semarang tahun angkatan ${this.lulus.nama_tahun_ajaran}`;
+    },
     expired() {
       return this.$store.state.expired ? this.$store.state.expired : null;
     },
@@ -386,10 +431,10 @@ export default {
       return this.$store.state.payment ? this.$store.state.payment : null;
     },
     tahuns() {
-      return this.$store.state.tahun ? this.$store.state.tahun : false;
+      return this.$store.state.tahun ? this.$store.state.tahun : null;
     },
     biodata() {
-      return this.$store.state.biodata;
+      return this.$store.state.biodata ? this.$store.state.biodata : null;
     },
     semester() {
       return this.$store.state.semester ? this.$store.state.semester : false;
@@ -421,12 +466,20 @@ export default {
             return "";
           }
         } else if (vm.isHerreg && vm.semester) {
-          if (vm.isHerreg && !vm.lunas) {
-            return `Anda memilih untuk Aktif pada semester ${this.semester.nama_semester}, segera lunasi tagihan anda untuk melanjutkan proses kegiatan akademik  `;
-          } else if (vm.isHerreg && vm.lunas) {
-            return `Anda adalah Mahasiswa Aktif semester ${this.semester.nama_semester} Poltekkes Kemenkes Semarang`;
+          if (vm.isHerreg.nama_status_mahasiswa != "Tidak aktif") {
+            if (vm.isHerreg && !vm.lunas) {
+              return `Anda memilih untuk Aktif pada semester ${this.semester.nama_semester}, segera lunasi tagihan anda untuk melanjutkan proses kegiatan akademik  `;
+            } else if (vm.isHerreg && vm.lunas) {
+              return `Anda adalah Mahasiswa Aktif semester ${this.semester.nama_semester} Poltekkes Kemenkes Semarang`;
+            } else {
+              return "";
+            }
           } else {
-            return "";
+            if (!vm.lunas) {
+              return `Anda memilih untuk Tidak Aktif  / Tidak melakukan Her Registrasi pada semester ${this.semester.nama_semester}, segera lunasi tagihan anda untuk melanjutkan proses kegiatan akademik  `;
+            } else {
+              return `Anda memilih untuk Tidak Aktif / Tidak melakukan Her Registrasi pada semester ${this.semester.nama_semester}`;
+            }
           }
         } else {
           return "";
@@ -495,9 +548,10 @@ export default {
             "detailsTagihanStudi/listDetailsTagihanStudiByNIM",
             {
               nim: vm.biodata.identity,
+              ditagihkan_kepada: "mahasiswa",
             }
           );
-          console.log(tagihan, "tagihan");
+          console.log(tagihan2, "tagihan");
           vm.$store.dispatch("payment", tagihan2.data.data[0]);
           vm.cek++;
         }
@@ -536,6 +590,28 @@ export default {
       }
       vm.cek++;
     },
+    async get_detail_mahasiswa() {
+      let vm = this;
+      let detail_mahasiswa = await vm.$axiossimadu("masterUser/cekUser");
+      // console.log(herreg.data.data, "herregsss");
+      if (detail_mahasiswa.data.status == 200) {
+        vm.$store.commit("set_detail_mahasiswa", detail_mahasiswa.data.data[0]);
+      }
+      vm.cek++;
+    },
+    async get_status() {
+      let vm = this;
+      let status_mahasiswa = await vm.$axiossimadu.post(
+        "registrasiMahasiswa/listMahasiswaRegistasi",
+        {
+          jumlah: 10,
+          halaman: 0,
+          NIM: vm.biodata.identity,
+        }
+      );
+      console.log(status_mahasiswa.data.data, "herregssstatus");
+      vm.status = status_mahasiswa.data.data[0];
+    },
     async goApp(x) {
       let vm = this;
       let expired = vm.expired;
@@ -573,6 +649,7 @@ export default {
 </script>
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
 * {
   /* margin: 0;
     padding: 0; */
@@ -763,6 +840,7 @@ export default {
 }
 
 .toolsdemo {
+  font-family: "Quicksand", sans-serif !important;
   display: flex;
   width: 906px;
   height: 349px;
@@ -784,6 +862,7 @@ export default {
 }
 
 .toolsdemo-hp {
+  font-family: "Quicksand", sans-serif !important;
   display: flex;
   width: 100%;
   height: auto;
@@ -962,6 +1041,7 @@ img {
 }
 
 .text-tagihan {
+  font-family: "Quicksand", sans-serif !important;
   color: #027a48;
   font-size: 18px;
   font-weight: 900;

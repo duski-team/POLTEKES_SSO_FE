@@ -9,6 +9,7 @@
 </template>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
 .na {
   height: 60px;
   background-color: #f9fafb;
@@ -26,7 +27,8 @@
 }
 
 .copyright {
-  font-size: 20px;
+  font-family: "Quicksand", sans-serif !important;
+  font-size: 18px;
   letter-spacing: 2px;
 }
 

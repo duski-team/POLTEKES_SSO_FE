@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
-        <div class="card" v-if="show && popup.length">
+        <div class="card" v-if="show && popup.length && token">
           <div class="card-header">
             <h5 class="card-title">INFORMASI</h5>
           </div>
@@ -100,6 +100,13 @@ export default {
     if (this.$store.state.popup) {
       this.getpopup();
     }
+  },
+  computed: {
+    token() {
+      return this.$store.state.sso_access_token
+        ? this.$store.state.sso_access_token
+        : null;
+    },
   },
   methods: {
     async getpopup() {

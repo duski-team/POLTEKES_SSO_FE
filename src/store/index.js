@@ -33,6 +33,7 @@ const state = {
   tahun: null,
   herreg: null,
   cuti: null,
+  detail_mahasiswa: null,
 };
 
 const mutations = {
@@ -94,6 +95,9 @@ const mutations = {
   },
   set_kode_otp_lupa(state, value) {
     state.kode_otp = value;
+  },
+  set_detail_mahasiswa(state, value) {
+    state.detail_mahasiswa = value;
   },
   set_payment(state, value) {
     state.payment = null;
